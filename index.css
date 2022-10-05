@@ -1,0 +1,38 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family:'fire sans' sans-serif;
+
+
+}
+#logo-img{
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+
+}
+body{
+  font-family: sans-serif;
+}
+#heading-anchor{
+  font-family: 'Straightler', sans-serif;
+  font-size: 1.6em;
+}
+.sidebar-sticky{
+  height: 100%;
+}
+.outer-div{
+  background-color:#eee;
+  height: 100%;
+}
+body{
+  background-color: #eee;
+  height: 100%;
+}
+nav{
+  background-color: #eee;
+}
+.col-md-2, .d-none, .d-md-block, .bg-light, .sidebar{
+  height:100%;
+}
