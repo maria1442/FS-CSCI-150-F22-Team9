@@ -88,6 +88,17 @@ body {
   border-bottom-right-radius: 40px;
 }
 
+/* .user_content {
+  width: 57px;
+  height: 100px;
+  background-color: blue;
+  position: absolute;
+  top: 108px;
+  left: 1608px;
+
+  overflow: hidden;
+} */
+
 /* #side_panel2:hover {
   background-color: black;
 } */
@@ -95,8 +106,13 @@ body {
 /* Hover for input button */
 #side_panel:hover,
 #grid_buttons:hover,
-#grid_newChart:hover {
+#grid_newChart:hover,
+#sub_content:hover {
   background-color: lightcoral;
+}
+
+#grid_profile_icon:hover {
+  border: 4px solid aquamarine;
 }
 
 #grid_select:hover {
@@ -125,7 +141,8 @@ body {
 
 #grid_buttons,
 #grid_select,
-#grid_newChart {
+#grid_newChart,
+#grid_profile_icon {
   background-color: transparent;
   font-size: 20px;
   width: 100%;
@@ -146,6 +163,7 @@ body {
 
   border: none;
 }
+
 /* START OF SIDE BAR MENU ------------------------------------------------------------------------------------------------------------------------- */
 
 .v1_805 {
@@ -597,7 +615,7 @@ body {
 .v1_876 {
   width: 148px;
   height: 60px;
-  background: url("../images/v1_876.png");
+
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -623,6 +641,7 @@ body {
   border-bottom-right-radius: 40px;
   overflow: hidden;
 }
+
 /* .v1_878 {
   width: 64px;
   height: 46px;
