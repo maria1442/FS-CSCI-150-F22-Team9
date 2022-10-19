@@ -222,6 +222,7 @@ class Student{
     #totalTheft;
     #totalLyingCheating;
     #totalOtherBehavior;
+    #totalBehavior
     #studentBehavior;
     constructor(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess){
         // STUDENT INFORMATION
