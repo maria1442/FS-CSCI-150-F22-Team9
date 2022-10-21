@@ -1,4 +1,7 @@
 // Classes for Backend
+
+const { execMap } = require("nodemon/lib/config/defaults");
+
 // ATTENDANCE
 class Attendance {
     #month;
@@ -111,10 +114,14 @@ class Behavior {
 }
 
 // ASSIGNMENT
+var quizWeight;
+var homeworkWeight;
+var examWeight;
+var projectWeight;
 class Assignment {
     #assignmentName = "";
     #assignmentCategory = "";
-    #assignmentWeight = 0;
+    #assignmentWeight;
     #possibleScore = 0;
     #givenScore = 0;
     #month;
@@ -122,26 +129,32 @@ class Assignment {
     #year;
     #date;
     #assignmentPercentage = 0;
-    constructor(name, category, weight, possibleScore, givenScore, month, day, year){
+    constructor(name, category, possibleScore, givenScore, month, day, year){
         this.#assignmentName = name;
         this.#assignmentCategory = category;
-        this.#assignmentWeight = weight;
+        if (category == "Homework"){
+            this.#assignmentWeight = homeworkWeight;
+        }
+        else if (category == "Quiz"){
+            this.#assignmentWeight = quizWeight;
+        }
+        else if (category == "Exam"){
+            this.#assignmentWeight = examWeight;
+        }
+        else this.#assignmentWeight = projectWeight;
         this.#possibleScore = possibleScore;
         this.#givenScore = givenScore;
         this.#month = month;
         this.#day = day;
         this.#year = year;
         this.#date = new Date(year, month, day);
-        this.#assignmentPercentage = (this.#givenScore / this.#possibleScore) *100;
+        this.#assignmentPercentage = (this.#givenScore / this.#possibleScore) * 100;
     }
     set assignmentName(name) {
         this.#assignmentName = name;
     }
     set assignmentCategory(category){
         this.#assignmentCategory = category;
-    }
-    set assignmentWeight(weight){
-        this.#assignmentWeight = weight;
     }
     set possibleScore(possibleScore){
         this.#possibleScore = possibleScore;
@@ -192,7 +205,7 @@ class Assignment {
         return {
             assignmentName: this.#assignmentName,
             assignmentCategory: this.#assignmentCategory,
-            assignmnetWeight: this.#assignmentWeight,
+            assignmentWeight: this.#assignmentWeight,
             possibleScore: this.#possibleScore,
             givenScore: this.#givenScore,
             date: this.#date,
@@ -528,10 +541,52 @@ class Student{
         var sum = 0;
         var points = 0;
         for (let i = 0; i < this.#studentAssignments.length; i++){
-            points = (this.#studentAssignments[i].assignmentPercentage * this.#studentAssignments[i].assignmentWeight) / 100;
+            points = (this.#studentAssignments[i].assignmentPercentage * this.#studentAssignments[i].assignmentWeight);
             sum += points;
         }
-        this.#gradePercentage = sum;
+        if (this.#totalHomework == 0 && this.#totalQuizzes == 0 && this.#totalExams == 0){
+            this.#gradePercentage = sum / (projectWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalQuizzes == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (examWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalExams == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (quizWeight);
+        }
+        else if (this.#totalQuizzes == 0 && this.#totalExams == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalQuizzes == 0){
+            this.#gradePercentage = sum / (examWeight + projectWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalExams == 0){
+            this.#gradePercentage = sum / (quizWeight + projectWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (quizWeight + examWeight);
+        }
+        else if (this.#totalQuizzes == 0 && this.#totalExams == 0){
+            this.#gradePercentage = sum / (homeworkWeight + projectWeight);
+        }
+        else if (this.#totalQuizzes == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight + examWeight);
+        }
+        else if (this.#totalExams == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight + quizWeight);
+        }
+        else if (this.#totalHomework == 0){
+            this.#gradePercentage = sum / (quizWeight + examWeight + projectWeight);
+        }
+        else if (this.#totalQuizzes == 0){
+            this.#gradePercentage = sum / (homeworkWeight + examWeight + projectWeight);
+        }
+        else if (this.#totalExams == 0){
+            this.#gradePercentage = sum / (homeworkWeight + quizWeight + projectWeight);
+        }
+        else if (this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight + quizWeight + examWeight);
+        }
+        else this.#gradePercentage = sum / (homeworkWeight + quizWeight + examWeight + projectWeight);
     }
     addAttendance(attendanceObj){
         //let a = new Attendance(month, day, year, status);
@@ -687,19 +742,19 @@ class Student{
         this.#lyingCheatingPercentage = (this.#totalLyingCheating / this.#totalBehaviorIncidents) * 100;
         this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
     }
-    addAssignment(assignmenObj){
+    addAssignment(assignmentObj){
         //let as = new Assignment(assignmentName, assignmentCategory, assignmentWeight, possibleScore, givenScore, date, assignmentPercentage);
-        this.#studentAssignments.push(assignmenObj);
-        if (assignmenObj.assignmentCategory == "Homework"){
+        this.#studentAssignments.push(assignmentObj);
+        if (assignmentObj.assignmentCategory == "Homework"){
             this.#totalHomework++;
         }
-        else if (assignmenObj.assignmentCategory == "Quiz"){
+        else if (assignmentObj.assignmentCategory == "Quiz"){
             this.#totalQuizzes++;
         }
-        else if (assignmenObj.assignmentCategory == "Exam"){
+        else if (assignmentObj.assignmentCategory == "Exam"){
             this.#totalExams++;
         }
-        else if (assignmenObj.assignmentCategory == "Project"){
+        else if (assignmentObj.assignmentCategory == "Project"){
             this.#totalProjects++;
         }
         else this.#totalOtherAssignments++;
@@ -1051,7 +1106,7 @@ class Class {
     #students;
     #events;
     #reminders;
-    constructor(courseName, instructorName, gradeLevel){
+    constructor(courseName, instructorName, gradeLevel, classHomeworkWeight, classQuizWeight, classExamWeight, classProjectWeight){
         this.#courseName = courseName;
         this.#instructorName = instructorName;
         this.#gradeLevel = gradeLevel;
@@ -1104,6 +1159,10 @@ class Class {
         this.#totalProjects = 0;
         this.#totalOtherAssignments = 0;
         this.#totalAssignments = 0;
+        homeworkWeight = classHomeworkWeight;
+        quizWeight = classQuizWeight;
+        examWeight = classExamWeight;
+        projectWeight = classProjectWeight;
         this.#totalLetterGradeA = 0;
         this.#totalLetterGradeB = 0;
         this.#totalLetterGradeC = 0;
@@ -1649,6 +1708,9 @@ class User {
     }
 }
 // TESTING BEFORE ADDING TO CLASS
+// Class
+var class1 = new Class("courseName", "Jane Doe", "9", 10, 25, 40, 25);
+// Student
 var student1 = new Student(10000000, "alt", "John", "Doe", "male", 5, 21, 2010, "jDoe@gmail.com", false, true, true);
 // Student 1 Behavior Info, month of September
 var student1Behavior1 = new Behavior("Touching Others", 9, 1, 2022, "talking during reading time");
@@ -1701,9 +1763,10 @@ student1.addAttendance(student1Day20);
 student1.addAttendance(student1Day21);
 student1.addAttendance(student1Day22);
 // Student 1 Assignment Info, month of September
-var student1Assignment1 = new Assignment("Assignment1", "Homework", 100, 10, 10, 9, 21, 2022);
+var student1Assignment1 = new Assignment("Assignment1", "Homework", 10, 10, 9, 21, 2022);
 console.log(student1Assignment1.assignmentPercentage);
 student1.addAssignment(student1Assignment1);
+console.log(homeworkWeight);
 console.log(student1.gradePercentage);
 var j = student1.toJSON();
 var strJSON = JSON.stringify(j);
@@ -1722,6 +1785,7 @@ console.log(string);
 /* TO DO: 
     Make a stringify function that takes an object and uses JSON.stringify in order to make document
     Make Demo class
+    Edit weighted assignments
     Connect to DB
         Able to take document and turn into object
         Able to turn object into document and add to DB
