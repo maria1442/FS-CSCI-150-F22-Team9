@@ -439,7 +439,7 @@ class Student{
             }
             this.#studentAttendance.splice(pos, 1); // 2nd parameter means remove one item only
             this.#totalDays--;
-            this.#totalAttendancePercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
+            this.#attendancePresentPercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
         }
     }
     addBehavior(incident, date, comment){
@@ -818,7 +818,7 @@ class Student{
             totalDays: this.#totalDays,
             totalPresentAttedance: this.#totalPresentAttendance,
             totalAbsentAttendance: this.#totalAbsentAttendance,
-            totalAttendancePercentage: this.#totalAttendancePercentage,
+            totalAttendancePercentage: this.#attendancePresentPercentage,
             studentAttendance: attendanceOutput,
             // TOTAL BEHAVIOR INCIDENTS
             totalOffTask: this.#totalOffTask,
@@ -984,7 +984,7 @@ class Class {
         this.#totalLetterGradeD = 0;
         this.#totalLetterGradeF = 0;
         this.#letterGradeAPercentage = 0;
-        this.#letterGradeBPercentag = 0;
+        this.#letterGradeBPercentage = 0;
         this.#letterGradeCPercentage = 0;
         this.#letterGradeDPercentage = 0;
         this.#letterGradeFPercentage = 0;
@@ -1116,11 +1116,11 @@ class Class {
         return this.#totalAttendanceAbsent;
     }
     get attendancPresentPercentage(){
-        this.#attendancPresentPercentage = (this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+        this.#attendancePresentPercentage = (this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
         return this.#attendancePresentPercentage;
     }
-    get attendancAbsentPercentage(){
-        this.#attendancAbsentPercentage = (this.#totalAttendanceAbsent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+    get attendanceAbsentPercentage(){
+        this.#attendanceAbsentPercentage = (this.#totalAttendanceAbsent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
         return this.#attendanceAbsentPercentage;
     }
     get totalOffTask(){
