@@ -248,7 +248,7 @@ class Student{
     #totalDays;
     #totalPresentAttendance;
     #totalAbsentAttendance;
-    #totalAttendancePercentage;
+    #attendancePresentPercentage;
     #studentAttendance;
     // TOTAL BEHAVIOR INCIDENTS
     #totalOffTask;
@@ -266,6 +266,20 @@ class Student{
     #totalLyingCheating;
     #totalOtherBehavior;
     #totalBehaviorIncidents;
+    #offTaskPercentage; 
+    #refusingToWorkPercentage;
+    #outOfSeatPercentage;
+    #talkingPercentage;
+    #throwingObjectPercentage;
+    #touchingOthersPercentage;
+    #selfHarmPercentage;
+    #inappropriateLangPercentage;
+    #bullyingTeasingPercentage;
+    #propertyDamagePercentage;
+    #defianceDisrespectPercentage;
+    #theftPercentage;
+    #lyingCheatingPercentage;
+    #otherBehaviorPercentage;
     #studentBehavior;
     constructor(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess){
         // STUDENT INFORMATION
@@ -287,7 +301,7 @@ class Student{
         this.#totalOtherAssignments = 0;
         this.#totalAssignments = 0;
         this.#letterGrade = "";
-        this.#gradePercentage = 0.0;
+        this.#gradePercentage = 0;
         this.#studentAssignments = [];
         // STUDENT BEHAVIOR
         this.#totalBehaviorIncidents = 0;
@@ -305,10 +319,24 @@ class Student{
         this.#totalTheft = 0;
         this.#totalLyingCheating = 0;
         this.#totalOtherBehavior = 0;
+        this.#offTaskPercentage = 0;
+        this.#refusingToWorkPercentage = 0;
+        this.#outOfSeatPercentage = 0;
+        this.#talkingPercentage = 0;
+        this.#throwingObjectPercentage = 0;
+        this.#touchingOthersPercentage = 0;
+        this.#selfHarmPercentage = 0;
+        this.#inappropriateLangPercentage = 0;
+        this.#bullyingTeasingPercentage = 0;
+        this.#propertyDamagePercentage = 0;
+        this.#defianceDisrespectPercentage = 0;
+        this.#theftPercentage = 0;
+        this.#lyingCheatingPercentage = 0;
+        this.#otherBehaviorPercentage = 0;
         this.#studentBehavior = [];
         // STUDENT ATTENDANCE INFORMATION
         this.#totalPresentAttendance = 0;
-        this.#totalAttendancePercentage = 0.0;
+        this.#attendancePresentPercentage = 0;
         this.#studentAttendance = [];
     }
     set studentId(studentId){
@@ -378,8 +406,8 @@ class Student{
         else this.#letterGrade = "A+";
     }
     calculateGradePercentage(){
-        var sum = 0.0;
-        var points = 0.0;
+        var sum = 0;
+        var points = 0;
         for (let i = 0; i < this.#studentAssignments.length; i++){
             points = (this.#studentAssignments[i].givenScore + this.#studentAssignments[i].assignmentWeight) / this.#studentAssignments[i].possibleScore;
             sum += points;
@@ -396,7 +424,7 @@ class Student{
         else if (status == "Absent"){
             this.#totalAbsentAttendance++;
         }
-        this.#totalAttendancePercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
+        this.#attendancePresentPercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
     }
     removeAttendance(date) {
         let pos = this.#studentAttendance.findIndex(
@@ -420,47 +448,61 @@ class Student{
         this.#totalBehaviorIncidents++;
         if (incident == "Off Task"){
             this.#totalOffTask++;
+            this.#offTaskPercentage = (this.#totalOffTask/ this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Refusing to Work"){
             this.#totalRefusingToWork++;
+            this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Out of Seat"){
             this.#totalRefusingToWork++;
+            this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Talking"){
             this.#totalTalking++;
+            this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Throwing Object"){
             this.#totalThrowingObject++;
-        }
-        else if (incident == "Touching Object"){
-            this.#totalThrowingObject++;
+            this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Touching Others"){
             this.#totalTouchingOthers++;
+            this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Self Harm"){
             this.#totalSelfHarm++;
+            this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Inappropriate Language"){
             this.#totalInappropriateLang++;
+            this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Bullying or Teasing"){
             this.#totalBullyingTeasing++;
+            this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Property Damage"){
             this.#totalPropertyDamage++;
+            this.#propertyDamagePercentage= (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Defiance or Disrespect"){
             this.#totalDefianceDisrespect++;
+            this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Theft"){
             this.#totalTheft++;
+            this.#theftPercentage = (this.#totalTheft/ this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Lying or Cheating"){
             this.#totalLyingCheating++;
+            this.#lyingCheatingPercentage = (this.#totalLyingCheating/ this.#totalBehaviorIncidents) * 100;
         }
-        else this.#totalOtherBehavior++;
+        else {
+            this.#totalOtherBehavior++;
+            this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
+        }
+
     }
     removeBehavior(incident, date, comment){
         let pos = this.#studentBehavior.findIndex(
@@ -472,47 +514,61 @@ class Student{
         this.#totalBehaviorIncidents--;
         if (incident == "Off Task"){
             this.#totalOffTask--;
+            this.#offTaskPercentage = (this.#totalOffTask/ this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Refusing to Work"){
             this.#totalRefusingToWork--;
+            this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Out of Seat"){
             this.#totalRefusingToWork--;
+            this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Talking"){
             this.#totalTalking--;
+            this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Throwing Object"){
             this.#totalThrowingObject--;
-        }
-        else if (incident == "Touching Object"){
-            this.#totalThrowingObject--;
+            this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
+
         }
         else if (incident == "Touching Others"){
             this.#totalTouchingOthers--;
+            this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Self Harm"){
             this.#totalSelfHarm--;
+            this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Inappropriate Language"){
             this.#totalInappropriateLang--;
+            this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Bullying or Teasing"){
             this.#totalBullyingTeasing--;
+            this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Property Damage"){
             this.#totalPropertyDamage--;
+            this.#propertyDamagePercentage = (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Defiance or Disrespect"){
             this.#totalDefianceDisrespect--;
+            this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Theft"){
             this.#totalTheft--;
+            this.#theftPercentage = (this.#totalTheft/ this.#totalBehaviorIncidents) * 100;
         }
         else if (incident == "Lying or Cheating"){
             this.#totalLyingCheating--;
+            this.#lyingCheatingPercentage = (this.#totalLyingCheating/ this.#totalBehaviorIncidents) * 100;
         }
-        else this.#totalOtherBehavior--;
+        else {
+            this.#totalOtherBehavior--;
+            this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
+        }
     }
     addAssignment(assignmentName, assignmentCategory, assignmentWeight, possibleScore, givenScore, date, assignmentPercentage){
         let as = new Assignment(assignmentName, assignmentCategory, assignmentWeight, possibleScore, givenScore, date, assignmentPercentage);
@@ -621,8 +677,8 @@ class Student{
     get totalAbsentAttendance(){
         return this.#totalAbsentAttendance;
     }
-    get totalAttendancePercentage(){
-        return this.#totalAttendancePercentage;
+    get attendancePresentPercentage(){
+        return this.#attendancePresentPercentage;
     }
     get studentAttendance(){
         return this.#studentAttendance;
@@ -671,6 +727,48 @@ class Student{
     }
     get totalOtherBehavior(){
         return this.#totalOtherBehavior;
+    }
+    get offTaskPercentage(){
+        return this.#offTaskPercentage;
+    }
+    get refuseToWorkPercentage(){
+        return this.#refusingToWorkPercentage;
+    }
+    get outOfSeatPercentage(){
+        return this.#outOfSeatPercentage;
+    }
+    get talkingPercentage(){
+        return this.#talkingPercentage;
+    }
+    get throwingObjectPercentage(){
+        return this.#throwingObjectPercentage;
+    }
+    get touchingOthersPercentage(){
+        return this.#touchingOthersPercentage;
+    }
+    get selfHarmPercentage(){
+        return this.#selfHarmPercentage;
+    }
+    get inappropriateLangPercentage(){
+        return this.#inappropriateLangPercentage;
+    }
+    get bullyingTeasingPercentage(){
+        return this.#bullyingTeasingPercentage;
+    }
+    get propertyDamagePercentage(){
+        return this.#propertyDamagePercentage;
+    }
+    get defianceDisrespectPercentage(){
+        return this.#defianceDisrespectPercentage;
+    }
+    get theftPercentage(){
+        return this.#theftPercentage;
+    }
+    get lyingCheatingPercentage(){
+        return this.#lyingCheatingPercentage;
+    }
+    get otherBehaviorPercentage(){
+        return this.#otherBehaviorPercentage;
     }
     get studentBehavior(){
         return this.#studentBehavior;
@@ -724,19 +822,33 @@ class Student{
             studentAttendance: attendanceOutput,
             // TOTAL BEHAVIOR INCIDENTS
             totalOffTask: this.#totalOffTask,
+            offTaskPercentage: this.#offTaskPercentage,
             totalRefusingToWork: this.#totalRefusingToWork,
+            refusingToWorkPercentage: this.#refusingToWorkPercentage,
             totalOutOfSeat: this.#totalOutOfSeat,
+            outOfSeatPercentage: this.#outOfSeatPercentage,
             totalTalking: this.#totalTalking,
+            talkingPercentage: this.#talkingPercentage,
             totalThrowingObject: this.#totalThrowingObject,
+            throwingObjectPercentage: this.#throwingObjectPercentage,
             totalTouchingOthers: this.#totalTouchingOthers,
+            touchingOthersPercentage: this.#touchingOthersPercentage,
             totalSelfHarm: this.#totalSelfHarm,
+            selfHarmPercentage: this.#selfHarmPercentage,
             totalInappropriateLang: this.#totalInappropriateLang,
+            inappropriateLangPercentage: this.#inappropriateLangPercentage,
             totalBullyingTeasing: this.#totalBullyingTeasing,
+            bullyingTeasingPercentage: this.#bullyingTeasingPercentage,
             totalPropertyDamage: this.#totalPropertyDamage,
+            propertyDamage: this.#propertyDamagePercentage,
             totalDefianceDisrespect: this.#totalDefianceDisrespect,
+            defianceDisrespect: this.#defianceDisrespectPercentage,
             totalTheft: this.#totalTheft,
+            theftPercentage: this.#theftPercentage,
             totalLyingCheating: this.#totalLyingCheating,
+            lyingCheatingPercentage: this.#lyingCheatingPercentage,
             totalOtherBehavior: this.#totalOtherBehavior,
+            otherBehaviorPercentage: this.#otherBehaviorPercentage,
             totalBehaviorIncidents: this.#totalBehaviorIncidents,
             studentBehavior: behaviorOutput
         };
@@ -759,8 +871,8 @@ class Class {
     // COURSE ATTENDANCE INFORMATION
     #totalAttendancePresent;
     #totalAttendanceAbsent;
-    #totalAttendancePresentPercentage;
-    #totalAttendanceAbsentPercentage;
+    #attendancePresentPercentage;
+    #attendanceAbsentPercentage;
     // COURSE BEHAVIOR INFORMATION
     #totalBehaviorIncidents;
     #totalOffTask;
@@ -777,6 +889,21 @@ class Class {
     #totalTheft;
     #totalLyingCheating;
     #totalOtherBehavior;
+    // Percentages
+    #offTaskPercentage; 
+    #refusingToWorkPercentage;
+    #outOfSeatPercentage;
+    #talkingPercentage;
+    #throwingObjectPercentage;
+    #touchingOthersPercentage;
+    #selfHarmPercentage;
+    #inappropriateLangPercentage;
+    #bullyingTeasingPercentage;
+    #propertyDamagePercentage;
+    #defianceDisrespectPercentage;
+    #theftPercentage;
+    #lyingCheatingPercentage;
+    #otherBehaviorPercentage;
     // COURSE ASSIGNMENT INFORMATION
     #totalHomework;
     #totalQuizzes;
@@ -789,6 +916,11 @@ class Class {
     #totalLetterGradeC;
     #totalLetterGradeD;
     #totalLetterGradeF;
+    #letterGradeAPercentage;
+    #letterGradeBPercentage;
+    #letterGradeCPercentage;
+    #letterGradeDPercentage;
+    #letterGradeFPercentage;
     // ARRAYS OF STUDENTS, EVENTS, AND REMINDERS
     #students;
     #events;
@@ -801,12 +933,14 @@ class Class {
         this.#totalSPED = 0;
         this.#totalEL = 0;
         this.#totalInternetAccess = 0;
-        this.#SPEDPercentage = 0.0;
-        this.#ELPercentage = 0.0;
-        this.#InternetAccessPercentage = 0.0;
+        this.#SPEDPercentage = 0;
+        this.#ELPercentage = 0;
+        this.#InternetAccessPercentage = 0;
 
         this.#totalAttendancePresent = 0;
         this.#totalAttendanceAbsent = 0;
+        this.#attendancePresentPercentage = 0;
+        this.#attendanceAbsentPercentage = 0;
 
         this.#totalBehaviorIncidents = 0;
         this.#totalOffTask = 0;
@@ -823,7 +957,21 @@ class Class {
         this.#totalTheft = 0;
         this.#totalLyingCheating = 0;
         this.#totalOtherBehavior = 0;
-    
+        this.#offTaskPercentage = 0;
+        this.#refusingToWorkPercentage = 0;
+        this.#outOfSeatPercentage = 0;
+        this.#talkingPercentage = 0;
+        this.#throwingObjectPercentage = 0;
+        this.#touchingOthersPercentage = 0;
+        this.#selfHarmPercentage = 0;
+        this.#inappropriateLangPercentage = 0;
+        this.#bullyingTeasingPercentage = 0;
+        this.#propertyDamagePercentage = 0;
+        this.#defianceDisrespectPercentage = 0;
+        this.#theftPercentage = 0;
+        this.#lyingCheatingPercentage = 0;
+        this.#otherBehaviorPercentage = 0;
+
         this.#totalHomework = 0;
         this.#totalQuizzes = 0;
         this.#totalExams = 0;
@@ -835,6 +983,11 @@ class Class {
         this.#totalLetterGradeC = 0;
         this.#totalLetterGradeD = 0;
         this.#totalLetterGradeF = 0;
+        this.#letterGradeAPercentage = 0;
+        this.#letterGradeBPercentag = 0;
+        this.#letterGradeCPercentage = 0;
+        this.#letterGradeDPercentage = 0;
+        this.#letterGradeFPercentage = 0;
 
         this.#students = [];
         this.#events = [];
@@ -962,6 +1115,14 @@ class Class {
         this.#totalAttendanceAbsent = sum;
         return this.#totalAttendanceAbsent;
     }
+    get attendancPresentPercentage(){
+        this.#attendancPresentPercentage = (this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+        return this.#attendancePresentPercentage;
+    }
+    get attendancAbsentPercentage(){
+        this.#attendancAbsentPercentage = (this.#totalAttendanceAbsent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+        return this.#attendanceAbsentPercentage;
+    }
     get totalOffTask(){
         let sum = 0;
         for (let i = 0; i < this.#students.length; i++){
@@ -1074,6 +1235,62 @@ class Class {
         this.#totalOtherBehavior = sum;
         return this.#totalOtherBehavior;
     }
+    get offTaskPercentage(){
+        this.#offTaskPercentage = (this.#totalOffTask/ this.#totalBehaviorIncidents) * 100;
+        return this.#offTaskPercentage;
+    }
+    get refuseToWorkPercentage(){
+        this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
+        return this.#refusingToWorkPercentage;
+    }
+    get outOfSeatPercentage(){
+        this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
+        return this.#outOfSeatPercentage;
+    }
+    get talkingPercentage(){
+        this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
+        return this.#talkingPercentage;
+    }
+    get throwingObjectPercentage(){
+        this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
+        return this.#throwingObjectPercentage;
+    }
+    get touchingOthersPercentage(){
+        this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
+        return this.#touchingOthersPercentage;
+    }
+    get selfHarmPercentage(){
+        this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
+        return this.#selfHarmPercentage;
+    }
+    get inappropriateLangPercentage(){
+        this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
+        return this.#inappropriateLangPercentage;
+    }
+    get bullyingTeasingPercentage(){
+        this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
+        return this.#bullyingTeasingPercentage;
+    }
+    get propertyDamagePercentage(){
+        this.#propertyDamagePercentage = (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
+        return this.#propertyDamagePercentage;
+    }
+    get defianceDisrespectPercentage(){
+        this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
+        return this.#defianceDisrespectPercentage;
+    }
+    get theftPercentage(){
+        this.#theftPercentage = (this.#totalTheft/ this.#totalBehaviorIncidents) * 100;
+        return this.#theftPercentage;
+    }
+    get lyingCheatingPercentage(){
+        this.#lyingCheatingPercentage = (this.#totalLyingCheating/ this.#totalBehaviorIncidents) * 100;
+        return this.#lyingCheatingPercentage;
+    }
+    get otherBehaviorPercentage(){
+        this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
+        return this.#otherBehaviorPercentage;
+    }
     get totalHomework(){
         this.#totalHomework = this.#students[0].totalHomework;
         return this.#totalHomework;
@@ -1148,6 +1365,26 @@ class Class {
         this.#totalLetterGradeF = sum;
         return this.#totalLetterGradeF;
     }
+    get letterGradeAPercentage(){
+        this.#letterGradeAPercentage = (this.#totalLetterGradeA / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeAPercentage;
+    }
+    get letterGradeBPercentage(){
+        this.#letterGradeBPercentage = (this.#totalLetterGradeB / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeBPercentage;
+    }
+    get letterGradeCPercentage(){
+        this.#letterGradeCPercentage = (this.#totalLetterGradeC / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeCPercentage;
+    }
+    get letterGradeDPercentage(){
+        this.#letterGradeDPercentage = (this.#totalLetterGradeD / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeDPercentage;
+    }
+    get letterGradeFPercentage(){
+        this.#letterGradeFPercentage = (this.#totalLetterGradeF / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeFPercentage;
+    }
     get students(){
         return this.#students;
     }
@@ -1193,29 +1430,50 @@ class Class {
             totalOtherAssignements: this.#totalOtherAssignments,
             totalAssignments: this.#totalAssignments,
             totalLetterGradeA: this.#totalLetterGradeA,
+            letterGradeAPercentage: this.#letterGradeAPercentage,
             totalLetterGradeB: this.#totalLetterGradeB,
+            letterGradeBPercentage: this.#letterGradeBPercentage,
             totalLetterGradeC: this.#totalLetterGradeC,
+            letterGradeCPercentage: this.#letterGradeCPercentage,
             totalLetterGradeD: this.#totalLetterGradeD,
+            letterGradeDPercentage: this.#letterGradeDPercentage,
             totalLetterGradeF: this.#totalLetterGradeF,
+            letterGradeFPercentage: this.#letterGradeFPercentage,
             // TOTAL ATTENDANCE
             totalAttendancePresent: this.#totalAttendancePresent,
             totalAttendanceAbsent: this.#totalAttendanceAbsent,
+            attendancePresentPercentage: this.#attendancePresentPercentage,
+            attendanceAbsentPercentage: this.#attendanceAbsentPercentage,
             // TOTAL BEHAVIOR INCIDENTS
             totalBehaviorIncidents: this.#totalBehaviorIncidents,
             totalOffTask: this.#totalOffTask,
+            offTaskPercentage: this.#offTaskPercentage,
             totalRefusingToWork: this.#totalRefusingToWork,
+            refusingToWorkPercentage: this.#refusingToWorkPercentage,
             totalOutOfSeat: this.#totalOutOfSeat,
+            outOfSeatPercentage: this.#outOfSeatPercentage,
             totalTalking: this.#totalTalking,
+            talkingPercentage: this.#talkingPercentage,
             totalThrowingObject: this.#totalThrowingObject,
+            throwingObjectPercentage: this.#throwingObjectPercentage,
             totalTouchingOthers: this.#totalTouchingOthers,
+            touchingOthersPercentage: this.#touchingOthersPercentage,
             totalSelfHarm: this.#totalSelfHarm,
+            selfHarmPercentage: this.#selfHarmPercentage,
             totalInappropriateLang: this.#totalInappropriateLang,
+            inappropriateLangPercentage: this.#inappropriateLangPercentage,
             totalBullyingTeasing: this.#totalBullyingTeasing,
+            bullyingTeasingPercentage: this.#bullyingTeasingPercentage,
             totalPropertyDamage: this.#totalPropertyDamage,
+            propertyDamage: this.#propertyDamagePercentage,
             totalDefianceDisrespect: this.#totalDefianceDisrespect,
+            defianceDisrespect: this.#defianceDisrespectPercentage,
             totalTheft: this.#totalTheft,
+            theftPercentage: this.#theftPercentage,
             totalLyingCheating: this.#totalLyingCheating,
+            lyingCheatingPercentage: this.#lyingCheatingPercentage,
             totalOtherBehavior: this.#totalOtherBehavior,
+            otherBehaviorPercentage: this.#otherBehaviorPercentage,
             // ARRAYS
             students: studentOutput,
             events: eventsOutput,
@@ -1245,7 +1503,7 @@ var string = JSON.stringify(obj);
 console.log(string);
 */
 /* TO DO: 
-    Add functions for classroom percentage
+    Add user class 
     Make a stringify function that takes an object and uses JSON.stringify in order to make document
     Connect to DB
         Able to take document and turn into object
