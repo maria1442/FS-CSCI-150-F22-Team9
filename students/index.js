@@ -1,4 +1,7 @@
 // Classes for Backend
+
+const { toHaveFocus } = require("@testing-library/jest-dom/dist/matchers");
+
 // ATTENDANCE
 class Attendance {
     #date = "";
@@ -1479,6 +1482,47 @@ class Class {
             events: eventsOutput,
             reminders: remindersOutput
         };
+    }
+}
+class User {
+    #username;
+    #password;
+    #totalNumberOfClasses;
+    #classes;
+    construct(username, password){
+        this.#username = username;
+        this.#password = password;
+        this.#totalNumberOfClasses = 0;
+        this.#classes = [];
+    }
+    set username(username){
+        this.#username = username;
+    }
+    set password(password){
+        this.#password = password;
+    }
+    addClass(courseName, instructorName, gradeLevel){
+        let c = new Class(courseName, instructorName, gradeLevel);
+        this.#classes.push(c);
+        this.#totalNumberOfClasses++;
+    }
+    removeClass(courseName){
+        let pos = this.#classes.findIndex(
+            element => element.courseName === courseName
+        );
+        if (pos > -1) { // only splice array when item is found
+            this.#classes.splice(pos, 1); // 2nd parameter means remove one item only
+        }
+        this.#totalNumberOfClasses--;
+    }
+    get username(){
+        return this.#username;
+    }
+    get password(){
+        return this.#password;
+    }
+    get totalNumberOfClass(){
+        return this.#totalNumberOfClasses;
     }
 }
 // TESTING BEFORE ADDING TO CLASS
