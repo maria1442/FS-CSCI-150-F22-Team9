@@ -1,20 +1,38 @@
 // Classes for Backend
-
-const { toHaveFocus } = require("@testing-library/jest-dom/dist/matchers");
-
 // ATTENDANCE
 class Attendance {
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #status = "";
-    constructor(date, status){
-        this.#date = date;
+    constructor(month, day, year, status){
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
         this.#status = status;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     set status(status){
         this.#status = status;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date(){
         return this.#date;
@@ -37,24 +55,45 @@ class Attendance {
 // BEHAVIOR
 class Behavior {
     #incident = "";
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #comment = "";
-    constructor(incident, date, comment){
+    constructor(incident, month, day, year, comment){
         this.#incident = incident;
-        this.#date = date;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
         this.#comment = comment;
     }
     set incident(incident){
         this.#incident = incident;
     }
-    set date(date) {
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     set comment(comment) {
         this.#comment = comment;
     }
     get incident() {
         return this.#incident;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date() {
         return this.#date;
@@ -78,15 +117,21 @@ class Assignment {
     #assignmentWeight = 0;
     #possibleScore = 0;
     #givenScore = 0;
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #assignmentPercentage = 0;
-    constructor(name, category, weight, possibleScore, givenScore, date){
+    constructor(name, category, weight, possibleScore, givenScore, month, day, year){
         this.#assignmentName = name;
         this.#assignmentCategory = category;
         this.#assignmentWeight = weight;
         this.#possibleScore = possibleScore;
         this.#givenScore = givenScore;
-        this.#date = date;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
         this.#assignmentPercentage = (this.#givenScore/this.#possibleScore)*100;
     }
     set assignmentName(name) {
@@ -104,8 +149,14 @@ class Assignment {
     set givenScore(givenScore){
         this.#givenScore = givenScore;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     get assignmentName() {
         return this.#assignmentName;
@@ -121,6 +172,15 @@ class Assignment {
     }
     get givenScore(){
         return this.#givenScore;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date(){
         return this.#date;
@@ -144,20 +204,32 @@ class Assignment {
 // EVENT
 class Event{
     #eventName = "";
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #description = "";
     #location = "";
-    constructor(eventName, date, description, location){
+    constructor(eventName, month, day, year, description, location){
         this.#eventName = eventName;
-        this.#date = date;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
         this.#description = description;
         this.#location = location;
     }
     set eventName(eventName){
         this.#eventName = eventName;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     set description(description){
         this.#description = description;
@@ -167,6 +239,15 @@ class Event{
     }
     get eventName(){
         return this.#eventName;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date(){
         return this.#date;
@@ -191,11 +272,17 @@ class Event{
 class Reminder{
     #title = "";
     #description = "";
-    #date = "";
-    constructor(title, description, date){
+    #month;
+    #day;
+    #year;
+    #date;
+    constructor(title, description, month, day, year){
         this.#title = title;
         this.#description = description;
-        this.#date = date;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
     }
     set title(title){
         this.#title = title;
@@ -203,14 +290,29 @@ class Reminder{
     set description(description){
         this.#description = description;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     get title(){
         return this.#title;
     }
     get description(){
         return this.#description;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date(){
         return this.#date;
@@ -1548,6 +1650,7 @@ console.log(string);
 */
 /* TO DO: 
     Make a stringify function that takes an object and uses JSON.stringify in order to make document
+    Make Demo class
     Connect to DB
         Able to take document and turn into object
         Able to turn object into document and add to DB
