@@ -1547,7 +1547,6 @@ var string = JSON.stringify(obj);
 console.log(string);
 */
 /* TO DO: 
-    Add user class 
     Make a stringify function that takes an object and uses JSON.stringify in order to make document
     Connect to DB
         Able to take document and turn into object
