@@ -3,7 +3,6 @@
 const { execMap } = require("nodemon/lib/config/defaults");
 
 // ATTENDANCE
-console.log("hi");
 class Attendance {
     #month;
     #day;
