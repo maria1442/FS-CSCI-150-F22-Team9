@@ -1231,13 +1231,13 @@ class Class {
             this.#events.splice(pos, 1); // 2nd parameter means remove one item only
         }
     }
-    addAnnoucement(reminderObj){
+    addAnnoucement(annoucementObj){
         //let r = new Annoucement(title, description, date);
-        this.#annoucements.push(reminderObj);
+        this.#annoucements.push(annoucementObj);
     }
-    removeAnnoucement(reminderObj){
+    removeAnnoucement(annoucementObj){
         let pos = this.#annoucements.findIndex(
-            element => element.title === reminderObj.title
+            element => element.title === annoucementObj.title
         );
         if (pos > -1) { // only splice array when item is found
             this.#annoucements.splice(pos, 1); // 2nd parameter means remove one item only
