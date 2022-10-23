@@ -282,7 +282,7 @@ class Event{
 }
 
 // REMINDER
-class Reminder{
+class Annoucement{
     #title = "";
     #description = "";
     #month;
@@ -1105,7 +1105,7 @@ class Class {
     // ARRAYS OF STUDENTS, EVENTS, AND REMINDERS
     #students;
     #events;
-    #reminders;
+    #annoucements;
     constructor(courseName, instructorName, gradeLevel, classHomeworkWeight, classQuizWeight, classExamWeight, classProjectWeight){
         this.#courseName = courseName;
         this.#instructorName = instructorName;
@@ -1176,7 +1176,7 @@ class Class {
 
         this.#students = [];
         this.#events = [];
-        this.#reminders = [];
+        this.#annoucements = [];
     }
     set courseName(courseName) {
         this.#courseName = courseName;
@@ -1231,16 +1231,16 @@ class Class {
             this.#events.splice(pos, 1); // 2nd parameter means remove one item only
         }
     }
-    addReminder(reminderObj){
-        //let r = new Reminder(title, description, date);
-        this.#reminders.push(reminderObj);
+    addAnnoucement(reminderObj){
+        //let r = new Annoucement(title, description, date);
+        this.#annoucements.push(reminderObj);
     }
-    removeReminder(reminderObj){
-        let pos = this.#reminders.findIndex(
+    removeAnnoucement(reminderObj){
+        let pos = this.#annoucements.findIndex(
             element => element.title === reminderObj.title
         );
         if (pos > -1) { // only splice array when item is found
-            this.#reminders.splice(pos, 1); // 2nd parameter means remove one item only
+            this.#annoucements.splice(pos, 1); // 2nd parameter means remove one item only
         } 
     }
     get courseName() {
@@ -1576,8 +1576,8 @@ class Class {
     get events(){
         return this.#events;
     }
-    get reminders(){
-        return this.#reminders;
+    get annoucements(){
+        return this.#annoucements;
     }
     toJSON(){
         var studentOutput = {};
@@ -1590,10 +1590,10 @@ class Class {
             var t = this.#events[i];
             eventsOutput[i] = t.toJSON();
         }
-        var remindersOutput = {};
-        for (let i = 0; i < this.#reminders.length; i++){
-            var b = this.#reminders[i];
-            remindersOutput[i] = b.toJSON();
+        var annoucementsOutput = {};
+        for (let i = 0; i < this.#annoucements.length; i++){
+            var b = this.#annoucements[i];
+            annoucementsOutput[i] = b.toJSON();
         }
         return {
             // COURSE INFORMATION
@@ -1662,7 +1662,7 @@ class Class {
             // ARRAYS
             students: studentOutput,
             events: eventsOutput,
-            reminders: remindersOutput
+            annoucements: annoucementsOutput
         };
     }
 }
