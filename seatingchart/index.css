@@ -1,0 +1,182 @@
+body,
+h1 {
+  margin: 0;
+  background-color: #eeeeee;
+}
+
+#img-logo {
+  width: 48px;
+  height: 48px;
+  margin-top: 30px;
+  border-radius: 9px;
+}
+
+.header-div {
+  text-align: center;
+}
+
+.same {
+  display: inline-block;
+}
+
+#heading {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  text-align: right;
+  color: #ffffff;
+}
+
+.side-nav {
+  height: 100%;
+  width: 18%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #002acc;
+}
+
+/* icon and text */
+.side-nav a {
+  padding: 10px 8px 10px 16px;
+
+  text-decoration: none;
+  font-size: 25px;
+  color: #ffffff;
+  display: block;
+  font-size: 14px;
+  margin-left: 20px;
+}
+
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* highlights side-nav */
+a:hover {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+  color: #002acc;
+
+  border-radius: 40px;
+}
+
+/* highlights side-nav when clicked*/
+a:focus {
+  background-color: silver;
+
+  border-radius: 40px;
+}
+
+i {
+  margin-left: 5px;
+  padding-right: 20px;
+  font-size: 20px;
+}
+
+.side-nav-a {
+  position: relative;
+  top: 5%;
+}
+
+.main-header {
+  position: fixed;
+  width: 78%;
+  height: 50px;
+  background-color: wheat;
+  border-radius: 20px;
+  margin-left: 20%;
+  /* margin-top: 5%; */
+  text-align: center;
+  top: 15%;
+}
+
+.main {
+  position: fixed;
+  width: 78%;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  margin-left: 20%;
+  margin-top: 5%;
+  text-align: center;
+  top: 15%;
+}
+
+.top-section {
+  position: relative;
+  top: 20px;
+  margin-left: 20%;
+  width: 78%;
+  height: 20%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.top-div {
+  display: inline-block;
+  color: #002acc;
+}
+
+.right-section {
+  /*background-color: red;/* /* testing for rendering space */
+  size: 10;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+#menu-button:hover {
+  border: 1px solid black;
+}
+
+/* image for the user */
+.user-img {
+  width: 60px;
+  height: 60px;
+
+  background: url("./images/max.jfif");
+  background-size: 100%;
+  border-radius: 40px;
+}
+
+.main-header {
+}
+
+/* #main-buttons {
+  position: absolute;
+  left: 0px;
+  top: 15px;
+} */
+
+#drop-icon:hover {
+}
+#drop-icon {
+  padding: 0;
+  width: 14px;
+  height: 10px;
+  right: 10%;
+  margin-left: 78%;
+}
+
+.fa-solid {
+  padding: 0;
+}
+
+.user-snippet {
+  width: 148px;
+  height: 60px;
+  display: inline-block;
+}
+
+table,
+td {
+  /* border: 3px solid black; */
+  border-collapse: collapse;
+  border-radius: 20px;
+  font-family: Arial;
+}
+table {
+  width: 100%;
+  height: 500px;
+  text-align: center;
+}
