@@ -990,7 +990,7 @@ class Student{
             totalQuizzes: this.#totalQuizzes,
             totalExams: this.#totalExams,
             totalProjects: this.#totalProjects,
-            totalOtherAssignements: this.#totalOtherAssignments,
+            totalOtherAssignments: this.#totalOtherAssignments,
             totalAssignments: this.#totalAssignments,
             letterGrade: this.#letterGrade,
             gradePercentage: this.#gradePercentage,
