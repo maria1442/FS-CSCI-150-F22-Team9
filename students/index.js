@@ -1,5 +1,4 @@
-// Classes for Backend
-
+// CLASS STRUCTURES
 const { execMap } = require("nodemon/lib/config/defaults");
 
 // ATTENDANCE
@@ -281,7 +280,7 @@ class Event{
     }
 }
 
-// REMINDER
+// ANNOUNCEMENT
 class Annoucement{
     #title = "";
     #description = "";
@@ -958,17 +957,17 @@ class Student{
         return this.#studentAssignments;
     }
     toJSON(){
-        var assignmentOutput = {};
+        var assignmentOutput = new Array();
         for (let i = 0; i < this.#studentAssignments.length; i++){
             var s = this.#studentAssignments[i];
             assignmentOutput[i] = s.toJSON();
         }
-        var attendanceOutput = {};
+        var attendanceOutput = new Array();
         for (let i = 0; i < this.#studentAttendance.length; i++){
             var t = this.#studentAttendance[i];
             attendanceOutput[i] = t.toJSON();
         }
-        var behaviorOutput = {};
+        var behaviorOutput = new Array();
         for (let i = 0; i < this.#studentBehavior.length; i++){
             var b = this.#studentBehavior[i];
             behaviorOutput[i] = b.toJSON();
@@ -1580,17 +1579,17 @@ class Class {
         return this.#annoucements;
     }
     toJSON(){
-        var studentOutput = {};
+        var studentOutput = new Array();;
         for (let i = 0; i < this.#students.length; i++){
             var s = this.#students[i];
             studentOutput[i] = s.toJSON();
         }
-        var eventsOutput = {};
+        var eventsOutput = new Array();;
         for (let i = 0; i < this.#events.length; i++){
             var t = this.#events[i];
             eventsOutput[i] = t.toJSON();
         }
-        var annoucementsOutput = {};
+        var annoucementsOutput = new Array();
         for (let i = 0; i < this.#annoucements.length; i++){
             var b = this.#annoucements[i];
             annoucementsOutput[i] = b.toJSON();
@@ -1706,88 +1705,203 @@ class User {
     get totalNumberOfClass(){
         return this.#totalNumberOfClasses;
     }
+    toJSON(){
+        var classOutput = {};
+        for (let i = 0; i < this.#classes.length; i++){
+            var s = this.#classes[i];
+            classOutput[i] = s.toJSON();
+        }
+        return {
+            username: this.#username,
+            password: this.#password,
+            totalNumberOfClasses: this.#totalNumberOfClasses,
+            classes: classOutput
+        };
+    }
 }
-// TESTING BEFORE ADDING TO CLASS
-// Class
-var class1 = new Class("courseName", "Jane Doe", "9", 10, 25, 40, 25);
-// Student
+// --------------------------------------
+// MONGO DB FUNCTIONS
+const {MongoClient, MongoDBNamespace} = require('mongodb');
+const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+
+const client = new MongoClient(uri);
+
+// ADD NEW DOCUMENTS
+async function addNewEventToDB(event){
+    try {
+        await client.connect();
+        let JSONEvent = event.toJSON(); 
+        const result = await client.db("classparency").collection("events").insertOne(JSONEvent);
+        console.log(`New event created with the following id: ${result.insertedId}`);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addNewAnnouncementToDB(announcement){
+    try {
+        await client.connect();
+        let JSONAnnouncement = announcement.toJSON(); 
+        const result = await client.db("classparency").collection("announcements").insertOne(JSONAnnouncement);
+        console.log(`New announcement created with the following id: ${result.insertedId}`);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addNewStudentToDB(student){
+    try {
+        await client.connect();
+        let JSONStudent = student.toJSON(); 
+        const result = await client.db("classparency").collection("students").insertOne(JSONStudent);
+        console.log(`New student created with the following id: ${result.insertedId}`);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addNewClassToDB(newClass){
+    try {
+        await client.connect();
+        let JSONClass = newClass.toJSON(); 
+        const result = await client.db("classparency").collection("classes").insertOne(JSONClass);
+        console.log(`New class created with the following id: ${result.insertedId}`);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addNewUserToDB(user){
+    try {
+        await client.connect();
+        let JSONUser = user.toJSON(); 
+        const result = await client.db("classparency").collection("users").insertOne(JSONUser);
+        console.log(`New user created with the following id: ${result.insertedId}`);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addStudentAttendanceToDB(student, attendance){
+    try {
+        await client.connect();
+        var id = student.studentId;
+        const query = {studentId: id};
+        const finding = await client.db("classparency").collection("students").findOne(query);
+        var stringId = finding._id;        
+        let JSONAttendance = attendance.toJSON();
+        const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$push: { studentAttendance: JSONAttendance}});
+        //console.log(`New user created with the following id: ${result.insertedId}`);
+    }
+    finally {
+        await client.close();
+    }  
+}
+// DELETE DOCUMENTS
+ async function deleteEventFromDB(event){
+    try {
+        await client.connect();
+        var name = event.eventName;
+        const query = {eventName: name};
+        const result = await client.db("classparency").collection("events").deleteOne(query);
+        if (result.deletedCount === 1) {
+            console.log("Successfully deleted one document.");
+        } 
+        else {
+            console.log("No documents matched the query. Deleted 0 documents.");
+        }   
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteAnnouncementFromDB(announcement){
+    try {
+        await client.connect();
+        var name = announcement.title;
+        const query = {title: name};
+        const result = await client.db("classparency").collection("announcements").deleteOne(query);
+        if (result.deletedCount === 1) {
+            console.log("Successfully deleted one document.");
+        } 
+        else {
+            console.log("No documents matched the query. Deleted 0 documents.");
+        }   
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteStudentFromDB(student){
+    try {
+        await client.connect();
+        var id = student.studentId;
+        const query = {studentId: id};
+        const result = await client.db("classparency").collection("students").deleteOne(query);
+        if (result.deletedCount === 1) {
+            console.log("Successfully deleted one document.");
+        } 
+        else {
+            console.log("No documents matched the query. Deleted 0 documents.");
+        }   
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteClassFromDB(removedClass){
+    try {
+        await client.connect();
+        var name = removedClass.couseName;
+        const query = {courseName: name};
+        const result = await client.db("classparency").collection("classes").deleteOne(query);
+        if (result.deletedCount === 1) {
+            console.log("Successfully deleted one document.");
+        } 
+        else {
+            console.log("No documents matched the query. Deleted 0 documents.");
+        }   
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteUserFromDB(user){
+    try {
+        await client.connect();
+        var name = user.username;
+        const query = {username: name};
+        const result = await client.db("classparency").collection("users").deleteOne(query);
+        if (result.deletedCount === 1) {
+            console.log("Successfully deleted one document.");
+        } 
+        else {
+            console.log("No documents matched the query. Deleted 0 documents.");
+        }   
+    }
+    finally {
+        await client.close();
+    }
+}
+
+// UPDATE EXISTING DOCUMENTS
+ 
+
+// Testing
+/*var event1 = new Event("eventName", 5, 23, 2022, "any", "fresno");
+//addNewEventToDB(event1);
+
+deleteEventFromDB(event1);*/
+
 var student1 = new Student(10000000, "alt", "John", "Doe", "male", 5, 21, 2010, "jDoe@gmail.com", false, true, true);
-// Student 1 Behavior Info, month of September
-var student1Behavior1 = new Behavior("Touching Others", 9, 1, 2022, "talking during reading time");
-var student1Behavior2 = new Behavior("Self Harm", 9, 3, 2022, "play fighting with student2");
-student1.addBehavior(student1Behavior1);
-student1.addBehavior(student1Behavior2);
-// Student1 Attendance Info, month of September
-var student1Day1 = new Attendance(9, 1, 2022, "Present");
-var student1Day2 = new Attendance(9, 2, 2022, "Present");
-var student1Day3 = new Attendance(9, 5, 2022, "Present");
-var student1Day4 = new Attendance(9, 6, 2022, "Present");
-var student1Day5 = new Attendance(9, 7, 2022, "Present");
-var student1Day6 = new Attendance(9, 8, 2022, "Present");
-var student1Day7 = new Attendance(9, 9, 2022, "Present");
-var student1Day8 = new Attendance(9, 12, 2022, "Present");
-var student1Day9 = new Attendance(9, 13, 2022, "Present");
-var student1Day10 = new Attendance(9, 14, 2022, "Present");
-var student1Day11 = new Attendance(9, 15, 2022, "Present");
-var student1Day12 = new Attendance(9, 16, 2022, "Absent");
-var student1Day13 = new Attendance(9, 19, 2022, "Absent");
-var student1Day14 = new Attendance(9, 20, 2022, "Absent");
-var student1Day15 = new Attendance(9, 21, 2022, "Absent");
-var student1Day16 = new Attendance(9, 22, 2022, "Absent");
-var student1Day17 = new Attendance(9, 23, 2022, "Absent");
-var student1Day18 = new Attendance(9, 26, 2022, "Absent");
-var student1Day19 = new Attendance(9, 27, 2022, "Absent");
-var student1Day20 = new Attendance(9, 28, 2022, "Absent");
-var student1Day21 = new Attendance(9, 29, 2022, "Absent");
-var student1Day22 = new Attendance(9, 30, 2022, "Absent");
-student1.addAttendance(student1Day1);
-student1.addAttendance(student1Day2);
-student1.addAttendance(student1Day3);
-student1.addAttendance(student1Day4);
-student1.addAttendance(student1Day5);
-student1.addAttendance(student1Day6);
-student1.addAttendance(student1Day7);
-student1.addAttendance(student1Day8);
-student1.addAttendance(student1Day9);
-student1.addAttendance(student1Day10);
-student1.addAttendance(student1Day11);
-student1.addAttendance(student1Day12);
-student1.addAttendance(student1Day13);
-student1.addAttendance(student1Day14);
-student1.addAttendance(student1Day15);
-student1.addAttendance(student1Day16);
-student1.addAttendance(student1Day17);
-student1.addAttendance(student1Day18);
-student1.addAttendance(student1Day19); 
-student1.addAttendance(student1Day20);
-student1.addAttendance(student1Day21);
-student1.addAttendance(student1Day22);
-// Student 1 Assignment Info, month of September
-var student1Assignment1 = new Assignment("Assignment1", "Homework", 10, 10, 9, 21, 2022);
-console.log(student1Assignment1.assignmentPercentage);
-student1.addAssignment(student1Assignment1);
-console.log(homeworkWeight);
-console.log(student1.gradePercentage);
-var j = student1.toJSON();
-var strJSON = JSON.stringify(j);
-console.log(strJSON);
-/*var attendanceOutput = {};
-for (let i = 0; i < array.length; i++){
-    var m = array[i];
-    attendanceOutput[i] = m.toJSON();
-}
-var obj = {
-    attended: attendanceOutput
-};
-var string = JSON.stringify(obj);
-console.log(string);
-*/
+//addNewStudentToDB(student1);
+var student1Day1 = new Attendance(8, 1, 2022, "Present");
+addStudentAttendanceToDB(student1, student1Day1);
+
 /* TO DO: 
-    Make a stringify function that takes an object and uses JSON.stringify in order to make document
-    Make Demo class
-    Edit weighted assignments
     Connect to DB
         Able to take document and turn into object
+            Need to add formToObject
         Able to turn object into document and add to DB
 */
 
