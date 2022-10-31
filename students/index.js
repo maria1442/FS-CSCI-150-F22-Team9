@@ -1812,6 +1812,15 @@ async function addStudentAttendanceToDB(client, student, attendance){
     let JSONAttendance = attendance.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$push: { studentAttendance: JSONAttendance}});
 }
+// NEED TO TEST
+async function addStudentAttendanceToClassDB(client, course, student, attendance){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONAttendance= attendance.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$push: {"studentAttendance.$": JSONAttendance}});
+}
 async function addStudentBehaviorToDB(client, student, behavior){
     let id = student.studentId;
     const query = {studentId: id};
