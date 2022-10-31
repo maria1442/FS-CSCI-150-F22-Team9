@@ -1,17 +1,41 @@
 // Classes for Backend
+
+const { execMap } = require("nodemon/lib/config/defaults");
+
 // ATTENDANCE
 class Attendance {
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #status = "";
-    constructor(date, status){
-        this.#date = date;
+    constructor(month, day, year, status){
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
         this.#status = status;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     set status(status){
         this.#status = status;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date(){
         return this.#date;
@@ -34,24 +58,45 @@ class Attendance {
 // BEHAVIOR
 class Behavior {
     #incident = "";
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #comment = "";
-    constructor(incident, date, comment){
+    constructor(incident, month, day, year, comment){
         this.#incident = incident;
-        this.#date = date;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
         this.#comment = comment;
     }
     set incident(incident){
         this.#incident = incident;
     }
-    set date(date) {
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     set comment(comment) {
         this.#comment = comment;
     }
     get incident() {
         return this.#incident;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date() {
         return this.#date;
@@ -69,22 +114,41 @@ class Behavior {
 }
 
 // ASSIGNMENT
+var quizWeight;
+var homeworkWeight;
+var examWeight;
+var projectWeight;
 class Assignment {
     #assignmentName = "";
     #assignmentCategory = "";
-    #assignmentWeight = 0;
+    #assignmentWeight;
     #possibleScore = 0;
     #givenScore = 0;
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #assignmentPercentage = 0;
-    constructor(name, category, weight, possibleScore, givenScore, date){
+    constructor(name, category, possibleScore, givenScore, month, day, year){
         this.#assignmentName = name;
         this.#assignmentCategory = category;
-        this.#assignmentWeight = weight;
+        if (category == "Homework"){
+            this.#assignmentWeight = homeworkWeight;
+        }
+        else if (category == "Quiz"){
+            this.#assignmentWeight = quizWeight;
+        }
+        else if (category == "Exam"){
+            this.#assignmentWeight = examWeight;
+        }
+        else this.#assignmentWeight = projectWeight;
         this.#possibleScore = possibleScore;
         this.#givenScore = givenScore;
-        this.#date = date;
-        this.#assignmentPercentage = (this.#givenScore/this.#possibleScore)*100;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
+        this.#assignmentPercentage = (this.#givenScore / this.#possibleScore) * 100;
     }
     set assignmentName(name) {
         this.#assignmentName = name;
@@ -92,17 +156,20 @@ class Assignment {
     set assignmentCategory(category){
         this.#assignmentCategory = category;
     }
-    set assignmentWeight(weight){
-        this.#assignmentWeight = weight;
-    }
     set possibleScore(possibleScore){
         this.#possibleScore = possibleScore;
     }
     set givenScore(givenScore){
         this.#givenScore = givenScore;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     get assignmentName() {
         return this.#assignmentName;
@@ -119,6 +186,15 @@ class Assignment {
     get givenScore(){
         return this.#givenScore;
     }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
+    }
     get date(){
         return this.#date;
     }
@@ -129,7 +205,7 @@ class Assignment {
         return {
             assignmentName: this.#assignmentName,
             assignmentCategory: this.#assignmentCategory,
-            assignmnetWeight: this.#assignmentWeight,
+            assignmentWeight: this.#assignmentWeight,
             possibleScore: this.#possibleScore,
             givenScore: this.#givenScore,
             date: this.#date,
@@ -141,20 +217,32 @@ class Assignment {
 // EVENT
 class Event{
     #eventName = "";
-    #date = "";
+    #month;
+    #day;
+    #year;
+    #date;
     #description = "";
     #location = "";
-    constructor(eventName, date, description, location){
+    constructor(eventName, month, day, year, description, location){
         this.#eventName = eventName;
-        this.#date = date;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
         this.#description = description;
         this.#location = location;
     }
     set eventName(eventName){
         this.#eventName = eventName;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     set description(description){
         this.#description = description;
@@ -164,6 +252,15 @@ class Event{
     }
     get eventName(){
         return this.#eventName;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date(){
         return this.#date;
@@ -184,15 +281,21 @@ class Event{
     }
 }
 
-// REMINDER
-class Reminder{
+// ANNOUNCEMENT
+class Annoucement{
     #title = "";
     #description = "";
-    #date = "";
-    constructor(title, description, date){
+    #month;
+    #day;
+    #year;
+    #date;
+    constructor(title, description, month, day, year){
         this.#title = title;
         this.#description = description;
-        this.#date = date;
+        this.#month = month;
+        this.#day = day;
+        this.#year = year;
+        this.#date = new Date(year, month, day);
     }
     set title(title){
         this.#title = title;
@@ -200,14 +303,29 @@ class Reminder{
     set description(description){
         this.#description = description;
     }
-    set date(date){
-        this.#date = date;
+    set month(month){
+        this.#month = month;
+    }
+    set day(day){
+        this.#day = day;
+    }
+    set year(year){
+        this.#year = year;
     }
     get title(){
         return this.#title;
     }
     get description(){
         return this.#description;
+    }
+    get month(){
+        return this.#month;
+    }
+    get day(){
+        return this.#day;
+    }
+    get year(){
+        return this.#year;
     }
     get date(){
         return this.#date;
@@ -229,7 +347,10 @@ class Student{
     #firstName = "";
     #lastName = "";
     #gender = "";
-    #birthDate = "";
+    #birthMonth;
+    #birthDay;
+    #birthYear;
+    #birthDate;
     #contactEmail = "";
     #SPED = false;
     #EL = false;
@@ -248,7 +369,7 @@ class Student{
     #totalDays;
     #totalPresentAttendance;
     #totalAbsentAttendance;
-    #totalAttendancePercentage;
+    #attendancePresentPercentage;
     #studentAttendance;
     // TOTAL BEHAVIOR INCIDENTS
     #totalOffTask;
@@ -266,15 +387,32 @@ class Student{
     #totalLyingCheating;
     #totalOtherBehavior;
     #totalBehaviorIncidents;
+    #offTaskPercentage; 
+    #refusingToWorkPercentage;
+    #outOfSeatPercentage;
+    #talkingPercentage;
+    #throwingObjectPercentage;
+    #touchingOthersPercentage;
+    #selfHarmPercentage;
+    #inappropriateLangPercentage;
+    #bullyingTeasingPercentage;
+    #propertyDamagePercentage;
+    #defianceDisrespectPercentage;
+    #theftPercentage;
+    #lyingCheatingPercentage;
+    #otherBehaviorPercentage;
     #studentBehavior;
-    constructor(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess){
+    constructor(studentId, photo, firstName, lastName, gender, birthMonth, birthDay, birthYear, contactEmail, SPED, EL, internetAccess){
         // STUDENT INFORMATION
         this.#studentId = studentId;
         this.#photo = photo;
         this.#firstName = firstName;
         this.#lastName = lastName;
         this.#gender = gender;
-        this.#birthDate = birthDate;
+        this.#birthMonth = birthMonth;
+        this.#birthDay = birthDay;
+        this.#birthYear = birthYear;
+        this.#birthDate = new Date(birthYear, birthMonth, birthDay);
         this.#contactEmail = contactEmail;
         this.#SPED = SPED;
         this.#EL = EL;
@@ -287,7 +425,7 @@ class Student{
         this.#totalOtherAssignments = 0;
         this.#totalAssignments = 0;
         this.#letterGrade = "";
-        this.#gradePercentage = 0.0;
+        this.#gradePercentage = 0;
         this.#studentAssignments = [];
         // STUDENT BEHAVIOR
         this.#totalBehaviorIncidents = 0;
@@ -305,10 +443,26 @@ class Student{
         this.#totalTheft = 0;
         this.#totalLyingCheating = 0;
         this.#totalOtherBehavior = 0;
+        this.#offTaskPercentage = 0;
+        this.#refusingToWorkPercentage = 0;
+        this.#outOfSeatPercentage = 0;
+        this.#talkingPercentage = 0;
+        this.#throwingObjectPercentage = 0;
+        this.#touchingOthersPercentage = 0;
+        this.#selfHarmPercentage = 0;
+        this.#inappropriateLangPercentage = 0;
+        this.#bullyingTeasingPercentage = 0;
+        this.#propertyDamagePercentage = 0;
+        this.#defianceDisrespectPercentage = 0;
+        this.#theftPercentage = 0;
+        this.#lyingCheatingPercentage = 0;
+        this.#otherBehaviorPercentage = 0;
         this.#studentBehavior = [];
         // STUDENT ATTENDANCE INFORMATION
+        this.#totalDays = 0;
         this.#totalPresentAttendance = 0;
-        this.#totalAttendancePercentage = 0.0;
+        this.#totalAbsentAttendance = 0;
+        this.#attendancePresentPercentage = 0;
         this.#studentAttendance = [];
     }
     set studentId(studentId){
@@ -326,8 +480,14 @@ class Student{
     set gender(gender){
         this.#gender = gender;
     }
-    set birthDate(birthDate){
-        this.#birthDate = birthDate;
+    set birthMonth(birthMonth){
+        this.#birthMonth = birthMonth;
+    }
+    set birthDay(birthDay){
+        this.#birthDay = birthDay;
+    }
+    set birthYear(birthYear){
+        this.#birthYear = birthYear;
     }
     set contactEmail(contactEmail){
         this.#contactEmail = contactEmail;
@@ -378,29 +538,71 @@ class Student{
         else this.#letterGrade = "A+";
     }
     calculateGradePercentage(){
-        var sum = 0.0;
-        var points = 0.0;
+        var sum = 0;
+        var points = 0;
         for (let i = 0; i < this.#studentAssignments.length; i++){
-            points = (this.#studentAssignments[i].givenScore + this.#studentAssignments[i].assignmentWeight) / this.#studentAssignments[i].possibleScore;
+            points = (this.#studentAssignments[i].assignmentPercentage * this.#studentAssignments[i].assignmentWeight);
             sum += points;
         }
-        this.#gradePercentage = sum*100;
+        if (this.#totalHomework == 0 && this.#totalQuizzes == 0 && this.#totalExams == 0){
+            this.#gradePercentage = sum / (projectWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalQuizzes == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (examWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalExams == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (quizWeight);
+        }
+        else if (this.#totalQuizzes == 0 && this.#totalExams == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalQuizzes == 0){
+            this.#gradePercentage = sum / (examWeight + projectWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalExams == 0){
+            this.#gradePercentage = sum / (quizWeight + projectWeight);
+        }
+        else if (this.#totalHomework == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (quizWeight + examWeight);
+        }
+        else if (this.#totalQuizzes == 0 && this.#totalExams == 0){
+            this.#gradePercentage = sum / (homeworkWeight + projectWeight);
+        }
+        else if (this.#totalQuizzes == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight + examWeight);
+        }
+        else if (this.#totalExams == 0 && this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight + quizWeight);
+        }
+        else if (this.#totalHomework == 0){
+            this.#gradePercentage = sum / (quizWeight + examWeight + projectWeight);
+        }
+        else if (this.#totalQuizzes == 0){
+            this.#gradePercentage = sum / (homeworkWeight + examWeight + projectWeight);
+        }
+        else if (this.#totalExams == 0){
+            this.#gradePercentage = sum / (homeworkWeight + quizWeight + projectWeight);
+        }
+        else if (this.#totalProjects == 0){
+            this.#gradePercentage = sum / (homeworkWeight + quizWeight + examWeight);
+        }
+        else this.#gradePercentage = sum / (homeworkWeight + quizWeight + examWeight + projectWeight);
     }
-    addAttendance(date, status){
-        let a = new Attendance(date, status);
-        this.#studentAttendance.push(a);
+    addAttendance(attendanceObj){
+        //let a = new Attendance(month, day, year, status);
+        this.#studentAttendance.push(attendanceObj);
         this.#totalDays++;
-        if (status == "Present"){
+        if (attendanceObj.status == "Present"){
             this.#totalPresentAttendance++;
         }
-        else if (status == "Absent"){
+        else if (attendanceObj.status == "Absent"){
             this.#totalAbsentAttendance++;
         }
-        this.#totalAttendancePercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
+        this.#attendancePresentPercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
     }
-    removeAttendance(date) {
+    removeAttendance(attendanceObj) {
         let pos = this.#studentAttendance.findIndex(
-            element => element.date === date
+            element => element.date === attendanceObj.date
         );
         if (pos > -1) { // only splice array when item is found
             if (this.#studentAttendance[pos].status == "Present"){
@@ -411,122 +613,148 @@ class Student{
             }
             this.#studentAttendance.splice(pos, 1); // 2nd parameter means remove one item only
             this.#totalDays--;
-            this.#totalAttendancePercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
+            this.#attendancePresentPercentage = ((this.#totalPresentAttendance) / this.#totalDays) * 100;
         }
     }
-    addBehavior(incident, date, comment){
-        let b = new Behavior(incident, date, comment);
-        this.#studentBehavior.push(b);
+    addBehavior(behaviorObj){
+        //let b = new Behavior(incident, date, comment);
+        this.#studentBehavior.push(behaviorObj);
         this.#totalBehaviorIncidents++;
-        if (incident == "Off Task"){
+        if (behaviorObj.incident == "Off Task"){
             this.#totalOffTask++;
         }
-        else if (incident == "Refusing to Work"){
+        else if (behaviorObj.incident  == "Refusing to Work"){
             this.#totalRefusingToWork++;
         }
-        else if (incident == "Out of Seat"){
-            this.#totalRefusingToWork++;
+        else if (behaviorObj.incident  == "Out of Seat"){
+            this.#totalOutOfSeat++;
         }
-        else if (incident == "Talking"){
+        else if (behaviorObj.incident  == "Talking"){
             this.#totalTalking++;
         }
-        else if (incident == "Throwing Object"){
+        else if (behaviorObj.incident  == "Throwing Object"){
             this.#totalThrowingObject++;
         }
-        else if (incident == "Touching Object"){
-            this.#totalThrowingObject++;
-        }
-        else if (incident == "Touching Others"){
+        else if (behaviorObj.incident  == "Touching Others"){
             this.#totalTouchingOthers++;
         }
-        else if (incident == "Self Harm"){
+        else if (behaviorObj.incident  == "Self Harm"){
             this.#totalSelfHarm++;
         }
-        else if (incident == "Inappropriate Language"){
+        else if (behaviorObj.incident  == "Inappropriate Language"){
             this.#totalInappropriateLang++;
         }
-        else if (incident == "Bullying or Teasing"){
+        else if (behaviorObj.incident  == "Bullying or Teasing"){
             this.#totalBullyingTeasing++;
         }
-        else if (incident == "Property Damage"){
+        else if (behaviorObj.incident  == "Property Damage"){
             this.#totalPropertyDamage++;
         }
-        else if (incident == "Defiance or Disrespect"){
+        else if (behaviorObj.incident  == "Defiance or Disrespect"){
             this.#totalDefianceDisrespect++;
         }
-        else if (incident == "Theft"){
+        else if (behaviorObj.incident  == "Theft"){
             this.#totalTheft++;
         }
-        else if (incident == "Lying or Cheating"){
+        else if (behaviorObj.incident  == "Lying or Cheating"){
             this.#totalLyingCheating++;
         }
-        else this.#totalOtherBehavior++;
+        else {
+            this.#totalOtherBehavior++;
+        }
+        this.#offTaskPercentage = (this.#totalOffTask / this.#totalBehaviorIncidents) * 100;
+        this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
+        this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
+        this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
+        this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
+        this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
+        this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
+        this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
+        this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
+        this.#propertyDamagePercentage= (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
+        this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
+        this.#theftPercentage = (this.#totalTheft / this.#totalBehaviorIncidents) * 100;
+        this.#lyingCheatingPercentage = (this.#totalLyingCheating / this.#totalBehaviorIncidents) * 100;
+        this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
     }
-    removeBehavior(incident, date, comment){
+    removeBehavior(behaviorObj){
         let pos = this.#studentBehavior.findIndex(
-            element => element.incident === incident && element.date === date && element.comment === comment
+            element => element.incident === behaviorObj.incident && element.date === behaviorObj.date && element.comment === behaviorObj.comment
         );
         if (pos > -1) { // only splice array when item is found
             this.#studentBehavior.splice(pos, 1); // 2nd parameter means remove one item only
         }
         this.#totalBehaviorIncidents--;
-        if (incident == "Off Task"){
+        if (behaviorObj.incident == "Off Task"){
             this.#totalOffTask--;
         }
-        else if (incident == "Refusing to Work"){
+        else if (behaviorObj.incident == "Refusing to Work"){
             this.#totalRefusingToWork--;
         }
-        else if (incident == "Out of Seat"){
-            this.#totalRefusingToWork--;
+        else if (behaviorObj.incident == "Out of Seat"){
+            this.#totalOutOfSeat--;
         }
-        else if (incident == "Talking"){
+        else if (behaviorObj.incident == "Talking"){
             this.#totalTalking--;
         }
-        else if (incident == "Throwing Object"){
+        else if (behaviorObj.incident == "Throwing Object"){
             this.#totalThrowingObject--;
         }
-        else if (incident == "Touching Object"){
-            this.#totalThrowingObject--;
-        }
-        else if (incident == "Touching Others"){
+        else if (behaviorObj.incident == "Touching Others"){
             this.#totalTouchingOthers--;
         }
-        else if (incident == "Self Harm"){
+        else if (behaviorObj.incident == "Self Harm"){
             this.#totalSelfHarm--;
         }
-        else if (incident == "Inappropriate Language"){
+        else if (behaviorObj.incident == "Inappropriate Language"){
             this.#totalInappropriateLang--;
         }
-        else if (incident == "Bullying or Teasing"){
+        else if (behaviorObj.incident == "Bullying or Teasing"){
             this.#totalBullyingTeasing--;
         }
-        else if (incident == "Property Damage"){
+        else if (behaviorObj.incident == "Property Damage"){
             this.#totalPropertyDamage--;
         }
-        else if (incident == "Defiance or Disrespect"){
+        else if (behaviorObj.incident == "Defiance or Disrespect"){
             this.#totalDefianceDisrespect--;
         }
-        else if (incident == "Theft"){
+        else if (behaviorObj.incident == "Theft"){
             this.#totalTheft--;
         }
-        else if (incident == "Lying or Cheating"){
+        else if (behaviorObj.incident == "Lying or Cheating"){
             this.#totalLyingCheating--;
         }
-        else this.#totalOtherBehavior--;
+        else {
+            this.#totalOtherBehavior--;
+        }
+        this.#offTaskPercentage = (this.#totalOffTask / this.#totalBehaviorIncidents) * 100;
+        this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
+        this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
+        this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
+        this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
+        this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
+        this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
+        this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
+        this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
+        this.#propertyDamagePercentage= (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
+        this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
+        this.#theftPercentage = (this.#totalTheft / this.#totalBehaviorIncidents) * 100;
+        this.#lyingCheatingPercentage = (this.#totalLyingCheating / this.#totalBehaviorIncidents) * 100;
+        this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
     }
-    addAssignment(assignmentName, assignmentCategory, assignmentWeight, possibleScore, givenScore, date, assignmentPercentage){
-        let as = new Assignment(assignmentName, assignmentCategory, assignmentWeight, possibleScore, givenScore, date, assignmentPercentage);
-        this.#studentAssignments.push(as);
-        if (assignmentCategory == "Homework"){
+    addAssignment(assignmentObj){
+        //let as = new Assignment(assignmentName, assignmentCategory, assignmentWeight, possibleScore, givenScore, date, assignmentPercentage);
+        this.#studentAssignments.push(assignmentObj);
+        if (assignmentObj.assignmentCategory == "Homework"){
             this.#totalHomework++;
         }
-        else if (assignmentCategory == "Quiz"){
+        else if (assignmentObj.assignmentCategory == "Quiz"){
             this.#totalQuizzes++;
         }
-        else if (assignmentCategory == "Exam"){
+        else if (assignmentObj.assignmentCategory == "Exam"){
             this.#totalExams++;
         }
-        else if (assignmentCategory == "Project"){
+        else if (assignmentObj.assignmentCategory == "Project"){
             this.#totalProjects++;
         }
         else this.#totalOtherAssignments++;
@@ -534,9 +762,9 @@ class Student{
         this.calculateGradePercentage();
         this.calculateLetterGrade();
     }
-    removeAssignment(assignmentName){
+    removeAssignment(assignmentObj){
         let pos = this.#studentAssignments.findIndex(
-            element => element.assignmentName === assignmentName
+            element => element.assignmentName === assignmenObj.assignmentName
         );
         if (pos > -1) { // only splice array when item is found
             if (this.#studentAssignments[pos].assignmentCategory == "Homework"){
@@ -572,6 +800,15 @@ class Student{
     }
     get gender(){
         return this.#gender;
+    }
+    get birthMonth(){
+        return this.#birthMonth;
+    }
+    get birthDay(){
+        return this.#birthDay;
+    }
+    get birthYear(){
+        return this.#birthYear;
     }
     get birthDate(){
        return this.#birthDate;
@@ -621,8 +858,8 @@ class Student{
     get totalAbsentAttendance(){
         return this.#totalAbsentAttendance;
     }
-    get totalAttendancePercentage(){
-        return this.#totalAttendancePercentage;
+    get attendancePresentPercentage(){
+        return this.#attendancePresentPercentage;
     }
     get studentAttendance(){
         return this.#studentAttendance;
@@ -672,6 +909,48 @@ class Student{
     get totalOtherBehavior(){
         return this.#totalOtherBehavior;
     }
+    get offTaskPercentage(){
+        return this.#offTaskPercentage;
+    }
+    get refuseToWorkPercentage(){
+        return this.#refusingToWorkPercentage;
+    }
+    get outOfSeatPercentage(){
+        return this.#outOfSeatPercentage;
+    }
+    get talkingPercentage(){
+        return this.#talkingPercentage;
+    }
+    get throwingObjectPercentage(){
+        return this.#throwingObjectPercentage;
+    }
+    get touchingOthersPercentage(){
+        return this.#touchingOthersPercentage;
+    }
+    get selfHarmPercentage(){
+        return this.#selfHarmPercentage;
+    }
+    get inappropriateLangPercentage(){
+        return this.#inappropriateLangPercentage;
+    }
+    get bullyingTeasingPercentage(){
+        return this.#bullyingTeasingPercentage;
+    }
+    get propertyDamagePercentage(){
+        return this.#propertyDamagePercentage;
+    }
+    get defianceDisrespectPercentage(){
+        return this.#defianceDisrespectPercentage;
+    }
+    get theftPercentage(){
+        return this.#theftPercentage;
+    }
+    get lyingCheatingPercentage(){
+        return this.#lyingCheatingPercentage;
+    }
+    get otherBehaviorPercentage(){
+        return this.#otherBehaviorPercentage;
+    }
     get studentBehavior(){
         return this.#studentBehavior;
     }
@@ -720,23 +999,37 @@ class Student{
             totalDays: this.#totalDays,
             totalPresentAttedance: this.#totalPresentAttendance,
             totalAbsentAttendance: this.#totalAbsentAttendance,
-            totalAttendancePercentage: this.#totalAttendancePercentage,
+            attendancePresentPercentage: this.#attendancePresentPercentage,
             studentAttendance: attendanceOutput,
             // TOTAL BEHAVIOR INCIDENTS
             totalOffTask: this.#totalOffTask,
+            offTaskPercentage: this.#offTaskPercentage,
             totalRefusingToWork: this.#totalRefusingToWork,
+            refusingToWorkPercentage: this.#refusingToWorkPercentage,
             totalOutOfSeat: this.#totalOutOfSeat,
+            outOfSeatPercentage: this.#outOfSeatPercentage,
             totalTalking: this.#totalTalking,
+            talkingPercentage: this.#talkingPercentage,
             totalThrowingObject: this.#totalThrowingObject,
+            throwingObjectPercentage: this.#throwingObjectPercentage,
             totalTouchingOthers: this.#totalTouchingOthers,
+            touchingOthersPercentage: this.#touchingOthersPercentage,
             totalSelfHarm: this.#totalSelfHarm,
+            selfHarmPercentage: this.#selfHarmPercentage,
             totalInappropriateLang: this.#totalInappropriateLang,
+            inappropriateLangPercentage: this.#inappropriateLangPercentage,
             totalBullyingTeasing: this.#totalBullyingTeasing,
+            bullyingTeasingPercentage: this.#bullyingTeasingPercentage,
             totalPropertyDamage: this.#totalPropertyDamage,
+            propertyDamage: this.#propertyDamagePercentage,
             totalDefianceDisrespect: this.#totalDefianceDisrespect,
+            defianceDisrespect: this.#defianceDisrespectPercentage,
             totalTheft: this.#totalTheft,
+            theftPercentage: this.#theftPercentage,
             totalLyingCheating: this.#totalLyingCheating,
+            lyingCheatingPercentage: this.#lyingCheatingPercentage,
             totalOtherBehavior: this.#totalOtherBehavior,
+            otherBehaviorPercentage: this.#otherBehaviorPercentage,
             totalBehaviorIncidents: this.#totalBehaviorIncidents,
             studentBehavior: behaviorOutput
         };
@@ -759,8 +1052,8 @@ class Class {
     // COURSE ATTENDANCE INFORMATION
     #totalAttendancePresent;
     #totalAttendanceAbsent;
-    #totalAttendancePresentPercentage;
-    #totalAttendanceAbsentPercentage;
+    #attendancePresentPercentage;
+    #attendanceAbsentPercentage;
     // COURSE BEHAVIOR INFORMATION
     #totalBehaviorIncidents;
     #totalOffTask;
@@ -777,6 +1070,21 @@ class Class {
     #totalTheft;
     #totalLyingCheating;
     #totalOtherBehavior;
+    // Percentages
+    #offTaskPercentage; 
+    #refusingToWorkPercentage;
+    #outOfSeatPercentage;
+    #talkingPercentage;
+    #throwingObjectPercentage;
+    #touchingOthersPercentage;
+    #selfHarmPercentage;
+    #inappropriateLangPercentage;
+    #bullyingTeasingPercentage;
+    #propertyDamagePercentage;
+    #defianceDisrespectPercentage;
+    #theftPercentage;
+    #lyingCheatingPercentage;
+    #otherBehaviorPercentage;
     // COURSE ASSIGNMENT INFORMATION
     #totalHomework;
     #totalQuizzes;
@@ -789,11 +1097,16 @@ class Class {
     #totalLetterGradeC;
     #totalLetterGradeD;
     #totalLetterGradeF;
+    #letterGradeAPercentage;
+    #letterGradeBPercentage;
+    #letterGradeCPercentage;
+    #letterGradeDPercentage;
+    #letterGradeFPercentage;
     // ARRAYS OF STUDENTS, EVENTS, AND REMINDERS
     #students;
     #events;
-    #reminders;
-    constructor(courseName, instructorName, gradeLevel){
+    #annoucements;
+    constructor(courseName, instructorName, gradeLevel, classHomeworkWeight, classQuizWeight, classExamWeight, classProjectWeight){
         this.#courseName = courseName;
         this.#instructorName = instructorName;
         this.#gradeLevel = gradeLevel;
@@ -801,12 +1114,14 @@ class Class {
         this.#totalSPED = 0;
         this.#totalEL = 0;
         this.#totalInternetAccess = 0;
-        this.#SPEDPercentage = 0.0;
-        this.#ELPercentage = 0.0;
-        this.#InternetAccessPercentage = 0.0;
+        this.#SPEDPercentage = 0;
+        this.#ELPercentage = 0;
+        this.#InternetAccessPercentage = 0;
 
         this.#totalAttendancePresent = 0;
         this.#totalAttendanceAbsent = 0;
+        this.#attendancePresentPercentage = 0;
+        this.#attendanceAbsentPercentage = 0;
 
         this.#totalBehaviorIncidents = 0;
         this.#totalOffTask = 0;
@@ -823,22 +1138,45 @@ class Class {
         this.#totalTheft = 0;
         this.#totalLyingCheating = 0;
         this.#totalOtherBehavior = 0;
-    
+        this.#offTaskPercentage = 0;
+        this.#refusingToWorkPercentage = 0;
+        this.#outOfSeatPercentage = 0;
+        this.#talkingPercentage = 0;
+        this.#throwingObjectPercentage = 0;
+        this.#touchingOthersPercentage = 0;
+        this.#selfHarmPercentage = 0;
+        this.#inappropriateLangPercentage = 0;
+        this.#bullyingTeasingPercentage = 0;
+        this.#propertyDamagePercentage = 0;
+        this.#defianceDisrespectPercentage = 0;
+        this.#theftPercentage = 0;
+        this.#lyingCheatingPercentage = 0;
+        this.#otherBehaviorPercentage = 0;
+
         this.#totalHomework = 0;
         this.#totalQuizzes = 0;
         this.#totalExams = 0;
         this.#totalProjects = 0;
         this.#totalOtherAssignments = 0;
         this.#totalAssignments = 0;
+        homeworkWeight = classHomeworkWeight;
+        quizWeight = classQuizWeight;
+        examWeight = classExamWeight;
+        projectWeight = classProjectWeight;
         this.#totalLetterGradeA = 0;
         this.#totalLetterGradeB = 0;
         this.#totalLetterGradeC = 0;
         this.#totalLetterGradeD = 0;
         this.#totalLetterGradeF = 0;
+        this.#letterGradeAPercentage = 0;
+        this.#letterGradeBPercentage = 0;
+        this.#letterGradeCPercentage = 0;
+        this.#letterGradeDPercentage = 0;
+        this.#letterGradeFPercentage = 0;
 
         this.#students = [];
         this.#events = [];
-        this.#reminders = [];
+        this.#annoucements = [];
     }
     set courseName(courseName) {
         this.#courseName = courseName;
@@ -849,23 +1187,23 @@ class Class {
     set gradeLevel(gradeLevel){
         this.#gradeLevel = gradeLevel;
     }
-    addStudent(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess){
-        let s = new Student(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess);
-        this.#students.push(s);
+    addStudent(studentObj){
+        //let s = new Student(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess);
+        this.#students.push(studentObj);
         this.#totalNumberOfStudents++;
-        if (SPED == true){
+        if (studentObj.SPED == true){
             this.#totalSPED++;
         }
-        if (EL == true){
+        if (studentObj.EL == true){
             this.#totalEL++;
         }
-        if (internetAccess == true){
+        if (studentObj.internetAccess == true){
             this.#totalInternetAccess++;
         }
     }
-    removeStudent(studentId){
+    removeStudent(studentObj){
         let pos = this.#students.findIndex(
-            element => element.studentId === studentId
+            element => element.studentId === studentObj.studentId
         );
         if (pos > -1) { // only splice array when item is found
             if (this.#students[pos].SPED == true){
@@ -881,28 +1219,28 @@ class Class {
             this.#totalNumberOfStudents--;
         }
     }
-    addEvent(eventName, date, description, location){
-        let e = new Event(eventName, date, description, location);
-        this.#events.push(e);
+    addEvent(eventObj){
+        //let e = new Event(eventName, date, description, location);
+        this.#events.push(eventObj);
     }
-    removeEvent(eventName){
+    removeEvent(eventObj){
         let pos = this.#events.findIndex(
-            element => element.eventName === eventName
+            element => element.eventName === eventObj.eventName
         );
         if (pos > -1) { // only splice array when item is found
             this.#events.splice(pos, 1); // 2nd parameter means remove one item only
         }
     }
-    addReminder(title, description, date){
-        let r = new Reminder(title, description, date);
-        this.#reminders.push(r);
+    addAnnoucement(annoucementObj){
+        //let r = new Annoucement(title, description, date);
+        this.#annoucements.push(annoucementObj);
     }
-    removeReminder(title){
-        let pos = this.#reminders.findIndex(
-            element => element.title === title
+    removeAnnoucement(annoucementObj){
+        let pos = this.#annoucements.findIndex(
+            element => element.title === annoucementObj.title
         );
         if (pos > -1) { // only splice array when item is found
-            this.#reminders.splice(pos, 1); // 2nd parameter means remove one item only
+            this.#annoucements.splice(pos, 1); // 2nd parameter means remove one item only
         } 
     }
     get courseName() {
@@ -961,6 +1299,14 @@ class Class {
         }
         this.#totalAttendanceAbsent = sum;
         return this.#totalAttendanceAbsent;
+    }
+    get attendancPresentPercentage(){
+        this.#attendancePresentPercentage = (this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+        return this.#attendancePresentPercentage;
+    }
+    get attendanceAbsentPercentage(){
+        this.#attendanceAbsentPercentage = (this.#totalAttendanceAbsent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+        return this.#attendanceAbsentPercentage;
     }
     get totalOffTask(){
         let sum = 0;
@@ -1074,6 +1420,62 @@ class Class {
         this.#totalOtherBehavior = sum;
         return this.#totalOtherBehavior;
     }
+    get offTaskPercentage(){
+        this.#offTaskPercentage = (this.#totalOffTask/ this.#totalBehaviorIncidents) * 100;
+        return this.#offTaskPercentage;
+    }
+    get refuseToWorkPercentage(){
+        this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
+        return this.#refusingToWorkPercentage;
+    }
+    get outOfSeatPercentage(){
+        this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
+        return this.#outOfSeatPercentage;
+    }
+    get talkingPercentage(){
+        this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
+        return this.#talkingPercentage;
+    }
+    get throwingObjectPercentage(){
+        this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
+        return this.#throwingObjectPercentage;
+    }
+    get touchingOthersPercentage(){
+        this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
+        return this.#touchingOthersPercentage;
+    }
+    get selfHarmPercentage(){
+        this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
+        return this.#selfHarmPercentage;
+    }
+    get inappropriateLangPercentage(){
+        this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
+        return this.#inappropriateLangPercentage;
+    }
+    get bullyingTeasingPercentage(){
+        this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
+        return this.#bullyingTeasingPercentage;
+    }
+    get propertyDamagePercentage(){
+        this.#propertyDamagePercentage = (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
+        return this.#propertyDamagePercentage;
+    }
+    get defianceDisrespectPercentage(){
+        this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
+        return this.#defianceDisrespectPercentage;
+    }
+    get theftPercentage(){
+        this.#theftPercentage = (this.#totalTheft/ this.#totalBehaviorIncidents) * 100;
+        return this.#theftPercentage;
+    }
+    get lyingCheatingPercentage(){
+        this.#lyingCheatingPercentage = (this.#totalLyingCheating/ this.#totalBehaviorIncidents) * 100;
+        return this.#lyingCheatingPercentage;
+    }
+    get otherBehaviorPercentage(){
+        this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
+        return this.#otherBehaviorPercentage;
+    }
     get totalHomework(){
         this.#totalHomework = this.#students[0].totalHomework;
         return this.#totalHomework;
@@ -1148,14 +1550,34 @@ class Class {
         this.#totalLetterGradeF = sum;
         return this.#totalLetterGradeF;
     }
+    get letterGradeAPercentage(){
+        this.#letterGradeAPercentage = (this.#totalLetterGradeA / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeAPercentage;
+    }
+    get letterGradeBPercentage(){
+        this.#letterGradeBPercentage = (this.#totalLetterGradeB / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeBPercentage;
+    }
+    get letterGradeCPercentage(){
+        this.#letterGradeCPercentage = (this.#totalLetterGradeC / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeCPercentage;
+    }
+    get letterGradeDPercentage(){
+        this.#letterGradeDPercentage = (this.#totalLetterGradeD / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeDPercentage;
+    }
+    get letterGradeFPercentage(){
+        this.#letterGradeFPercentage = (this.#totalLetterGradeF / this.#totalNumberOfStudents) * 100;
+        return this.#letterGradeFPercentage;
+    }
     get students(){
         return this.#students;
     }
     get events(){
         return this.#events;
     }
-    get reminders(){
-        return this.#reminders;
+    get annoucements(){
+        return this.#annoucements;
     }
     toJSON(){
         var studentOutput = {};
@@ -1168,10 +1590,10 @@ class Class {
             var t = this.#events[i];
             eventsOutput[i] = t.toJSON();
         }
-        var remindersOutput = {};
-        for (let i = 0; i < this.#reminders.length; i++){
-            var b = this.#reminders[i];
-            remindersOutput[i] = b.toJSON();
+        var annoucementsOutput = {};
+        for (let i = 0; i < this.#annoucements.length; i++){
+            var b = this.#annoucements[i];
+            annoucementsOutput[i] = b.toJSON();
         }
         return {
             // COURSE INFORMATION
@@ -1193,46 +1615,162 @@ class Class {
             totalOtherAssignements: this.#totalOtherAssignments,
             totalAssignments: this.#totalAssignments,
             totalLetterGradeA: this.#totalLetterGradeA,
+            letterGradeAPercentage: this.#letterGradeAPercentage,
             totalLetterGradeB: this.#totalLetterGradeB,
+            letterGradeBPercentage: this.#letterGradeBPercentage,
             totalLetterGradeC: this.#totalLetterGradeC,
+            letterGradeCPercentage: this.#letterGradeCPercentage,
             totalLetterGradeD: this.#totalLetterGradeD,
+            letterGradeDPercentage: this.#letterGradeDPercentage,
             totalLetterGradeF: this.#totalLetterGradeF,
+            letterGradeFPercentage: this.#letterGradeFPercentage,
             // TOTAL ATTENDANCE
             totalAttendancePresent: this.#totalAttendancePresent,
             totalAttendanceAbsent: this.#totalAttendanceAbsent,
+            attendancePresentPercentage: this.#attendancePresentPercentage,
+            attendanceAbsentPercentage: this.#attendanceAbsentPercentage,
             // TOTAL BEHAVIOR INCIDENTS
             totalBehaviorIncidents: this.#totalBehaviorIncidents,
             totalOffTask: this.#totalOffTask,
+            offTaskPercentage: this.#offTaskPercentage,
             totalRefusingToWork: this.#totalRefusingToWork,
+            refusingToWorkPercentage: this.#refusingToWorkPercentage,
             totalOutOfSeat: this.#totalOutOfSeat,
+            outOfSeatPercentage: this.#outOfSeatPercentage,
             totalTalking: this.#totalTalking,
+            talkingPercentage: this.#talkingPercentage,
             totalThrowingObject: this.#totalThrowingObject,
+            throwingObjectPercentage: this.#throwingObjectPercentage,
             totalTouchingOthers: this.#totalTouchingOthers,
+            touchingOthersPercentage: this.#touchingOthersPercentage,
             totalSelfHarm: this.#totalSelfHarm,
+            selfHarmPercentage: this.#selfHarmPercentage,
             totalInappropriateLang: this.#totalInappropriateLang,
+            inappropriateLangPercentage: this.#inappropriateLangPercentage,
             totalBullyingTeasing: this.#totalBullyingTeasing,
+            bullyingTeasingPercentage: this.#bullyingTeasingPercentage,
             totalPropertyDamage: this.#totalPropertyDamage,
+            propertyDamage: this.#propertyDamagePercentage,
             totalDefianceDisrespect: this.#totalDefianceDisrespect,
+            defianceDisrespect: this.#defianceDisrespectPercentage,
             totalTheft: this.#totalTheft,
+            theftPercentage: this.#theftPercentage,
             totalLyingCheating: this.#totalLyingCheating,
+            lyingCheatingPercentage: this.#lyingCheatingPercentage,
             totalOtherBehavior: this.#totalOtherBehavior,
+            otherBehaviorPercentage: this.#otherBehaviorPercentage,
             // ARRAYS
             students: studentOutput,
             events: eventsOutput,
-            reminders: remindersOutput
+            annoucements: annoucementsOutput
         };
     }
 }
+class User {
+    #username;
+    #password;
+    #totalNumberOfClasses;
+    #classes;
+    construct(username, password){
+        this.#username = username;
+        this.#password = password;
+        this.#totalNumberOfClasses = 0;
+        this.#classes = [];
+    }
+    set username(username){
+        this.#username = username;
+    }
+    set password(password){
+        this.#password = password;
+    }
+    addClass(classObj){
+        //let c = new Class(courseName, instructorName, gradeLevel);
+        this.#classes.push(classObj);
+        this.#totalNumberOfClasses++;
+    }
+    removeClass(classObj){
+        let pos = this.#classes.findIndex(
+            element => element.courseName === classObj.courseName
+        );
+        if (pos > -1) { // only splice array when item is found
+            this.#classes.splice(pos, 1); // 2nd parameter means remove one item only
+        }
+        this.#totalNumberOfClasses--;
+    }
+    get username(){
+        return this.#username;
+    }
+    get password(){
+        return this.#password;
+    }
+    get totalNumberOfClass(){
+        return this.#totalNumberOfClasses;
+    }
+}
 // TESTING BEFORE ADDING TO CLASS
-/*
-var day1 = new Attendance("5", "Present");
-var day2 = new Attendance("06", "Present");
-var day3 = new Attendance("07", "Present");
-var array = [];
-array.push(day1);
-array.push(day2);
-array.push(day3);
-
+// Class
+/*var class1 = new Class("courseName", "Jane Doe", "9", 10, 25, 40, 25);
+// Student
+var student1 = new Student(10000000, "alt", "John", "Doe", "male", 5, 21, 2010, "jDoe@gmail.com", false, true, true);
+// Student 1 Behavior Info, month of September
+var student1Behavior1 = new Behavior("Touching Others", 9, 1, 2022, "talking during reading time");
+var student1Behavior2 = new Behavior("Self Harm", 9, 3, 2022, "play fighting with student2");
+student1.addBehavior(student1Behavior1);
+student1.addBehavior(student1Behavior2);
+// Student1 Attendance Info, month of September
+var student1Day1 = new Attendance(9, 1, 2022, "Present");
+var student1Day2 = new Attendance(9, 2, 2022, "Present");
+var student1Day3 = new Attendance(9, 5, 2022, "Present");
+var student1Day4 = new Attendance(9, 6, 2022, "Present");
+var student1Day5 = new Attendance(9, 7, 2022, "Present");
+var student1Day6 = new Attendance(9, 8, 2022, "Present");
+var student1Day7 = new Attendance(9, 9, 2022, "Present");
+var student1Day8 = new Attendance(9, 12, 2022, "Present");
+var student1Day9 = new Attendance(9, 13, 2022, "Present");
+var student1Day10 = new Attendance(9, 14, 2022, "Present");
+var student1Day11 = new Attendance(9, 15, 2022, "Present");
+var student1Day12 = new Attendance(9, 16, 2022, "Absent");
+var student1Day13 = new Attendance(9, 19, 2022, "Absent");
+var student1Day14 = new Attendance(9, 20, 2022, "Absent");
+var student1Day15 = new Attendance(9, 21, 2022, "Absent");
+var student1Day16 = new Attendance(9, 22, 2022, "Absent");
+var student1Day17 = new Attendance(9, 23, 2022, "Absent");
+var student1Day18 = new Attendance(9, 26, 2022, "Absent");
+var student1Day19 = new Attendance(9, 27, 2022, "Absent");
+var student1Day20 = new Attendance(9, 28, 2022, "Absent");
+var student1Day21 = new Attendance(9, 29, 2022, "Absent");
+var student1Day22 = new Attendance(9, 30, 2022, "Absent");
+student1.addAttendance(student1Day1);
+student1.addAttendance(student1Day2);
+student1.addAttendance(student1Day3);
+student1.addAttendance(student1Day4);
+student1.addAttendance(student1Day5);
+student1.addAttendance(student1Day6);
+student1.addAttendance(student1Day7);
+student1.addAttendance(student1Day8);
+student1.addAttendance(student1Day9);
+student1.addAttendance(student1Day10);
+student1.addAttendance(student1Day11);
+student1.addAttendance(student1Day12);
+student1.addAttendance(student1Day13);
+student1.addAttendance(student1Day14);
+student1.addAttendance(student1Day15);
+student1.addAttendance(student1Day16);
+student1.addAttendance(student1Day17);
+student1.addAttendance(student1Day18);
+student1.addAttendance(student1Day19); 
+student1.addAttendance(student1Day20);
+student1.addAttendance(student1Day21);
+student1.addAttendance(student1Day22);
+// Student 1 Assignment Info, month of September
+var student1Assignment1 = new Assignment("Assignment1", "Homework", 10, 10, 9, 21, 2022);
+console.log(student1Assignment1.assignmentPercentage);
+student1.addAssignment(student1Assignment1);
+console.log(homeworkWeight);
+console.log(student1.gradePercentage);
+var j = student1.toJSON();
+var strJSON = JSON.stringify(j);
+console.log(strJSON);
 var attendanceOutput = {};
 for (let i = 0; i < array.length; i++){
     var m = array[i];
@@ -1242,12 +1780,11 @@ var obj = {
     attended: attendanceOutput
 };
 var string = JSON.stringify(obj);
-console.log(string);
-*/
+console.log(string);*/
+
 /* TO DO: 
-    Add functions for classroom percentage
-    Make a stringify function that takes an object and uses JSON.stringify in order to make document
     Connect to DB
         Able to take document and turn into object
         Able to turn object into document and add to DB
 */
+
