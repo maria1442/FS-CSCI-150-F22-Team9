@@ -1722,6 +1722,8 @@ class User {
 // --------------------------------------
 // MONGO DB FUNCTIONS
 const {MongoClient, MongoDBNamespace} = require('mongodb');
+
+// DEMO Main for Testing DB functions
 async function main() {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
 
@@ -1730,22 +1732,34 @@ async function main() {
     try {
         await client.connect();
         var class1 = new Class("courseName", "Jane Doe", "9", 10, 25, 40, 25);
-        var event1 = new Event("halloween", 10, 31, 2022, "party", "fs");
-        var event2 = new Event("halloween party", 10, 31, 2022, "party", "fs");
-        var event3 = new Event("end of october", 10, 31, 2022, "party", "fs");
+        var student1 = new Student(10000000, "alt", "John", "Doe", "male", 5, 21, 2010, "jDoe@gmail.com", false, true, true);
+        var student1Day1 = new Attendance(9, 1, 2022, "Present");
+        var student1Day2 = new Attendance(9, 2, 2022, "Present");
+        var student1Behavior1 = new Behavior("Touching Others", 9, 1, 2022, "talking during reading time");
+        var student1Behavior2 = new Behavior("Self Harm", 9, 3, 2022, "play fighting with student2");
+        //await deleteStudentFromClassDB(client, class1, student1);
+        //await addNewStudentToClassDB(client, class1, student1);
+        //await addStudentAttendanceToClassDB(client, class1, student1, student1Day1);
+        //await updateStudentAttendanceFromClassDB(client, class1, student1, student1Day1, student1Day2);
+        //await deleteStudentAttendanceFromClassDB(client, class1, student1, student1Day1);
+        //await addStudentBehaviorToClassDB(client, class1, student1, student1Behavior1);
+        //await updateStudentBehaviorFromClassDB(client, class1, student1, student1Behavior1, student1Behavior2);
+        //var event1 = new Event("halloween", 10, 31, 2022, "party", "fs");
+        //var event2 = new Event("halloween party", 10, 31, 2022, "party", "fs");
+        //var event3 = new Event("end of october", 10, 31, 2022, "party", "fs");
         //await addNewEventToDB(client, event3);
         //await addNewEventToClassDB(client, class1, event3);
         //await deleteEventFromClassDB(client, class1, event1);
         //await updateEventToDB(client, event2, event1);
-        await updateEventFromClassDB(client, class1, event2, event1);
-        
+        //await updateEventFromClassDB(client, class1, event2, event1);
+        //await addNewClassToDB(client, class1);
     }
     finally {
         await client.close();
     }
 }
 main().catch(console.error);
-
+// Write to MongoDB
 // ADD NEW DOCUMENTS
 async function addNewEventToDB(client, event){
     let JSONEvent = event.toJSON(); 
@@ -1812,14 +1826,13 @@ async function addStudentAttendanceToDB(client, student, attendance){
     let JSONAttendance = attendance.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$push: { studentAttendance: JSONAttendance}});
 }
-// NEED TO TEST
 async function addStudentAttendanceToClassDB(client, course, student, attendance){
     let name = course.courseName;
     const query = {courseName: name};
     const finding = await client.db("classparency").collection("classes").findOne(query);
     let stringId = finding._id;        
-    let JSONAttendance= attendance.toJSON();
-    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$push: {"studentAttendance.$": JSONAttendance}});
+    let JSONAttendance = attendance.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$push: {"students.$.studentAttendance": JSONAttendance}});
 }
 async function addStudentBehaviorToDB(client, student, behavior){
     let id = student.studentId;
@@ -1829,14 +1842,29 @@ async function addStudentBehaviorToDB(client, student, behavior){
     let JSONBehavior = behavior.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$push: {studentBehavior: JSONBehavior}});
 }
+async function addStudentBehaviorToClassDB(client, course, student, behavior){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONBehavior = behavior.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$push: {"students.$.studentBehavior": JSONBehavior}});
+}
 async function addStudentAssignmentToDB(client, student, assignment){
-    await client.connect();
     let id = student.studentId;
     const query = {studentId: id};
     const finding = await client.db("classparency").collection("students").findOne(query);
     let stringId = finding._id;        
     let JSONAssignment = assignment.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$push: {studentAssignments: JSONAssignment}}); 
+}
+async function addStudentAssignmentToClassDB(client, course, student, assignment){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONAssignment = assignment.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$push: {"students.$.studentAssignments": JSONAssignment}});
 }
 // DELETE DOCUMENTS
  async function deleteEventFromDB(client, event){
@@ -1894,7 +1922,7 @@ async function deleteStudentFromClassDB(client, course, student){
     const finding = await client.db("classparency").collection("classes").findOne(query);
     let stringId = finding._id;        
     let JSONStudent = student.toJSON();
-    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId}, {$pull: {events: JSONStudent}});
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId}, {$pull: {students: JSONStudent}});
 }
 async function deleteClassFromDB(client, removedClass){
     let name = removedClass.courseName;
@@ -1907,14 +1935,6 @@ async function deleteClassFromDB(client, removedClass){
         console.log("No documents matched the query. Deleted 0 documents.");
     }   
 }
-async function deleteClassfromUserDB(client, user, course){
-    let name = user.username;
-    const query = {username: name};
-    const finding = await client.db("classparency").collection("users").findOne(query);
-    let stringId = finding._id;        
-    let JSONCourse = course.toJSON();
-    const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$pull: {classes: JSONCourse}});
-}
 async function deleteUserFromDB(client, user){
     let name = user.username;
     const query = {username: name};
@@ -1926,7 +1946,62 @@ async function deleteUserFromDB(client, user){
         console.log("No documents matched the query. Deleted 0 documents.");
     }
 }
-
+async function deleteClassfromUserDB(client, user, course){
+    let name = user.username;
+    const query = {username: name};
+    const finding = await client.db("classparency").collection("users").findOne(query);
+    let stringId = finding._id;        
+    let JSONCourse = course.toJSON();
+    const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$pull: {classes: JSONCourse}});
+}
+async function deleteStudentAttendanceFromDB(client, student, attendance){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;        
+    let JSONAttendance = attendance.toJSON();
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$pull: {studentAttendance: JSONAttendance}});
+}
+async function deleteStudentAttendanceFromClassDB(client, course, student, attendance){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONAttendance = attendance.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$pull: {"students.$.studentAttendance": JSONAttendance}});
+}
+async function deleteStudentBehaviorFromDB(client, student, behavior){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;        
+    let JSONBehavior = behavior.toJSON();
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$pull: {studentBehavior: JSONBehavior}});
+}
+async function deleteStudentBehaviorFromClassDB(client, course, student, behavior){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONBehavior = behavior.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$pull: {"students.$.studentBehavior": JSONBehavior}});
+}
+async function deleteStudentAssignmentFromDB(client, student, assignment){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;        
+    let JSONAssignment = assignment.toJSON();
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$pull: {studentAssignments: JSONAssignment}});
+}
+async function deleteStudentAssignmentFromClassDB(client, course, student, assignment){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONAssignment = assignment.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$pull: {"students.$.studentAssignments": JSONAssignment}});
+}
 // UPDATE EXISTING DOCUMENTS
 async function updateEventToDB(client, event, newEvent){
     let name = event.eventName;
@@ -2000,6 +2075,14 @@ async function updateStudentAttendanceFromDB(client, student, attendance, newAtt
     let JSONAttendance = newAttendance.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId, "studentAttendance.date": attendance.date}, {$set: {"studentAttendance.$": JSONAttendance}});
 }
+async function updateStudentAttendanceFromClassDB(client, course, student, attendance, newAttendance){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONAttendance = newAttendance.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId, "students.studentAttendance.date": attendance.date}, {$set: {"students.$.studentAttendance": JSONAttendance}});
+}
 async function updateStudentBehaviorFromDB(client, student, behavior, newBehavior){
     let name = student.studentId;
     const query = {studentId: name};
@@ -2007,6 +2090,14 @@ async function updateStudentBehaviorFromDB(client, student, behavior, newBehavio
     let stringId = finding._id;        
     let JSONBehavior = newBehavior.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId, "studentBehavior.date": behavior.date, "studentBehavior.incident": behavior.incident}, {$set: {"studentBehavior.$": JSONBehavior}});
+}
+async function updateStudentBehaviorFromClassDB(client, course, student, behavior, newBehavior){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONBehavior = newBehavior.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId, "students.studentBehavior.date": behavior.date, "students.studentBehavior.incident": behavior.incident }, {$set: {"students.$.studentBehavior": JSONBehavior}});
 }
 async function updateStudentAssignmentFromDB(client, student, assignment, newAssignment){
     let name = student.studentId;
@@ -2016,13 +2107,22 @@ async function updateStudentAssignmentFromDB(client, student, assignment, newAss
     let JSONAssignment = newAssignment.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId, "studentAssignments.assignmentName": assignment.assignmentName}, {$set: {"studentAssignments.$": JSONAssignment}});
 }
+async function updateStudentAssignmentFromClassDB(client, course, student, assignment, newAssignment){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id;        
+    let JSONAssignment = newAssignment.toJSON();
+    const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId, "students.studentAssignments.assignmentName": assignment.assignmentName}, {$set: {"students.$.studentAssignments": JSONAssignment}});
+}
+
+// Read from MongoDB
+
 /* TO DO: 
-    Add students into class students Array
-    Able to turn object into document and add to DB
-           Need to add formToObject
-            Will need to make the main function for each to make db calls
-            Will have the client connect and disconnect
-    Able to take document and turn into object
+    Need to add formToObject, connected with HTML page
+        Will need to make the main function for each to make db calls
+        Will have the client connect and disconnect
+    Need to add functions to take document and turn into object
         
 */
 
