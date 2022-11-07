@@ -1579,12 +1579,12 @@ class Class {
         return this.#annoucements;
     }
     toJSON(){
-        var studentOutput = new Array();;
+        var studentOutput = new Array();
         for (let i = 0; i < this.#students.length; i++){
             var s = this.#students[i];
             studentOutput[i] = s.toJSON();
         }
-        var eventsOutput = new Array();;
+        var eventsOutput = new Array();
         for (let i = 0; i < this.#events.length; i++){
             var t = this.#events[i];
             eventsOutput[i] = t.toJSON();
@@ -1706,7 +1706,7 @@ class User {
         return this.#totalNumberOfClasses;
     }
     toJSON(){
-        var classOutput = {};
+        var classOutput = new Array();
         for (let i = 0; i < this.#classes.length; i++){
             var s = this.#classes[i];
             classOutput[i] = s.toJSON();
@@ -1739,9 +1739,9 @@ async function main() {
         var student1Behavior2 = new Behavior("Self Harm", 9, 3, 2022, "play fighting with student2");
         //await deleteStudentFromClassDB(client, class1, student1);
         //await addNewStudentToClassDB(client, class1, student1);
-        //await addStudentAttendanceToClassDB(client, class1, student1, student1Day1);
+        //await addStudentAttendanceToDB(client, student1, student1Day2);
         //await updateStudentAttendanceFromClassDB(client, class1, student1, student1Day1, student1Day2);
-        //await deleteStudentAttendanceFromClassDB(client, class1, student1, student1Day1);
+        //await deleteStudentAttendanceFromClassDB(client, class1, student1, student1Day2);
         //await addStudentBehaviorToClassDB(client, class1, student1, student1Behavior1);
         //await updateStudentBehaviorFromClassDB(client, class1, student1, student1Behavior1, student1Behavior2);
         //var event1 = new Event("halloween", 10, 31, 2022, "party", "fs");
@@ -1753,12 +1753,40 @@ async function main() {
         //await updateEventToDB(client, event2, event1);
         //await updateEventFromClassDB(client, class1, event2, event1);
         //await addNewClassToDB(client, class1);
+        var arr = await retrieveEventArrayFromDB(client);
+        //var arr = new Array();
+        //var arr = await retrieveStudentFromDB(client, student1);//retrieveStudentFromDB(client, student1);
+        console.log(arr);//JSON.parse(arr));
     }
     finally {
         await client.close();
     }
 }
 main().catch(console.error);
+// Functions to call MongoDB, use form functionName(parameter(s)).catch(console.error); to call functions
+async function addEventToDB(event) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addNewEventToDB(client, event);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addEventToClassDB(course, event) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addNewEventToClassDB(client, course, event);
+    }
+    finally {
+        await client.close();
+    }
+}
+
 // Write to MongoDB
 // ADD NEW DOCUMENTS
 async function addNewEventToDB(client, event){
@@ -1935,6 +1963,14 @@ async function deleteClassFromDB(client, removedClass){
         console.log("No documents matched the query. Deleted 0 documents.");
     }   
 }
+async function deleteClassfromUserDB(client, user, course){
+    let name = user.username;
+    const query = {username: name};
+    const finding = await client.db("classparency").collection("users").findOne(query);
+    let stringId = finding._id;        
+    let JSONCourse = course.toJSON();
+    const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$pull: {classes: JSONCourse}});
+}
 async function deleteUserFromDB(client, user){
     let name = user.username;
     const query = {username: name};
@@ -1945,14 +1981,6 @@ async function deleteUserFromDB(client, user){
     else {
         console.log("No documents matched the query. Deleted 0 documents.");
     }
-}
-async function deleteClassfromUserDB(client, user, course){
-    let name = user.username;
-    const query = {username: name};
-    const finding = await client.db("classparency").collection("users").findOne(query);
-    let stringId = finding._id;        
-    let JSONCourse = course.toJSON();
-    const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$pull: {classes: JSONCourse}});
 }
 async function deleteStudentAttendanceFromDB(client, student, attendance){
     let name = student.studentId;
@@ -2067,6 +2095,14 @@ async function updateClassFromUserDB(client, user, course, newCourse){
     let JSONClass = newCourse.toJSON();
     const result = await client.db("classparency").collection("users").updateOne({"_id": stringId, "classes.courseName": course.courseName}, {$set: {"classes.$": JSONClass}});
 }
+async function updateUserToDB(client, user, newUser){
+    let name = user.username;
+    const query = {username: name};
+    const finding = await client.db("classparency").collection("users").findOne(query);
+    let stringId = finding._id;  
+    let update = newUser.toJSON();  
+    const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$set: update});
+}
 async function updateStudentAttendanceFromDB(client, student, attendance, newAttendance){
     let name = student.studentId;
     const query = {studentId: name};
@@ -2117,13 +2153,77 @@ async function updateStudentAssignmentFromClassDB(client, course, student, assig
 }
 
 // Read from MongoDB
-
+async function retrieveEventArrayFromDB(client){
+    let eventArray = new Array();
+    eventArray = await client.db("classparency").collection("events").find({},{projection:{ _id: 0 }}).toArray();
+    return eventArray;
+}
+async function retrieveEventFromDB(client, event){
+    let name = event.eventName;
+    const query = {eventName: name};
+    const finding = await client.db("classparency").collection("events").findOne(query);
+    let stringId = finding._id; 
+    const eventObj = await client.db("classparency").collection("events").findOne({"_id": stringId});
+    return eventObj;
+}
+async function retrieveAnnouncementArrayFromDB(client){
+    let announcementArray = new Array();
+    announcementArray = await client.db("classparency").collection("announcements").find({},{projection:{ _id: 0 }}).toArray();
+    return announcementArray;
+}
+async function retrieveAnnouncementFromDB(client, announcement){
+    let name = annoucement.title;
+    const query = {title: name};
+    const finding = await client.db("classparency").collection("announcements").findOne(query);
+    let stringId = finding._id;
+    const announcementObj = await client.db("classparency").collection("announcements").findOne({"_id": stringId});
+    return announcementObj;
+}
+async function retrieveStudentArrayFromDB(client){
+    let studentArray = new Array();
+    studentArray = await client.db("classparency").collection("students").find({},{projection:{ _id: 0 }}).toArray();
+    return studentArray;
+}
+// Use student.fieldname to get info from student
+async function retrieveStudentFromDB(client, student){
+    let id = student.studentId;
+    const query = {studentId: id};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id; 
+    const studentObj = await client.db("classparency").collection("students").findOne({"_id": stringId}, {projection:{ _id: 0 }});
+    return studentObj;
+}
+async function retrieveClassArrayFromDB(client){
+    let classArray = new Array();
+    classArray = await client.db("classparency").collection("classes").find({},{projection:{ _id: 0 }}).toArray();
+    return classArray;
+}
+async function retrieveClassFromDB(client, course){
+    let name = course.courseName;
+    const query = {courseName: name};
+    const finding = await client.db("classparency").collection("classes").findOne(query);
+    let stringId = finding._id; 
+    const classObj = await client.db("classparency").collection("classes").findOne({"_id": stringId}, {projection:{ _id: 0 }});
+    return classObj;
+}
+async function retrieveUserArrayFromDB(client){
+    let userArray = new Array();
+    userArray = await client.db("classparency").collection("users").find({},{projection:{ _id: 0 }}).toArray();
+    return userArray;
+}
+async function retrieveUserFromDB(client, user){
+    let name = user.username;
+    const query = {username: name};
+    const finding = await client.db("classparency").collection("users").findOne(query);
+    let stringId = finding._id; 
+    const userObj = await client.db("classparency").collection("users").findOne({"_id": stringId}, {projection:{ _id: 0 }});
+    return userObj;
+}
 /* TO DO: 
     Need to add formToObject, connected with HTML page
         Will need to make the main function for each to make db calls
-        Will have the client connect and disconnect
-    Need to add functions to take document and turn into object
-        
+        Will have the client connect and disconnect 
+        Will have to be async       
 */
 
 // TESTING BEFORE ADDING TO CLASS
@@ -2200,10 +2300,4 @@ var obj = {
 };
 var string = JSON.stringify(obj);
 console.log(string);*/
-
-/* TO DO: 
-    Connect to DB
-        Able to take document and turn into object
-        Able to turn object into document and add to DB
-*/
 
