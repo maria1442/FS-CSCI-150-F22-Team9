@@ -1764,30 +1764,417 @@ async function main() {
 }
 main().catch(console.error);
 // Functions to call MongoDB, use form functionName(parameter(s)).catch(console.error); to call functions
-async function addEventToDB(event) {
+// ADD DOCUMENTS
+async function addEventToDB(course, event) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
     try {
         await client.connect();
         await addNewEventToDB(client, event);
-    }
-    finally {
-        await client.close();
-    }
-}
-async function addEventToClassDB(course, event) {
-    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
-    const client = new MongoClient(uri);
-    try {
-        await client.connect();
         await addNewEventToClassDB(client, course, event);
     }
     finally {
         await client.close();
     }
 }
+async function addAnnouncementToDB(course, annoucement) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addNewAnnouncementToDB(client, annoucement);
+        await addNewAnnouncementToClassDB(client, course, annoucement);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addStudentToDB(course, student) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addNewStudentToDB(client, student);
+        await addNewStudentToClassDB(client, course, student);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addClassToDB(user, course) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addNewClassToDB(client, course);
+        await addNewClassToUserDB(client, user, course);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addUserToDB(user) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addNewUserToDB(client, user);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addAttendanceToDB(course, student, attendance) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addStudentAttendanceToDB(client, student, attendance);
+        await addStudentAttendanceToClassDB(client, course, student, attendance);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addBehaviorToDB(course, student, behavior) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addStudentBehaviorToDB(client, student, behavior);
+        await addStudentBehaviorToClassDB(client, course, student, behavior);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function addAssignmentToDB(course, student, assignment) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await addStudentAssignmentToDB(client, student, assignment);
+        await addStudentAssignmentToClassDB(client, course, student, assignment);
+    }
+    finally {
+        await client.close();
+    }
+}
+// DELETE DOCUMENTS
+async function deleteEventFromDB(course, event) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteEventFromDBClient(client, event);
+        await deleteEventFromClassDB(client, course, event);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteAnnouncementFromDB(course, announcement) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteAnnouncementFromDBClient(client, announcement);
+        await deleteAnnouncementFromClassDB(client, course, announcement);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteStudentFromDB(course, student) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteStudentFromDBClient(client, student);
+        await deleteStudentFromClassDB(client, course, student);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteClassFromDB(user, course) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteClassFromDBClient(client, course);
+        await deleteClassfromUserDB(client, user, course);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteUserFromDB(user) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteUserFromDBClient(client, user);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteAttendanceFromDB(course, student, attendance) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteStudentAttendanceFromDB(client, student, attendance);
+        await deleteStudentAttendanceFromClassDB(client, course, student, attendance);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteBehaviorFromDB(course, student, behavior) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteStudentBehaviorFromDB(client, student, behavior);
+        await deleteStudentBehaviorFromClassDB(client, course, student, behavior);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function deleteAssignmentFromDB(course, student, assignment) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await deleteStudentAssignmentFromDB(client, student, assignment);
+        await deleteStudentAssignmentFromClassDB(client, course, student, assignment);
+    }
+    finally {
+        await client.close();
+    }
+}
+// UPDATE DOCUMENTS
+async function updateEventFromDB(course, event, newEvent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateEventFromDBClient(client, event, newEvent);
+        await updateEventFromClassDB(client, course, event, newEvent);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateAnnouncementFromDB(course, announcement, newAnnouncement) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateAnnouncementFromDBClient(client, announcement, newAnnouncement);
+        await updateAnnouncementFromClassDB(client, course, announcement, newAnnouncement);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateStudentFromDB(course, student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentFromDBClient(client, student, newStudent);
+        await updateStudentFromClassDB(client, course, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateClassFromDB(user, course, newCourse) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateClassFromDBClient(client, course, newCourse);
+        await updateClassFromUserDB(client, user, course, newCourse);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateUserFromDB(user, newUser) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateUserFromDBClient(client, user, newUser);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateAttendanceFromDB(course, student, attendance, newAttendance) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentAttendanceFromDB(client, student, attendance, newAttendance);
+        await updateStudentAttendanceFromClassDB(client, course, student, attendance, newAttendance);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateBehaviorFromDB(course, student, behavior, newBehavior) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentBehaviorFromDB(client, student, behavior, newBehavior);
+        await updateStudentBehaviorFromClassDB(client, course, student, behavior, newBehavior);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateAssignmentFromDB(course, student, assignment, newAssignment) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentAssignmentFromDB(client, student, assignment, newAssignment);
+        await updateStudentAssignmentFromClassDB(client, course, student, assignment, newAssignment);
+    }
+    finally {
+        await client.close();
+    }
+}
+// READ DOCUMENT
+async function getEventFromDB(event) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const readEvent = await retrieveEventFromDB(client, event);
+    }
+    finally {
+        await client.close();
+        return readEvent;
+    }
+}
+async function getEventArrayFromDB() {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const eventArr = await retrieveEventArrayFromDB(client);
+    }
+    finally {
+        await client.close();
+        return eventArr;
+    }
+}
+async function getAnnouncementFromDB(announcement) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const readAnnouncement = await retrieveAnnouncementFromDB(client, announcement);
+    }
+    finally {
+        await client.close();
+        return readAnnouncement;
+    }
+}
+async function getAnnouncementArrayFromDB() {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const announcementArr = await retrieveAnnouncementArrayFromDB(client);
+    }
+    finally {
+        await client.close();
+        return announcementArr;
+    }
+}
+async function getStudentFromDB(student) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const readStudent = await retrieveStudentFromDB(client, student);
+    }
+    finally {
+        await client.close();
+        return readStudent;
+    }
+}
+async function getStudentArrayFromDB() {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const studentArr = await retrieveStudentArrayFromDB(client);
+    }
+    finally {
+        await client.close();
+        return studentArr;
+    }
+}
+async function getClassFromDB(course) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const readClass = await retrieveClassFromDB(client, course);
+    }
+    finally {
+        await client.close();
+        return readClass;
+    }
+}
+async function getClassArrayFromDB() {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const classArr = await retrieveClassArrayFromDB(client);
+    }
+    finally {
+        await client.close();
+        return classArr;
+    }
+}
+async function getUserFromDB(user) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const readUser = await retrieveUserFromDB(client, user);
+    }
+    finally {
+        await client.close();
+        return readUser;
+    }
+}
+async function getUserArrayFromDB() {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const userArr = await retrieveUserArrayFromDB(client);
+    }
+    finally {
+        await client.close();
+        return userArr;
+    }
+}
 
-// Write to MongoDB
+// Functions to write to MongoDB
 // ADD NEW DOCUMENTS
 async function addNewEventToDB(client, event){
     let JSONEvent = event.toJSON(); 
@@ -1833,11 +2220,6 @@ async function addNewClassToDB(client, newClass){
     const result = await client.db("classparency").collection("classes").insertOne(JSONClass);
     console.log(`New class created with the following id: ${result.insertedId}`);
 }
-async function addNewUserToDB(client, user){
-    let JSONUser = user.toJSON(); 
-    const result = await client.db("classparency").collection("users").insertOne(JSONUser);
-    console.log(`New user created with the following id: ${result.insertedId}`);
-}
 async function addNewClassToUserDB(client, user, course){
     let name = user.username;
     const query = {username: name};
@@ -1845,6 +2227,11 @@ async function addNewClassToUserDB(client, user, course){
     let stringId = finding._id;        
     let JSONCourse = course.toJSON();
     const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$push: {classes: JSONCourse}});
+}
+async function addNewUserToDB(client, user){
+    let JSONUser = user.toJSON(); 
+    const result = await client.db("classparency").collection("users").insertOne(JSONUser);
+    console.log(`New user created with the following id: ${result.insertedId}`);
 }
 async function addStudentAttendanceToDB(client, student, attendance){
     let id = student.studentId;
@@ -1895,7 +2282,7 @@ async function addStudentAssignmentToClassDB(client, course, student, assignment
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$push: {"students.$.studentAssignments": JSONAssignment}});
 }
 // DELETE DOCUMENTS
- async function deleteEventFromDB(client, event){
+ async function deleteEventFromDBClient(client, event){
     let name = event.eventName;
     const query = {eventName: name};
     const result = await client.db("classparency").collection("events").deleteOne(query);
@@ -1914,7 +2301,7 @@ async function deleteEventFromClassDB(client, course, event){
     let JSONEvent = event.toJSON();
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId}, {$pull: {events: JSONEvent}});
 }
-async function deleteAnnouncementFromDB(client, announcement){
+async function deleteAnnouncementFromDBClient(client, announcement){
     let name = announcement.title;
     const query = {title: name};
     const result = await client.db("classparency").collection("announcements").deleteOne(query);
@@ -1933,7 +2320,7 @@ async function deleteAnnouncementFromClassDB(client, course, announcement){
     let JSONAnnouncement = announcement.toJSON();
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId}, {$pull: {events: JSONAnnouncement}});
 }
-async function deleteStudentFromDB(client, student){
+async function deleteStudentFromDBClient(client, student){
     let id = student.studentId;
     const query = {studentId: id};
     const result = await client.db("classparency").collection("students").deleteOne(query);
@@ -1952,7 +2339,7 @@ async function deleteStudentFromClassDB(client, course, student){
     let JSONStudent = student.toJSON();
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId}, {$pull: {students: JSONStudent}});
 }
-async function deleteClassFromDB(client, removedClass){
+async function deleteClassFromDBClient(client, removedClass){
     let name = removedClass.courseName;
     const query = {courseName: name};
     const result = await client.db("classparency").collection("classes").deleteOne(query);
@@ -1971,7 +2358,7 @@ async function deleteClassfromUserDB(client, user, course){
     let JSONCourse = course.toJSON();
     const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$pull: {classes: JSONCourse}});
 }
-async function deleteUserFromDB(client, user){
+async function deleteUserFromDBClient(client, user){
     let name = user.username;
     const query = {username: name};
     const result = await client.db("classparency").collection("users").deleteOne(query);
@@ -2031,7 +2418,7 @@ async function deleteStudentAssignmentFromClassDB(client, course, student, assig
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$pull: {"students.$.studentAssignments": JSONAssignment}});
 }
 // UPDATE EXISTING DOCUMENTS
-async function updateEventToDB(client, event, newEvent){
+async function updateEventFromDBClient(client, event, newEvent){
     let name = event.eventName;
     const query = {eventName: name};
     const finding = await client.db("classparency").collection("events").findOne(query);
@@ -2047,7 +2434,7 @@ async function updateEventFromClassDB(client, course, event, newEvent){
     let JSONEvent = newEvent.toJSON();
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "events.eventName": event.eventName}, {$set: {"events.$": JSONEvent}});
 }
-async function updateAnnouncementToDB(client, annoucement, newAnnouncement){
+async function updateAnnouncementFromDBClient(client, annoucement, newAnnouncement){
     let name = annoucement.title;
     const query = {title: name};
     const finding = await client.db("classparency").collection("announcements").findOne(query);
@@ -2063,7 +2450,7 @@ async function updateAnnouncementFromClassDB(client, course, annoucement, newAnn
     let JSONAnnouncement = newAnnouncement.toJSON();
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "announcements.title": annoucement.title}, {$set: {"announcements.$": JSONAnnouncement}});
 }
-async function updateStudentToDB(client, student, newStudent){
+async function updateStudentFromDBClient(client, student, newStudent){
     let name = student.studentId;
     const query = {studentId: name};
     const finding = await client.db("classparency").collection("students").findOne(query);
@@ -2079,7 +2466,7 @@ async function updateStudentFromClassDB(client, course, student, newStudent){
     let JSONStudent = newStudent.toJSON();
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId}, {$set: {"students.$": JSONStudent}});
 }
-async function updateClassToDB(client, course, newCourse){
+async function updateClassFromDBClient(client, course, newCourse){
     let name = course.courseName;
     const query = {courseName: name};
     const finding = await client.db("classparency").collection("classes").findOne(query);
@@ -2095,7 +2482,7 @@ async function updateClassFromUserDB(client, user, course, newCourse){
     let JSONClass = newCourse.toJSON();
     const result = await client.db("classparency").collection("users").updateOne({"_id": stringId, "classes.courseName": course.courseName}, {$set: {"classes.$": JSONClass}});
 }
-async function updateUserToDB(client, user, newUser){
+async function updateUserFromDBClient(client, user, newUser){
     let name = user.username;
     const query = {username: name};
     const finding = await client.db("classparency").collection("users").findOne(query);
