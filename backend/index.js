@@ -1199,6 +1199,182 @@ class Class {
         if (studentObj.internetAccess == true){
             this.#totalInternetAccess++;
         }
+        // Update totalBehavior
+        let totalBehaviorSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalBehaviorSum += this.#students[i].totalBehaviorIncidents;
+        }
+        this.#totalBehaviorIncidents = totalBehaviorSum;
+        // Update SPEDPercentage
+        this.#SPEDPercentage = (this.#totalSPED / this.#totalNumberOfStudents) * 100;
+        // Update ELPercentage
+        this.#ELPercentage = (this.#totalEL / this.#totalNumberOfStudents) * 100;
+        // update InternestAccessPercentage
+        this.#InternetAccessPercentage = (this.#totalInternetAccess / this.#totalNumberOfStudents) * 100;
+        // update totalAttedancePresent
+        let totalAttendancePresentSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalAttendancePresentSum += this.#students[i].totalPresentAttendance;
+        }
+        this.#totalAttendancePresent = totalAttendancePresentSum;
+        this.#attendancePresentPercentage = (this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+        // update totalAttedanceAbsent
+        let totalAttendanceAbsent = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalAttendanceAbsent += this.#students[i].totalAbsentAttendance;
+        }
+        this.#totalAttendanceAbsent = totalAttendanceAbsent;
+        this.#attendanceAbsentPercentage = (this.#totalAttendanceAbsent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+        // Update totalOffTask
+        let totalOffTaskSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalOffTaskSum += this.#students[i].totalOffTask;
+        }
+        this.#totalOffTask = totalOffTaskSum;
+        this.#offTaskPercentage = (this.#totalOffTask/ this.#totalBehaviorIncidents) * 100;
+        // Update totalRefusingToWork
+        let totalRefusingToWorkSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalRefusingToWorkSum += this.#students[i].totalRefusingToWork;
+        }
+        this.#totalRefusingToWork = totalRefusingToWorkSum;
+        this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
+        // Update totalOutOfSeat
+        let totalOutOfSeatSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalOutOfSeatSum += this.#students[i].totalOutOfSeat;
+        }
+        this.#totalOutOfSeat = totalOutOfSeatSum;
+        this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
+        // Update totalTalking
+        let totalTalkingSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalTalkingSum += this.#students[i].totalTalking;
+        }
+        this.#totalTalking = totalTalkingSum;
+        this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
+        // Update totalThrowingObject
+        let totalThrowingObjectSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalThrowingObjectSum += this.#students[i].totalThrowingObject;
+        }
+        this.#totalThrowingObject = totalThrowingObjectSum;
+        this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
+        // Update totalTouchingOthers
+        let totalTouchingOthersSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalTouchingOthersSum += this.#students[i].totalTouchingOthers;
+        }
+        this.#totalTouchingOthers = totalTouchingOthersSum;
+        this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
+        // Update totalSelfHarm
+        let totalSelfHarmSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalSelfHarmSum += this.#students[i].totalSelfHarm;
+        }
+        this.#totalSelfHarm = totalSelfHarmSum;
+        this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
+        // Update totalInappropriateLang
+        let totalInappropriateLangSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalInappropriateLangSum += this.#students[i].totalInappropriateLang;
+        }
+        this.#totalInappropriateLang= totalInappropriateLangSum;
+        this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
+        // Update totalBullyingTeasing
+        let totalBullyingTeasingSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalBullyingTeasingSum += this.#students[i].totalBullyingTeasing;
+        }
+        this.#totalBullyingTeasing = totalBullyingTeasingSum;
+        this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
+        // Update totalPropertyDamage
+        let totalPropertyDamageSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalPropertyDamageSum += this.#students[i].totalPropertyDamage;
+        }
+        this.#totalPropertyDamage = totalPropertyDamageSum;
+        this.#propertyDamagePercentage = (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
+        // Update totalDefianceDisrespect
+        let totalDefianceDisrespectSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalDefianceDisrespectSum += this.#students[i].totalDefianceDisrespect;
+        }
+        this.#totalDefianceDisrespect = totalDefianceDisrespectSum;
+        this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
+        // Update totalTheft
+        let totalTheftSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalTheftSum += this.#students[i].totalTheft;
+        }
+        this.#totalTheft = totalTheftSum;
+        this.#theftPercentage = (this.#totalTheft/ this.#totalBehaviorIncidents) * 100;
+        // Update totalLyingCheating
+        let totalLyingCheatingSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalLyingCheatingSum += this.#students[i].totalLyingCheating;
+        }
+        this.#totalLyingCheating = totalLyingCheatingSum;
+        this.#lyingCheatingPercentage = (this.#totalLyingCheating/ this.#totalBehaviorIncidents) * 100;
+        // Update totalOtherBehavior
+        let totalOtherBehaviorSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            totalOtherBehaviorSum += this.#students[i].totalOtherBehavior;
+        }
+        this.#totalOtherBehavior = totalOtherBehaviorSum;
+        this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
+        // Update Assignments
+        this.#totalHomework = this.#students[0].totalHomework;
+        this.#totalQuizzes= this.#students[0].totalQuizzes;
+        this.#totalExams = this.#students[0].totalExams;
+        this.#totalProjects = this.#students[0].totalProjects;
+        this.#totalOtherAssignments = this.#students[0].totalOtherAssignments;
+        this.#totalAssignments= this.#students[0].totalAssignments;
+        // Update totalLetterGradeA
+        let totalLetterGradeASum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            if (this.#students[i].letterGrade == "A+" || this.#students[i].letterGrade == "A" || this.#students[i].letterGrade == "A-"){
+                totalLetterGradeASum++;
+            }
+        }
+        this.#totalLetterGradeA = totalLetterGradeASum;
+        this.#letterGradeAPercentage = (this.#totalLetterGradeA / this.#totalNumberOfStudents) * 100;
+        // Update totalLetterGradeB
+        let totalLetterGradeBSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            if (this.#students[i].letterGrade == "B+" || this.#students[i].letterGrade == "B" || this.#students[i].letterGrade == "B-"){
+                totalLetterGradeBSum++;
+            }
+        }
+        this.#totalLetterGradeB = totalLetterGradeBSum;
+        this.#letterGradeBPercentage = (this.#totalLetterGradeB / this.#totalNumberOfStudents) * 100;
+        // Update totalLetterGradeC
+        let totalLetterGradeCSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            if (this.#students[i].letterGrade == "C+" || this.#students[i].letterGrade == "C" || this.#students[i].letterGrade == "C-"){
+                totalLetterGradeCSum++;
+            }
+        }
+        this.#totalLetterGradeC = totalLetterGradeCSum;
+        this.#letterGradeCPercentage = (this.#totalLetterGradeC / this.#totalNumberOfStudents) * 100;
+        // Update totalLetterGradeD
+        let totalLetterGradeDSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            if (this.#students[i].letterGrade == "D+" || this.#students[i].letterGrade == "D" || this.#students[i].letterGrade == "D-"){
+                totalLetterGradeDSum++;
+            }
+        }
+        this.#totalLetterGradeD = totalLetterGradeDSum;
+        this.#letterGradeDPercentage = (this.#totalLetterGradeD / this.#totalNumberOfStudents) * 100;
+        // Update totalLetterGradeF
+        let totalLetterGradeFSum = 0;
+        for (let i = 0; i < this.#students.length; i++){
+            if (this.#students[i].letterGrade == "F"){
+                totalLetterGradeFSum++;
+            }
+        }
+        this.#totalLetterGradeF = totalLetterGradeFSum;
+        this.#letterGradeFPercentage = (this.#totalLetterGradeF / this.#totalNumberOfStudents) * 100;
     }
     removeStudent(studentObj){
         let pos = this.#students.findIndex(
@@ -1216,6 +1392,182 @@ class Class {
             }
             this.#students.splice(pos, 1); // 2nd parameter means remove one item only
             this.#totalNumberOfStudents--;
+            // Update totalBehavior
+            let totalBehaviorSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalBehaviorSum += this.#students[i].totalBehaviorIncidents;
+            }
+            this.#totalBehaviorIncidents = totalBehaviorSum;
+            // Update SPEDPercentage
+            this.#SPEDPercentage = (this.#totalSPED / this.#totalNumberOfStudents) * 100;
+            // Update ELPercentage
+            this.#ELPercentage = (this.#totalEL / this.#totalNumberOfStudents) * 100;
+            // update InternestAccessPercentage
+            this.#InternetAccessPercentage = (this.#totalInternetAccess / this.#totalNumberOfStudents) * 100;
+            // update totalAttedancePresent
+            let totalAttendancePresentSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalAttendancePresentSum += this.#students[i].totalPresentAttendance;
+            }
+            this.#totalAttendancePresent = totalAttendancePresentSum;
+            this.#attendancePresentPercentage = (this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+            // update totalAttedanceAbsent
+            let totalAttendanceAbsent = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalAttendanceAbsent += this.#students[i].totalAbsentAttendance;
+            }
+            this.#totalAttendanceAbsent = totalAttendanceAbsent;
+            this.#attendanceAbsentPercentage = (this.#totalAttendanceAbsent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+            // Update totalOffTask
+            let totalOffTaskSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalOffTaskSum += this.#students[i].totalOffTask;
+            }
+            this.#totalOffTask = totalOffTaskSum;
+            this.#offTaskPercentage = (this.#totalOffTask/ this.#totalBehaviorIncidents) * 100;
+            // Update totalRefusingToWork
+            let totalRefusingToWorkSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalRefusingToWorkSum += this.#students[i].totalRefusingToWork;
+            }
+            this.#totalRefusingToWork = totalRefusingToWorkSum;
+            this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
+            // Update totalOutOfSeat
+            let totalOutOfSeatSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalOutOfSeatSum += this.#students[i].totalOutOfSeat;
+            }
+            this.#totalOutOfSeat = totalOutOfSeatSum;
+            this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
+            // Update totalTalking
+            let totalTalkingSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalTalkingSum += this.#students[i].totalTalking;
+            }
+            this.#totalTalking = totalTalkingSum;
+            this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
+            // Update totalThrowingObject
+            let totalThrowingObjectSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalThrowingObjectSum += this.#students[i].totalThrowingObject;
+            }
+            this.#totalThrowingObject = totalThrowingObjectSum;
+            this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
+            // Update totalTouchingOthers
+            let totalTouchingOthersSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalTouchingOthersSum += this.#students[i].totalTouchingOthers;
+            }
+            this.#totalTouchingOthers = totalTouchingOthersSum;
+            this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
+            // Update totalSelfHarm
+            let totalSelfHarmSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalSelfHarmSum += this.#students[i].totalSelfHarm;
+            }
+            this.#totalSelfHarm = totalSelfHarmSum;
+            this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
+            // Update totalInappropriateLang
+            let totalInappropriateLangSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalInappropriateLangSum += this.#students[i].totalInappropriateLang;
+            }
+            this.#totalInappropriateLang= totalInappropriateLangSum;
+            this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
+            // Update totalBullyingTeasing
+            let totalBullyingTeasingSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalBullyingTeasingSum += this.#students[i].totalBullyingTeasing;
+            }
+            this.#totalBullyingTeasing = totalBullyingTeasingSum;
+            this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
+            // Update totalPropertyDamage
+            let totalPropertyDamageSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalPropertyDamageSum += this.#students[i].totalPropertyDamage;
+            }
+            this.#totalPropertyDamage = totalPropertyDamageSum;
+            this.#propertyDamagePercentage = (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
+            // Update totalDefianceDisrespect
+            let totalDefianceDisrespectSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalDefianceDisrespectSum += this.#students[i].totalDefianceDisrespect;
+            }
+            this.#totalDefianceDisrespect = totalDefianceDisrespectSum;
+            this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
+            // Update totalTheft
+            let totalTheftSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalTheftSum += this.#students[i].totalTheft;
+            }
+            this.#totalTheft = totalTheftSum;
+            this.#theftPercentage = (this.#totalTheft/ this.#totalBehaviorIncidents) * 100;
+            // Update totalLyingCheating
+            let totalLyingCheatingSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalLyingCheatingSum += this.#students[i].totalLyingCheating;
+            }
+            this.#totalLyingCheating = totalLyingCheatingSum;
+            this.#lyingCheatingPercentage = (this.#totalLyingCheating/ this.#totalBehaviorIncidents) * 100;
+            // Update totalOtherBehavior
+            let totalOtherBehaviorSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                totalOtherBehaviorSum += this.#students[i].totalOtherBehavior;
+            }
+            this.#totalOtherBehavior = totalOtherBehaviorSum;
+            this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
+            // Update Assignments
+            this.#totalHomework = this.#students[0].totalHomework;
+            this.#totalQuizzes= this.#students[0].totalQuizzes;
+            this.#totalExams = this.#students[0].totalExams;
+            this.#totalProjects = this.#students[0].totalProjects;
+            this.#totalOtherAssignments = this.#students[0].totalOtherAssignments;
+            this.#totalAssignments= this.#students[0].totalAssignments;
+            // Update totalLetterGradeA
+            let totalLetterGradeASum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                if (this.#students[i].letterGrade == "A+" || this.#students[i].letterGrade == "A" || this.#students[i].letterGrade == "A-"){
+                    totalLetterGradeASum++;
+                }
+            }
+            this.#totalLetterGradeA = totalLetterGradeASum;
+            this.#letterGradeAPercentage = (this.#totalLetterGradeA / this.#totalNumberOfStudents) * 100;
+            // Update totalLetterGradeB
+            let totalLetterGradeBSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                if (this.#students[i].letterGrade == "B+" || this.#students[i].letterGrade == "B" || this.#students[i].letterGrade == "B-"){
+                    totalLetterGradeBSum++;
+                }
+            }
+            this.#totalLetterGradeB = totalLetterGradeBSum;
+            this.#letterGradeBPercentage = (this.#totalLetterGradeB / this.#totalNumberOfStudents) * 100;
+            // Update totalLetterGradeC
+            let totalLetterGradeCSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                if (this.#students[i].letterGrade == "C+" || this.#students[i].letterGrade == "C" || this.#students[i].letterGrade == "C-"){
+                    totalLetterGradeCSum++;
+                }
+            }
+            this.#totalLetterGradeC = totalLetterGradeCSum;
+            this.#letterGradeCPercentage = (this.#totalLetterGradeC / this.#totalNumberOfStudents) * 100;
+            // Update totalLetterGradeD
+            let totalLetterGradeDSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                if (this.#students[i].letterGrade == "D+" || this.#students[i].letterGrade == "D" || this.#students[i].letterGrade == "D-"){
+                    totalLetterGradeDSum++;
+                }
+            }
+            this.#totalLetterGradeD = totalLetterGradeDSum;
+            this.#letterGradeDPercentage = (this.#totalLetterGradeD / this.#totalNumberOfStudents) * 100;
+            // Update totalLetterGradeF
+            let totalLetterGradeFSum = 0;
+            for (let i = 0; i < this.#students.length; i++){
+                if (this.#students[i].letterGrade == "F"){
+                    totalLetterGradeFSum++;
+                }
+            }
+            this.#totalLetterGradeF = totalLetterGradeFSum;
+            this.#letterGradeFPercentage = (this.#totalLetterGradeF / this.#totalNumberOfStudents) * 100;
         }
     }
     addEvent(eventObj){
@@ -1255,11 +1607,6 @@ class Class {
         return this.#totalNumberOfStudents;
     }
     get totalBehaviorIncidents() {
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalBehaviorIncidents;
-        }
-        this.#totalBehaviorIncidents = sum;
         return this.#totalBehaviorIncidents;
     }
     get totalSPED(){
@@ -1272,301 +1619,156 @@ class Class {
         return this.#totalInternetAccess;
     }
     get SPEDPercentage(){
-        this.#SPEDPercentage = (this.#totalSPED / this.#totalNumberOfStudents) * 100;
         return this.#SPEDPercentage;
     }
     get ELPercentage(){
-        this.#ELPercentage = (this.#totalEL / this.#totalNumberOfStudents) * 100;
         return this.#ELPercentage;
     }
     get InternetAccessPercentage(){
-        this.#InternetAccessPercentage = (this.#totalInternetAccess / this.#totalNumberOfStudents) * 100;
         return this.#InternetAccessPercentage;
     }
     get totalAttendancePresent(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalPresentAttendance;
-        }
-        this.#totalAttendancePresent = sum;
         return this.#totalAttendancePresent;
     }
     get totalAttendanceAbsent(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalAbsentAttendance;
-        }
-        this.#totalAttendanceAbsent = sum;
         return this.#totalAttendanceAbsent;
     }
-    get attendancPresentPercentage(){
-        this.#attendancePresentPercentage = (this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
+    get attendancePresentPercentage(){
         return this.#attendancePresentPercentage;
     }
     get attendanceAbsentPercentage(){
-        this.#attendanceAbsentPercentage = (this.#totalAttendanceAbsent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100;
         return this.#attendanceAbsentPercentage;
     }
     get totalOffTask(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalOffTask;
-        }
-        this.#totalOffTask = sum;
         return this.#totalOffTask;
     }
     get totalRefusingToWork(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalRefusingToWork;
-        }
-        this.#totalRefusingToWork = sum;
         return this.#totalRefusingToWork;
     }
     get totalOutOfSeat(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalOutOfSeat;
-        }
-        this.#totalOutOfSeat = sum;
         return this.#totalOutOfSeat;
     }
     get totalTalking(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalTalking;
-        }
-        this.#totalTalking= sum;
         return this.#totalTalking;
     }
     get totalThrowingObject(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalThrowingObject;
-        }
-        this.#totalThrowingObject= sum;
         return this.#totalThrowingObject;
     }
     get totalTouchingOthers(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalTouchingOthers;
-        }
-        this.#totalTouchingOthers = sum;
         return this.#totalTouchingOthers;
     }
     get totalSelfHarm(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalSelfHarm;
-        }
-        this.#totalSelfHarm = sum;
         return this.#totalSelfHarm;
     }
     get totalInappropriateLang() {
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalInappropriateLang;
-        }
-        this.#totalInappropriateLang= sum;
         return this.#totalInappropriateLang;
     }
     get totalBullyingTeasing(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalBullyingTeasing;
-        }
-        this.#totalBullyingTeasing = sum;
         return this.#totalBullyingTeasing;
     }
     get totalPropertyDamage(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalPropertyDamage;
-        }
-        this.#totalPropertyDamage = sum;
         return this.#totalPropertyDamage;
     }
     get totalDefianceDisrespect(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalDefianceDisrespect;
-        }
-        this.#totalDefianceDisrespect= sum;
         return this.#totalDefianceDisrespect;
     }
     get totalTheft(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalTheft;
-        }
-        this.#totalTheft = sum;
         return this.#totalTheft;
     }
     get totalLyingCheating(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalLyingCheating;
-        }
-        this.#totalLyingCheating = sum;
         return this.#totalLyingCheating;
     }
     get totalOtherBehavior(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            sum += this.#students[i].totalOtherBehavior;
-        }
-        this.#totalOtherBehavior = sum;
         return this.#totalOtherBehavior;
     }
     get offTaskPercentage(){
-        this.#offTaskPercentage = (this.#totalOffTask/ this.#totalBehaviorIncidents) * 100;
         return this.#offTaskPercentage;
     }
     get refuseToWorkPercentage(){
-        this.#refusingToWorkPercentage= (this.#totalRefusingToWork / this.#totalBehaviorIncidents) * 100;
         return this.#refusingToWorkPercentage;
     }
     get outOfSeatPercentage(){
-        this.#outOfSeatPercentage = (this.#totalOutOfSeat / this.#totalBehaviorIncidents) * 100;
         return this.#outOfSeatPercentage;
     }
     get talkingPercentage(){
-        this.#talkingPercentage = (this.#totalTalking / this.#totalBehaviorIncidents) * 100;
         return this.#talkingPercentage;
     }
     get throwingObjectPercentage(){
-        this.#throwingObjectPercentage = (this.#totalThrowingObject / this.#totalBehaviorIncidents) * 100;
         return this.#throwingObjectPercentage;
     }
     get touchingOthersPercentage(){
-        this.#touchingOthersPercentage = (this.#totalTouchingOthers / this.#totalBehaviorIncidents) * 100;
         return this.#touchingOthersPercentage;
     }
     get selfHarmPercentage(){
-        this.#selfHarmPercentage = (this.#totalSelfHarm / this.#totalBehaviorIncidents) * 100;
         return this.#selfHarmPercentage;
     }
     get inappropriateLangPercentage(){
-        this.#inappropriateLangPercentage = (this.#totalInappropriateLang / this.#totalBehaviorIncidents) * 100;
         return this.#inappropriateLangPercentage;
     }
     get bullyingTeasingPercentage(){
-        this.#bullyingTeasingPercentage = (this.#totalBullyingTeasing / this.#totalBehaviorIncidents) * 100;
         return this.#bullyingTeasingPercentage;
     }
     get propertyDamagePercentage(){
-        this.#propertyDamagePercentage = (this.#totalPropertyDamage / this.#totalBehaviorIncidents) * 100;
         return this.#propertyDamagePercentage;
     }
     get defianceDisrespectPercentage(){
-        this.#defianceDisrespectPercentage = (this.#totalDefianceDisrespect / this.#totalBehaviorIncidents) * 100;
         return this.#defianceDisrespectPercentage;
     }
     get theftPercentage(){
-        this.#theftPercentage = (this.#totalTheft/ this.#totalBehaviorIncidents) * 100;
         return this.#theftPercentage;
     }
     get lyingCheatingPercentage(){
-        this.#lyingCheatingPercentage = (this.#totalLyingCheating/ this.#totalBehaviorIncidents) * 100;
         return this.#lyingCheatingPercentage;
     }
     get otherBehaviorPercentage(){
-        this.#otherBehaviorPercentage = (this.#totalOtherBehavior / this.#totalBehaviorIncidents) * 100;
         return this.#otherBehaviorPercentage;
     }
     get totalHomework(){
-        this.#totalHomework = this.#students[0].totalHomework;
         return this.#totalHomework;
     }
     get totalQuizzes(){
-        this.#totalQuizzes= this.#students[0].totalQuizzes;
         return this.#totalQuizzes;
     }
     get totalExams(){
-        this.#totalExams = this.#students[0].totalExams;
         return this.#totalExams;
     }
     get totalProjects(){
-        this.#totalProjects = this.#students[0].totalProjects;
         return this.#totalProjects;
     }
     get totalOtherAssignments(){
-        this.#totalOtherAssignments = this.#students[0].totalOtherAssignments;
         return this.#totalOtherAssignments;
     }
     get totalAssignments(){
-        this.#totalAssignments= this.#students[0].totalAssignments;
         return this.#totalAssignments;
     }
     get totalLetterGradeA(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            if (this.#students[i].letterGrade == "A+" || this.#students[i].letterGrade == "A" || this.#students[i].letterGrade == "A-"){
-                sum++;
-            }
-        }
-        this.#totalLetterGradeA = sum;
         return this.#totalLetterGradeA;
     }
     get totalLetterGradeB(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            if (this.#students[i].letterGrade == "B+" || this.#students[i].letterGrade == "B" || this.#students[i].letterGrade == "B-"){
-                sum++;
-            }
-        }
-        this.#totalLetterGradeB = sum;
         return this.#totalLetterGradeB;
     }
     get totalLetterGradeC(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            if (this.#students[i].letterGrade == "C+" || this.#students[i].letterGrade == "C" || this.#students[i].letterGrade == "C-"){
-                sum++;
-            }
-        }
-        this.#totalLetterGradeC = sum;
         return this.#totalLetterGradeC;
     }
     get totalLetterGradeD(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            if (this.#students[i].letterGrade == "D+" || this.#students[i].letterGrade == "D" || this.#students[i].letterGrade == "D-"){
-                sum++;
-            }
-        }
-        this.#totalLetterGradeD = sum;
         return this.#totalLetterGradeD;
     }
     get totalLetterGradeF(){
-        let sum = 0;
-        for (let i = 0; i < this.#students.length; i++){
-            if (this.#students[i].letterGrade == "F"){
-                sum++;
-            }
-        }
-        this.#totalLetterGradeF = sum;
         return this.#totalLetterGradeF;
     }
     get letterGradeAPercentage(){
-        this.#letterGradeAPercentage = (this.#totalLetterGradeA / this.#totalNumberOfStudents) * 100;
         return this.#letterGradeAPercentage;
     }
     get letterGradeBPercentage(){
-        this.#letterGradeBPercentage = (this.#totalLetterGradeB / this.#totalNumberOfStudents) * 100;
         return this.#letterGradeBPercentage;
     }
     get letterGradeCPercentage(){
-        this.#letterGradeCPercentage = (this.#totalLetterGradeC / this.#totalNumberOfStudents) * 100;
         return this.#letterGradeCPercentage;
     }
     get letterGradeDPercentage(){
-        this.#letterGradeDPercentage = (this.#totalLetterGradeD / this.#totalNumberOfStudents) * 100;
         return this.#letterGradeDPercentage;
     }
     get letterGradeFPercentage(){
-        this.#letterGradeFPercentage = (this.#totalLetterGradeF / this.#totalNumberOfStudents) * 100;
         return this.#letterGradeFPercentage;
     }
     get students(){
