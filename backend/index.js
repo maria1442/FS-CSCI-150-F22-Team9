@@ -1955,6 +1955,7 @@ class User {
 const {MongoClient, MongoDBNamespace} = require('mongodb');
 
 // Functions to call MongoDB, use form functionName(parameter(s)).catch(console.error); to call functions
+// USE THESE IN CLIENT JS
 // ADD DOCUMENTS to EXISTING CLASS
 async function addEventToDB(course, event) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
@@ -2256,6 +2257,7 @@ async function getEventFromDB(event) {
         return readEvent;
     }
 }
+
 async function getEventArrayFromDB() {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
@@ -2366,6 +2368,7 @@ async function getUserArrayFromDB() {
 }
 
 // Functions to write to MongoDB
+// HELPER FUNCTIONS, CALL THE ONES ABOVE
 // ADD NEW DOCUMENTS
 async function addNewEventToDB(client, event){
     let JSONEvent = event.toJSON(); 
@@ -2802,6 +2805,11 @@ async function retrieveUserFromDB(client, user){
         Will need to make the main function for each to make db calls
         Will have the client connect and disconnect 
         Will have to be async when retrieving values    
+    Steps to Grab Data
+        Retrieve document, student, and class from DB, use arrays for large amounts
+        Turn documents into object
+        Add object to student object, add student to class
+        Update class, student, and object (if updating object)
 */
 
 
