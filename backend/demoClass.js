@@ -1,5 +1,6 @@
 // DEMO CLASS
 //ADDING TO CLASS
+var class1 = new Class("Mrs. Doe Sixth Grade", "Jane Doe", "6", 10, 25, 40, 25);
 // Students
 var student0 = new Student(10000000, "alt", "Bryana", "Cantle", "female", 5, 28, 2012, "bcantle0@gmail.com", false, false, true);
 var student1 = new Student(10000001, "alt", "Josephina", "Udden", "agender", 11, 26, 2011, "judden1@gmail.com", false, false, true);
@@ -1412,11 +1413,11 @@ student29.addAttendance(student29Day19);
 student29.addAttendance(student29Day20);
 student29.addAttendance(student29Day21);
 // Behavior
-var student0Behavior1 = new Behavior("Refusing To Work", 9, 1, 2022, "Did not want to do writing assignment");
+var student0Behavior1 = new Behavior("Refusing to Work", 9, 1, 2022, "Did not want to do writing assignment");
 var student1Behavior1 = new Behavior("Talking", 9, 1, 2022, "Talking during reading time");
 var student2Behavior1 = new Behavior("Touching Others", 9, 2, 2022, "Play fighting with Josephina");
 var student3Behavior1 = new Behavior("Off Task", 9, 5, 2022, "Not paying attention");
-var student4Behavior1 = new Behavior("Refusing To Work", 9, 6, 2022, "Did not want to do math");
+var student4Behavior1 = new Behavior("Refusing to Work", 9, 6, 2022, "Did not want to do math");
 var student5Behavior1 = new Behavior("Out of Seat", 9, 7, 2022, "Would not stay seated during reading time");
 var student6Behavior1 = new Behavior("Talking", 9, 8, 2022, "Talking with Lexine");
 var student7Behavior1 = new Behavior("Talking", 9, 8, 2022, "Talking with Margarete");
@@ -1431,7 +1432,7 @@ var student15Behavior1 = new Behavior("Theft", 9, 20, 2022, "Stole an eraser");
 var student16Behavior1 = new Behavior("Lying or Cheating", 9, 21, 2022, "Lied about homework");
 var student17Behavior1 = new Behavior("Touching Others", 9, 22, 2022, "Not keeping hands to themselves");
 var student18Behavior1 = new Behavior("Off Task", 9, 23, 2022, "Not paying attention");
-var student19Behavior1 = new Behavior("Refusing To Work", 9, 26, 2022, "Did not want to read out loud");
+var student19Behavior1 = new Behavior("Refusing to Work", 9, 26, 2022, "Did not want to read out loud");
 var student20Behavior1 = new Behavior("Out of Seat", 9, 27, 2022, "Did not stay seated during science lesson");
 var student21Behavior1 = new Behavior("Throwing Object", 9, 28, 2022, "Threw ball of paper across room");
 var student22Behavior1 = new Behavior("Touching Others", 9, 29, 2022, "Play fighting");
@@ -1453,7 +1454,7 @@ var student6Behavior2 = new Behavior("Self Harm", 9, 22, 2022, "Hitting themselv
 var student7Behavior2 = new Behavior("Touching Others", 9, 21, 2022, "Hit Goldina");
 var student8Behavior2 = new Behavior("Throwing Object", 9, 20, 2022, "Threw eraser at Channa");
 var student9Behavior2 = new Behavior("Out of Seat", 9, 19, 2022, "Did not stay seated during attendance");
-var student10Behavior2 = new Behavior("Refusing To Work", 9, 16, 2022, "Did not want to work on classwork");
+var student10Behavior2 = new Behavior("Refusing to Work", 9, 16, 2022, "Did not want to work on classwork");
 var student11Behavior2 = new Behavior("Off Task", 9, 15, 2022, "Did not pay attention during video");
 var student12Behavior2 = new Behavior("Other Behavior", 9, 14, 2022, "Need to talk to parent");
 var student13Behavior2 = new Behavior("Lying or Cheating", 9, 13, 2022, "Cheating on exam");
@@ -1465,7 +1466,7 @@ var student18Behavior2 = new Behavior("Inappropriate Language", 9, 6, 2022, "Cus
 var student19Behavior2 = new Behavior("Touching Others", 9, 5, 2022, "Play fighting with Whit");
 var student20Behavior2 = new Behavior("Throwing Object", 9, 2, 2022, "Threw whiteboard marker");
 var student21Behavior2 = new Behavior("Out of Seat", 9, 1, 2022, "Out of seat during homework time");
-var student22Behavior2 = new Behavior("Refusing To Work", 9, 30, 2022, "Refused to check out book");
+var student22Behavior2 = new Behavior("Refusing to Work", 9, 30, 2022, "Refused to check out book");
 var student23Behavior2 = new Behavior("Off Task", 9, 29, 2022, "Was doing math homework during reading time");
 var student24Behavior2 = new Behavior("Other Behavior", 9, 28, 2022, "Need to talk to parent");
 var student25Behavior2 = new Behavior("Lying or Cheating", 9, 27, 2022, "Forged parent signature");
@@ -2085,7 +2086,6 @@ student29.addAssignment(student29Assignment7);
 var user1 = new User("jDoe", "password");
 
 // Class
-var class1 = new Class("Mrs. Doe Sixth Grade", "Jane Doe", "6", 10, 25, 40, 25);
 
 // Events
 var event0 = new Event("School Carnival", 9, 2, 2022, "Plenty of games and booths after school", "School Foyer")
@@ -2143,3 +2143,50 @@ class1.addStudent(student29);
 
 // Add class to user
 user1.addClass(class1);
+// Adding to DB
+// User
+addUserToDB(user1);
+// Class
+//addClassToDB(user1, class1);
+// Events
+addEventToDB(class1, event0).catch(console.error);
+addEventToDB(class1, event1).catch(console.error);
+addEventToDB(class1, event2).catch(console.error);
+addEventToDB(class1, event3).catch(console.error);
+addEventToDB(class1, event4).catch(console.error);
+// Announcements
+addAnnouncementToDB(class1, announcement0);
+addAnnouncementToDB(class1, announcement1);
+addAnnouncementToDB(class1, announcement2);
+addAnnouncementToDB(class1, announcement3);
+// Students
+addStudentToDB(class1, student0);
+addStudentToDB(class1, student1);
+addStudentToDB(class1, student2);
+addStudentToDB(class1, student3);
+addStudentToDB(class1, student4);
+addStudentToDB(class1, student5);
+addStudentToDB(class1, student6);
+addStudentToDB(class1, student7);
+addStudentToDB(class1, student8);
+addStudentToDB(class1, student9);
+addStudentToDB(class1, student10);
+addStudentToDB(class1, student11);
+addStudentToDB(class1, student12);
+addStudentToDB(class1, student13);
+addStudentToDB(class1, student14);
+addStudentToDB(class1, student15);
+addStudentToDB(class1, student16);
+addStudentToDB(class1, student17);
+addStudentToDB(class1, student18);
+addStudentToDB(class1, student19);
+addStudentToDB(class1, student20);
+addStudentToDB(class1, student21);
+addStudentToDB(class1, student22);
+addStudentToDB(class1, student23);
+addStudentToDB(class1, student24);
+addStudentToDB(class1, student25);
+addStudentToDB(class1, student26);
+addStudentToDB(class1, student27);
+addStudentToDB(class1, student28);
+addStudentToDB(class1, student29);
