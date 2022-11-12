@@ -1,3 +1,8 @@
+/* html,
+body {
+  overflow-y: scroll;
+} */
+
 body,
 h1 {
   margin: 0;
@@ -96,10 +101,10 @@ i {
   width: 78%;
   height: 500px;
   background-color: #ffffff;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   margin-left: 20%;
   margin-top: 5%;
-  text-align: center;
+  /* text-align: center; */
   top: 15%;
 }
 
@@ -169,14 +174,37 @@ i {
 }
 
 table,
-td {
-  /* border: 3px solid black; */
+td,
+th {
+  border: 1px solid black;
   border-collapse: collapse;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   font-family: Arial;
 }
+
 table {
   width: 100%;
   height: 500px;
   text-align: center;
+  table-layout: fixed;
+  overflow: auto;
+}
+
+.event_content thead th {
+  height: 10%;
+  background-color: gold;
+}
+
+.event_content tbody th {
+  height: 15%;
+  background-color: white;
+}
+
+.main,
+.side-nav {
+  overflow-y: scroll;
+}
+
+.side-nav::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
