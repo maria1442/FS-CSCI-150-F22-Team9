@@ -37,4 +37,10 @@
         await client.close();
     }
 }
-main().catch(console.error);*/
+main().catch(console.error);
+async function getData(){
+    var y = await getEventArrayFromDB();
+    document.getElementById("index").value = JSON.stringify(y);
+    console.log(y);
+}
+*/
