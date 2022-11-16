@@ -1,0 +1,46 @@
+[{
+  "eventName": "Scholastic Book Fair",
+  "date": {
+    "$date": {
+      "$numberLong": "1665903600000"
+    }
+  },
+  "description": "Students can buy books from the book fair",
+  "location": "Library"
+},{
+  "eventName": "School Carnival",
+  "date": {
+    "$date": {
+      "$numberLong": "1664694000000"
+    }
+  },
+  "description": "Plenty of games and booths after school",
+  "location": "School Foyer"
+},{
+  "eventName": "Pastries with Parents",
+  "date": {
+    "$date": {
+      "$numberLong": "1665298800000"
+    }
+  },
+  "description": "Come enjoy pastries with your student",
+  "location": "Cafeteria"
+},{
+  "eventName": "End of Month Assembly",
+  "date": {
+    "$date": {
+      "$numberLong": "1667113200000"
+    }
+  },
+  "description": "Monthly assembly",
+  "location": "Cafeteria"
+},{
+  "eventName": "Drug Free Assembly",
+  "date": {
+    "$date": {
+      "$numberLong": "1666508400000"
+    }
+  },
+  "description": "Assembly about being drug free",
+  "location": "Cafeteria"
+}]
