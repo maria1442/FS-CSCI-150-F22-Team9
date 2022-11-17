@@ -2821,3 +2821,47 @@ async function retrieveUserFromDB(client, user){
     const userObj = await client.db("classparency").collection("users").findOne({"_id": stringId}, {projection:{ _id: 0 }});
     return userObj;
 }
+
+async function main() {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+
+    const client = new MongoClient(uri);
+
+    try {
+        await client.connect();
+        var class1 = new Class("Mrs. Doe Sixth Grade", "Jane Doe", "6", 10, 25, 40, 25);
+        var student1 = new Student(10000001, "alt", "Josephina", "Udden", "agender", 11, 26, 2011, "judden1@gmail.com", false, false, true);
+        var student1Day1 = new Attendance(9, 2, 2022, "Present");
+        var student1Day2 = new Attendance(9, 5, 2022, "Present");
+        var student1Behavior1 = new Behavior("Talking", 9, 1, 2022, "Talking during reading time");
+        var student1Behavior2 = new Behavior("Theft", 9, 29, 2022, "Stole Fabio's pencil");
+        //await deleteStudentFromClassDB(client, class1, student1);
+        //await addNewStudentToClassDB(client, class1, student1);
+        //await addStudentAttendanceToDB(client, student1, student1Day2);
+        //await updateStudentAttendanceFromClassDB(client, class1, student1, student1Day1, student1Day2);
+        //await deleteStudentAttendanceFromClassDB(client, class1, student1, student1Day2);
+        //await addStudentBehaviorToClassDB(client, class1, student1, student1Behavior1);
+        //await updateStudentBehaviorFromClassDB(client, class1, student1, student1Behavior1, student1Behavior2);
+        var event1 = new Event("Pastries with Parents", 9, 9, 2022, "Come enjoy pastries with your student", "Cafeteria");
+        var event2 = new Event("Scholastic Book Fair", 9, 16, 2022, "Students can buy books from the book fair", "Library");
+        var event3 = new Event("Drug Free Assembly", 9, 23, 2022, "Assembly about being drug free", "Cafeteria");
+        //await addNewEventToDB(client, event3);
+        //await addNewEventToClassDB(client, class1, event3);
+        //await deleteEventFromClassDB(client, class1, event1);
+        //await updateEventToDB(client, event2, event1);
+        //await updateEventFromClassDB(client, class1, event2, event1);
+        //await addNewClassToDB(client, class1);
+        //var arr = await retrieveEventArrayFromDB(client);
+        var student = await retrieveStudentFromDB(client, student1);
+        //var arr = student.studentAttendance;
+        //var arr = student.studentBehavior;
+        var arr = student.studentAssignments;
+        console.log(arr)
+        //var obj = await retrieveStudentFromDB(client, student1);//retrieveStudentFromDB(client, student1);
+        //console.log(obj);//JSON.parse(arr))
+    }
+    finally {
+        await client.close();
+    }
+}
+main().catch(console.error);
