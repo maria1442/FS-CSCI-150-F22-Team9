@@ -25,33 +25,40 @@
 
 }
 
-.additional{
+.events-pie{
     position: relative;
     top: 20px;
-    margin-top: 3%;
+    margin-top: 2%;
     margin-left: 20%;
     width: 78%;
     height: 300px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-
-
 }
 
-#announcements{
-    margin-right: 0;
-    margin-left: 150px;
-}
-.events{
-    height: 300px;
-    width: 400px;
+.events-card{
     display: inline-block;
     vertical-align: middle;
     background-color: white;
-    
+    width: 350px;
+    height: 370px;
     border-radius: 20px;
-
+    margin-right: 30px;
+    margin-left: 5px;
+    text-align: center;
 }
+
+.events-card-info{
+    padding-right: 30px;
+    width: 320px;
+    height: 350px;
+    margin-left: 0px;
+    margin-top: 20px;
+    background-color: orange;
+    opacity: .4;
+    
+}
+
 
 .stats-card{
     display: inline-block;
@@ -64,13 +71,186 @@
     margin-left: 5px;
     
 }
+
+.skill{
+    width: 180px;
+    height: 180px;
+    position: relative;
+
+}
+
+.outter{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    padding: 20px;
+    /* border: 2px solid red; */
+    box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+                -6px -6px 10px -1px rgba(255,255,255,0.7)
+
+}
+
+.inner{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 2px solid red;
+    /* box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+                inset -4px -4px 6px -1px rgba(255,255,255,0.7),
+                -0.5px -0.5px, 0px rgba(255,255,255,1),
+                0.5px 0.5px, 0px rgba(0,0,0,0.15),
+                0px 12px 10px -10px rgba(0,0,0,0.05); */
+    /* margin: 16px; */
+
+}
+
+
+/* This is copy paste */
+
+.all{
+    display: flex;
+  }
+  .circle-wrap {
+    display: grid;
+    grid-template-columns: repeat(1, 160px);
+    grid-gap: 80px;
+    margin-top: 100px;
+    margin-left: 50px;
+    width: 150px;
+    height: 150px;
+    background: #d9d7da;
+    border-radius: 50%;
+  }
+  
+  .circle-wrap .circle .mask,
+  .circle-wrap .circle .fill-1,
+  .circle-wrap .circle .fill-2,
+  .circle-wrap .circle .fill-3 {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    border-radius: 50%;
+  }
+  
+  .circle-wrap .circle .mask {
+    clip: rect(0px, 150px, 150px, 75px);
+  }
+  
+  .circle-wrap .inside-circle {
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    background: white;
+    line-height: 120px;
+    text-align: center;
+    margin-top: 13px;
+    margin-left: 13px;
+    color: black;
+    position: absolute;
+    z-index: 100;
+    font-weight: 700;
+    font-size: 2em;
+  }
+  
+  /* color animation */
+  
+  .mask .fill-1 {
+    clip: rect(0px, 75px, 150px, 0px);
+    background-color: #0052CC;
+  }
+  
+  .mask.full-1,
+  .circle .fill-1 {
+    animation: fill-1 ease-in-out 3s;
+    transform: rotate(153deg);
+  }
+  
+  @keyframes fill-1 {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(153deg);
+    }
+  }
+  
+  /* 2nd bar */
+  
+  .mask .fill-2 {
+    clip: rect(0px, 75px, 150px, 0px);
+    background-color: #FBD540;
+  }
+  
+  .mask.full-2,
+  .circle .fill-2 {
+    animation: fill-2 ease-in-out 3s;
+    transform: rotate(117deg);
+  }
+  
+  @keyframes fill-2{
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(117deg);
+    }
+  }
+  
+  /* 3rd progress bar */
+  .mask .fill-3 {
+    clip: rect(0px, 75px, 150px, 0px);
+    background-color: #F37F3D;
+  }
+  
+  .mask.full-3,
+  .circle .fill-3 {
+    animation: fill-3 ease-in-out 3s;
+    transform: rotate(135deg);
+  }
+  
+  @keyframes fill-3{
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(135deg);
+    }
+  }
+  
+
+
+/*Uptill here */
+
 .card-info{
     padding-right: 30px;
     width: 200px;
     height: 200px;
+    margin-left: 35px;
+    margin-top: 20px;
+    /* background-color: #002ACC;
+    opacity: .4; */
+    text-align: center;
+    
+}
+
+.progress{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin-top: 40px;
+    margin-left: 35px;
+    background-color: black;
+
+}
+.event-info{
+  
+
     background-color: #002ACC;
     opacity: .4;
-    margin-left: 35px;
+    padding-right: 30px;
+    width: 350px;
+    height: 200px;
+    margin-left: 30px;
     margin-top: 20px;
     
 }
@@ -96,7 +276,7 @@
     width: 50px;
     height: 50px;
     border-radius: 100%;
-    background-color: yellow;
+    background-color: #FBD540;
 }
 body,
 h1 {
