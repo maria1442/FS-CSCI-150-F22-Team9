@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./student.css">
+  <link rel="stylesheet" href="./dashboard.css">
   <script src="https://kit.fontawesome.com/d029989dde.js" crossorigin="anonymous"></script>
 
 
-  <title>Students</title>
+  <title>Dashboard</title>
 </head>
 <body>
 
@@ -21,7 +21,7 @@
 
     <div class = "side-nav-a">
     <a href="./dashboard.html"> <i class="fa-solid fa-house"></i> Dashboard</a>
-    <a href="./students.html"> <i class="fa-solid fa-user-graduate"></i> Students</a>
+    <a href="./student.html"> <i class="fa-solid fa-user-graduate"></i> Students</a>
     <a href="#grades"> <i class="fa-solid fa-square-poll-vertical"></i> Grades</a>
     <a href="#attendance"> <i class="fa-solid fa-wave-square"></i>Attendence</a>
     <a href="#events"> <i class="fa-solid fa-calendar-days"></i> Events</a>
@@ -32,7 +32,7 @@
   </aside>
 
   <div class="top-section">
-      <h2 class = "top-div" id = "top-header">Students</h2>
+      <h2 class = "top-div" id = "top-header">Dashboard</h2>
       <!-- <i class = "top-div" id = "#drop-icon" class="fa-solid fa-caret-down"></i> -->
       <!-- <div class="user-snippet">
         <img class = "inside-user-snip"id = "user-photo" src="./images/classparencyLogo.png" alt="">
@@ -44,107 +44,131 @@
 
   </div>
 
-  <div class = "search-section">
-
-
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input class = "input-search" type="text" placeholder="   Search">
-    </input>
-
-
-    <button class = "newest">Newest</button>
-    <button class = "add-new">New Student</button>
-
-
+  <div class="container">
     
+    <div class = "student-card">
+        <div class = "s-card-image">
+            <img src="./student.png" alt="Student-info">
+        </div>
 
-</div>
+        <div class = "s-card-image">
+            XXXXXX
+        </div>
+        
+    </div>
 
-  <div class = "main">
-    <table>
+    <div class = "student-card">
+        <div class="p-card-image">
+            <img src="./student.png" alt="parent-info">
+        </div>
+        
+        <div class = "p-card-image">
+            XXXXXX
+        </div>
+        
+    </div>
 
-  <tr>
-
-    <th>Name</th>
-
-    <th>ID</th>
-
-    <th>Date</th>
-
-    <th>Parent Name</th>
-
-    <th>City</th>
-
-    <th>Contact</th>
-
-    <th>Grade</th>
-
-    <th>Action</th>
-
-  </tr>
-
-  <tr>
-
-    <td>Alfreds Futterkiste</td>
-
-    <td>Maria Anders</td>
-
-    <td>Germany</td>
-
-  </tr>
-
-  <tr>
-
-    <td>Centro comercial Moctezuma</td>
-
-    <td>Francisco Chang</td>
-
-    <td>Mexico</td>
-
-  </tr>
-
-  <tr>
-
-    <td>Ernst Handel</td>
-
-    <td>Roland Mendel</td>
-
-    <td>Austria</td>
-
-  </tr>
-
-  <tr>
-
-    <td>Island Trading</td>
-
-    <td>Helen Bennett</td>
-
-    <td>UK</td>
-
-  </tr>
-
-  <tr>
-
-    <td>Laughing Bacchus Winecellars</td>
-
-    <td>Yoshi Tannamuri</td>
-
-    <td>Canada</td>
-
-  </tr>
-
-  <tr>
-
-    <td>Magazzini Alimentari Riuniti</td>
-
-    <td>Giovanni Rovelli</td>
-
-    <td>Italy</td>
-
-  </tr>
-
-</table>
   </div>
+
+
+
+  <div class = "stats-pie">
+
+    <div class = "stats-card">
+        <div class = "card-info" style = "font-weight: 700;"> 
+            Attendence
+
+            <div class="circle-wrap">
+                <div class="circle">
+                  <div class="mask full-1">
+                    <div class="fill-1"></div>
+                  </div>
+                  <div class="mask half">
+                    <div class="fill-1"></div>
+                  </div>
+                  <div class="inside-circle"> 85% </div>
+                </div>
+              </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="stats-card">
+        <div class = "card-info" style = "font-weight: 700;" > 
+            Grades
+
+            <div class="circle-wrap">
+                <div class="circle">
+                  <div class="mask full-2">
+                    <div class="fill-2"></div>
+                  </div>
+                  <div class="mask half">
+                    <div class="fill-2"></div>
+                  </div>
+                  <div class="inside-circle"> 65% </div>
+                </div>
+              </div>
+        
+
+        </div>
+
+    </div>
+
+    <div class = "stats-card">
+        <div class = "card-info" style = "font-weight: 700;"> 
+            Behavior
+
+            
+
+
+            <div class="circle-wrap" style = "margin-right: 100px; ">
+                <div class="circle">
+                  <div class="mask full-3">
+                    <div class="fill-3"></div>
+                  </div>
+                  <div class="mask half">
+                    <div class="fill-3"></div>
+                  </div>
+                  <div class="inside-circle"> 75% </div>
+                </div>
+              </div>
+            </div>
+
+        
+
+        </div>
+    </div>
+
+  </div>
+
+  <div class = "events-pie">
+
+    <div class = "events-card">
+        <div class = "events-card-info" style = "font-weight: 700;"> 
+            Events
+
+
+        </div>
+
+    </div>
+
+    <div class="events-card">
+        <div class = "events-card-info" style = "font-weight: 700;" > 
+            Announcements
+
+            <div>
+                <ul></ul>
+            </div>
+            
+        </div>
+
+    </div>
+
+  </div>
+
+
 </body>
 <script src="index.js"></script>
 
