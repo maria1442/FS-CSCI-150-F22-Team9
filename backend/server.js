@@ -1,7 +1,6 @@
 // --------------------------------------
 // MONGO DB FUNCTIONS
 const {MongoClient, MongoDBNamespace} = require('mongodb');
-
 // Functions to call MongoDB, use form functionName(parameter(s)).catch(console.error); to call functions
 // USE THESE IN CLIENT JS
 // ADD DOCUMENTS to EXISTING CLASS
