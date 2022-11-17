@@ -12,21 +12,18 @@
 
     <title>Announcements</title>
   </head>
-  <body>
+  <body onload="makeList()">
     <aside class="side-nav">
       <div class="header-div">
-        <img
-          id="img-logo"
-          class="same"
-          src="./images/classparencyLogo.png"
-          alt="no-image"
-        />
+        <img id="img-logo" class="same" src="./cp_logo.png" alt="no-image" />
         <h2 class="same" id="heading">Classparency</h2>
       </div>
 
       <div class="side-nav-a">
-        <a href="#dashboard"> <i class="fa-solid fa-house"></i> Dashboard</a>
-        <a href="#students">
+        <a href="./dashboard.html">
+          <i class="fa-solid fa-house"></i> Dashboard</a
+        >
+        <a href="./students.html">
           <i class="fa-solid fa-user-graduate"></i> Students</a
         >
         <a href="#grades">
@@ -35,13 +32,13 @@
         <a href="#attendance">
           <i class="fa-solid fa-wave-square"></i>Attendence</a
         >
-        <a href="events.html">
+        <a href="./events.html">
           <i class="fa-solid fa-calendar-days"></i> Events</a
         >
-        <a href="seatingchart.html">
+        <a href="./seatingchart.html">
           <i class="fa-solid fa-chair"></i> Seating Chart</a
         >
-        <a href="announcement.html">
+        <a href="./announcement.html">
           <i class="fa-solid fa-bullhorn"></i> Announcements</a
         >
         <a href="#options"> <i class="fa-solid fa-gear"></i> Options</a>
@@ -65,18 +62,16 @@
 
     <div class="main">
       <ul id="announcement_content">
-        <li id="title">
-          Pizza
+        <!-- <li>
+          <p id="title">test</p>
           <ul>
-            <p id = "description">Pepperoni will be on the pizza</p>
+            <p id="description">test</p>
           </ul>
-        </li>
-        
-        
+        </li> -->
       </ul>
     </div>
   </body>
-  <script src="test.js"></script>
-  <script src="announcements.json"></script>
 
+  <script src="announcements.json"></script>
+  <script src="kalvin_page.js"></script>
 </html>

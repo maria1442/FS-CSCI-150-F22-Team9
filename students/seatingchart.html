@@ -10,7 +10,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <title>Announcements</title>
+    <title>Seating Charts</title>
   </head>
   <body>
     <aside class="side-nav">
@@ -49,7 +49,7 @@
     </aside>
 
     <div class="top-section">
-      <h2 class="top-div" id="top-header">Announcements</h2>
+      <h2 class="top-div" id="top-header">Seating Chart</h2>
       <!-- <i class = "top-div" id = "#drop-icon" class="fa-solid fa-caret-down"></i> -->
       <!-- <div class="user-snippet">
         <img class = "inside-user-snip"id = "user-photo" src="./images/classparencyLogo.png" alt="">
@@ -63,20 +63,17 @@
       </div>
     </div>
 
-    <div class="main">
-      <ul id="announcement_content">
-        <li id="title">
-          Pizza
-          <ul>
-            <p id = "description">Pepperoni will be on the pizza</p>
-          </ul>
-        </li>
-        
-        
-      </ul>
+    <div class="main-header">
+      <input type="button" id="main-buttons" value="Student" />
+      <input type="button" id="main-buttons" value="Edit" />
+      <select id="main-select" name="Preference">
+        <option value="1">Preference 1</option>
+        <option value="2">Preference 2</option>
+        <option value="3">Preference 3</option>
+        <option value="4">Preference 4</option>
+      </select>
     </div>
+    <div class="main"></div>
   </body>
-  <script src="test.js"></script>
-  <script src="announcements.json"></script>
-
+  <script src="index.js"></script>
 </html>
