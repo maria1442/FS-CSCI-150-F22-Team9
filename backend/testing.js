@@ -83,3 +83,15 @@ var server = app.listen(8081, function () {
    
    console.log("Example app listening at http://%s:%s", host, port)
 })
+/* TO DO: 
+    Need to add formToObject, connected with HTML page
+        Will need to make the main function for each to make db calls
+        Will have the client connect and disconnect 
+        Will have to be async when retrieving values    
+    Steps to Grab Data
+        Retrieve document, student, and class from DB, use arrays for large amounts
+        Turn documents into object
+        Add object to student object, add student to class
+        Update class, student, and object (if updating object)
+    Connect with Express.js
+    */
