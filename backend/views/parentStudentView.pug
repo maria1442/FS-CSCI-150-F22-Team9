@@ -1,0 +1,63 @@
+html
+  head
+    title= "Student Information"
+  body
+    h1= studentFirstName + " " + studentLastName
+    img(src=studentPhoto alt='studentPhoto' style='width:100px; height:100px;')
+    section 
+      h2="Student Demographic"
+      p="Gender: " + gender 
+      p="Birth Date: " + birthDate 
+      p="Contact Email: " + contactEmail
+      p="SPED: " + sped 
+      p="EL: " + el 
+      p="Internet Access: " + internetAccess 
+    section
+      h2="Assignments"
+      p=gradePercentage + " " + letterGrade
+      table   
+        tr 
+          th= "Assignment Name" 
+          th= "Assignment Category" 
+          th= "Assignment Weight"
+          th= "Given Score"
+          th= "Possible Score"
+          th= "Percentage"
+          th= "Date"
+        each assignment in studentAssignments 
+          tr
+            td=assignment.assignmentName
+            td=assignment.assignmentCategory
+            td=assignment.assignmentWeight*100 + "%"
+            td=assignment.givenScore 
+            td=assignment.possibleScore 
+            td=assignment.assignmentPercentage + "%"
+            td=assignment.date 
+    section 
+      h2="Attendance"
+      p="Total Days: " + totalDays 
+      p="Total Days Present: " + totalPresentAttendance 
+      p="Total Days Absent: " + totalAbsentAttendance
+      p="Present Percentage: " + attendancePresentPercentage + "%"
+      table   
+        tr 
+          th= "Date" 
+          th= "Status"
+        each day in studentAttendance
+          tr
+            td=day.date
+            td=day.status
+    section 
+      h2="Behavior"
+      p="Total Behavior Incidents: " + totalBehaviorIncidents 
+      table   
+        tr 
+          th= "Incident" 
+          th= "Date"
+          th= "Comment"
+        each behavior in studentBehavior
+          tr
+            td=behavior.incident
+            td=behavior.date 
+            td=behavior.comment 
+    

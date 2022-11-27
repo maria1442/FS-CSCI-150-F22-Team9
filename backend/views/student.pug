@@ -1,0 +1,70 @@
+html
+	head
+		meta(charset='UTF-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width,initial-scale=1')
+		style 	
+			include ./index.css
+		script(src='https://kit.fontawesome.com/d029989dde.js' crossorigin='anonymous')
+		title="Student"
+	body 
+		aside.side-nav
+			.header-div
+				img#img-logo.same(src='/cp_logo.png' alt='no-image')
+				h2.same#heading="Classparency"
+			.side-nav-a
+				a(href='./dashboard')
+					i.fa-solid.fa-house
+					="Dashboard"
+				a(href='./studentPage')
+					i.fa-solid.fa-user-graduate
+					="Students"
+				a(href='./grades')
+					i.fa-solid.fa-square-poll-vertical
+					="Grades"
+				a(href='./attendance')
+					i.fa-solid.fa-wave-square
+					="Attendence"
+				a(href='./eventsPage')
+					i.fa-solid.fa-calendar-days
+					="Events"
+				a(href='./seatingchart.html')
+					i.fa-solid.fa-chair
+					="Seating Chart"
+				a(href='./announcementsPage')
+					i.fa-solid.fa-bullhorn
+					="Announcements"
+				a(href='#options')
+					i.fa-solid.fa-gear
+					="Options"
+	.top-section
+				h2.top-div#top-header="Students"
+				img#dd-a(href='https://www.google.com')
+				i#drop-icon.fa-solid.fa-caret-down
+				a(href)
+					i.fa-solid.fa-bell
+				a(href)
+					i.fa-solid.fa-gear
+	.main
+		table   
+					tr 
+						th="Student Photo"
+						th= "Student ID" 
+						th= "Student Name" 
+						th= "Date of Birth"
+						th= "Contact Email"
+						th= "SPED"
+						th= "EL"
+						th= "Internet Access"
+						th= "Letter Grade"
+					each student in students
+						tr
+							td=student.photo
+							td=student.studentId
+							td=student.firstName + " " + student.lastName
+							td=student.birthDate
+							td=student.contactEmail 
+							td=student.SPED 
+							td=student.EL
+							td=student.internetAccess 
+							td=student.letterGrade

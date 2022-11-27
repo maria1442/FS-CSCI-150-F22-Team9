@@ -2015,7 +2015,7 @@ async function updateStudentAssignmentFromDB(client, student, assignment, newAss
     let stringId = finding._id;        
     let JSONAssignment = newAssignment.toJSON();
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId, "studentAssignments.assignmentName": assignment.assignmentName}, {$set: {"studentAssignments.$": JSONAssignment}});
-}
+}*/
 /* TO DO: 
     Add students into class students Array
     Able to turn object into document and add to DB
@@ -2106,4 +2106,3 @@ console.log(string);*/
         Able to take document and turn into object
         Able to turn object into document and add to DB
 */
-

@@ -2767,7 +2767,8 @@ async function retrieveAnnouncementFromDB(client, announcement){
 }
 async function retrieveStudentArrayFromDB(client){
     let studentArray = new Array();
-    studentArray = await client.db("classparency").collection("students").find({},{projection:{ _id: 0 }}).toArray();
+    studentArray = await client.db("classparency").collection("students").find({},{projection:{ _id: 0 }, sort:{
+        'studentId': 1}}).toArray();
     return studentArray;
 }
 // Use student.fieldname to get info from student
@@ -2807,9 +2808,14 @@ async function retrieveUserFromDB(client, user){
 }
 
 const express = require("express");
+const { response } = require('express');
 const mongo = require("mongodb").MongoClient;
 
 const app = express();
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'pug');
+app.use(express.static('views'));
+
 
 const url =  "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
 
@@ -2830,6 +2836,7 @@ mongo.connect(
   }
 );
 app.use(express.json())
+
 
 // Send Documents
 // Add new document
@@ -2944,9 +2951,16 @@ app.get("/event", async function(req, res) {
     const singleEvent = await getEventFromDB(req.body);
     res.status(200).json({event: singleEvent});
 })
-app.get("/events", async function(req, res) {
+/*app.get("/events", async function(req, res) {
     const eventsArr = await getEventArrayFromDB();
     res.status(200).json({events: eventsArr});
+})*/
+app.get("/eventsPage", async function(req, res) {
+    const eventsArr = await getEventArrayFromDB();
+    for (let i = 0; i < eventsArr.length; i++){
+        eventsArr[i].date = eventsArr[i].date.toLocaleDateString();
+    }
+    res.render('events', {events: eventsArr});
 })
 app.get("/announcement", async function(req, res) {
     const singleAnnouncement = await getAnnouncementFromDB(req.body);
@@ -2956,15 +2970,83 @@ app.get("/announcements", async function(req, res) {
     const announcementsArr = await getAnnouncementArrayFromDB();
     res.status(200).json({announcements: announcementsArr});
 })
+app.get("/announcementsPage", async function(req, res) {
+    const announcementsArr = await getAnnouncementArrayFromDB();
+    for (let i = 0; i < announcementsArr.length; i++){
+        announcementsArr[i].date = announcementsArr[i].date.toLocaleDateString();
+    }
+    res.render('announcements', {announcements: announcementsArr});
+})
 app.get("/student", async function(req, res) {
-    const singleStudent = await getStudentFromDB(req.body);
+    var studentId = req.query.studentID;
+    var student = new Student(Number(studentId));
+    const singleStudent = await getStudentFromDB(student.toJSON());
     res.status(200).json({student: singleStudent});
 })
 
+app.get("/studentParentPage", async function(req, res) {
+    var studentId = req.query.studentID;
+    var student = new Student(Number(studentId));
+    const singleStudent = await getStudentFromDB(student.toJSON());
+    if (singleStudent == undefined){
+        res.render('failedParentStudentView');
+    }
+    else{
+        singleStudent.birthDate = singleStudent.birthDate.toLocaleDateString();
+        for (let i = 0; i < singleStudent.studentAttendance.length; i++){
+            singleStudent.studentAttendance[i].date = singleStudent.studentAttendance[i].date.toLocaleDateString();
+        }
+        for (let i = 0; i < singleStudent.studentAssignments.length; i++){
+            singleStudent.studentAssignments[i].date = singleStudent.studentAssignments[i].date.toLocaleDateString();
+        }
+        for (let i = 0; i < singleStudent.studentBehavior.length; i++){
+            singleStudent.studentBehavior[i].date = singleStudent.studentBehavior[i].date.toLocaleDateString();
+        }
+        res.render('parentStudentView', { studentPhoto: singleStudent.photo, 
+                                        studentFirstName: singleStudent.firstName, 
+                                        studentLastName: singleStudent.lastName, 
+                                        gender: singleStudent.gender,
+                                        birthDate: singleStudent.birthDate,
+                                        contactEmail: singleStudent.contactEmail,
+                                        sped: singleStudent.SPED,
+                                        el: singleStudent.EL,
+                                        internetAccess: singleStudent.internetAccess,
+                                        letterGrade: singleStudent.letterGrade,
+                                        gradePercentage: singleStudent.gradePercentage,
+                                        studentAssignments: singleStudent.studentAssignments,
+                                        totalDays: singleStudent.totalDays,
+                                        totalPresentAttendance: singleStudent.totalPresentAttedance,
+                                        totalAbsentAttendance: singleStudent.totalAbsentAttendance,
+                                        attendancePresentPercentage: singleStudent.attendancePresentPercentage,
+                                        studentAttendance: singleStudent.studentAttendance,
+                                        totalBehaviorIncidents: singleStudent.totalBehaviorIncidents,
+                                        studentBehavior: singleStudent.studentBehavior
+                                        });
+    }
+})
 app.get("/students", async function(req, res) {
     const studentsArr = await getStudentArrayFromDB();
     res.status(200).json({students: studentsArr});
 })
+
+app.get("/grades", async function(req, res) {
+    const studentsArr = await getStudentArrayFromDB();
+    var assignmentArr = studentsArr[0].studentAssignments;
+    for (let i = 0; i < assignmentArr.length; i++){
+        assignmentArr[i].date = assignmentArr[i].date.toLocaleDateString();
+    }
+    res.render('grades', {students: studentsArr, assignmentArr: assignmentArr});
+})
+
+app.get("/attendance", async function(req, res) {
+    const studentsArr = await getStudentArrayFromDB();
+    var attendanceArr = studentsArr[0].studentAttendance;
+    for (let i = 0; i < attendanceArr.length; i++){
+        attendanceArr[i].date = attendanceArr[i].date.toLocaleDateString();
+    }
+    res.render('attendance', {students: studentsArr, attendanceArr: attendanceArr});
+})
+
 app.get("/class", async function(req, res) {
     const singleClass = await getClassFromDB(req.body);
     res.status(200).json({class: singleClass});
@@ -2973,6 +3055,35 @@ app.get("/classes", async function(req, res) {
     const classesArr = await getClassArrayFromDB();
     res.status(200).json({classes: classesArr});
 })
+
+app.get("/dashboard", async function(req, res) {
+    const classesArr = await getClassArrayFromDB();
+    const singleClass = classesArr[0];
+    for (let i = 0; i < singleClass.events.length; i++){
+        singleClass.events[i].date = singleClass.events[i].date.toLocaleDateString();
+    }
+    for (let i = 0; i < singleClass.announcements.length; i++){
+        singleClass.announcements[i].date = singleClass.announcements[i].date.toLocaleDateString();
+    }
+    res.render('dashboard', {   sped: singleClass.totalSPED,
+                                el: singleClass.totalEL,
+                                internetAccess: singleClass.totalInternetAccess,
+                                attendancePercentage: singleClass.attendancePresentPercentage,
+                                letterGradeAPercentage: singleClass.letterGradeAPercentage,
+                                events: singleClass.events,
+                                announcements: singleClass.announcements
+                        });
+})
+
+app.get("/studentPage",  async function(req, res) {
+    const classesArr = await getClassArrayFromDB();
+    const singleClass = classesArr[0];
+    for (let i = 0; i < singleClass.students.length; i++){
+        singleClass.students[i].birthDate = singleClass.students[i].birthDate.toLocaleDateString();
+    }
+    res.render('student', { students: singleClass.students});
+})
+
 app.get("/user", async function(req, res) {
     const singleUser = await getUserFromDB(req.body);
     res.status(200).json({user: singleUser});
@@ -2980,6 +3091,11 @@ app.get("/user", async function(req, res) {
 app.get("/users", async function(req, res) {
     const usersArr = await getUserArrayFromDB();
     res.status(200).json({users: usersArr});
+})
+
+app.use(express.static('public'));
+app.get('/parent.html', function (req, res) {
+   res.sendFile( __dirname + "/" + "parent.html" );
 })
 
 app.listen(3000, () => console.log("Server ready"))
