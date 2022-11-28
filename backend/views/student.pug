@@ -60,7 +60,7 @@ html
 					each student in students
 						tr
 							td=student.photo
-							td=student.studentId
+							td=student.studentId 
 							td=student.firstName + " " + student.lastName
 							td=student.birthDate
 							td=student.contactEmail 
@@ -68,3 +68,45 @@ html
 							td=student.EL
 							td=student.internetAccess 
 							td=student.letterGrade
+		h2="Add Student"
+		form(action='./addStudent' method='POST')
+			| 
+			label(for='studentID')= "Student ID: "
+			input(type='text' name='studentID')
+			| 
+			label(for='studentFirstName')= "Student First Name: " 
+			input(type='text' name='studentFirstName')
+			| 
+			label(for='studentLastName')="Student Last Name: "
+			input(type='text' name='studentLastName')
+			| 
+			br
+			label(for='studentGender')= "Student Gender: " 
+			input(type='text' name='studentGender')
+			|
+			label(for='studentDOB')="DOB: "
+			input(type='date' name='studentDOB')
+			| 
+			label(for='studentContactEmail')="Contact Email: "
+			input(type='text' name='studentContactEmail')
+			|
+			br
+			input#spedFalse(type='radio' name='sped' value='SPEDFalse')
+			label(for='spedFalse')="NOT SPED"
+			input#spedTrue(type='radio' name='sped' value='SPEDTrue')
+			label(for='spedTrue')="SPED"
+			|
+			br
+			input#elFalse(type='radio' name='el' value='ELFalse')
+			label(for='elFalse')="NOT EL"
+			input#spedTrue(type='radio' name='el' value='ELTrue')
+			label(for='elTrue')="EL"
+			|
+			br
+			input#internetAccessFalse(type='radio' name='internetAccess' value='InternetAccessFalse')
+			label(for='internetAccessFalse')="Does not have internet access at home"
+			input#internetAccessTrue(type='radio' name='internetAccess' value='InternetAccessTrue')
+			label(for='internetAccessTrue')="Does have internet access at home"
+			|
+			br
+			input(type='submit' value='Add Student')

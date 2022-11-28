@@ -56,3 +56,18 @@ html
 							td=announcement.title
 							td=announcement.date
 							td=announcement.description
+		h2="Add Announcement"
+		form(action='./addAnnouncement' method='POST')
+			| 
+			label(for='title')= "Announcement Subject: "
+			input(type='text' name='title')
+			| 
+			label(for='description')= "Description: " 
+			input(type='text' name='description')
+			|  
+			br
+			label(for='announcementDate')="Date: "
+			input(type='date' name='announcementDate')
+			| 
+			br
+			input(type='submit' value='Add Announcement')

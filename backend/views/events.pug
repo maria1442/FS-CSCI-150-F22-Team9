@@ -58,3 +58,21 @@ html
 							td=event.date
 							td=event.description
 							td=event.location
+		h2="Add Event"
+		form(action='./addEvent' method='POST')
+			| 
+			label(for='eventName')= "Event Name: "
+			input(type='text' name='eventName')
+			| 
+			label(for='description')= "Description: " 
+			input(type='text' name='description')
+			| 
+			label(for='location')="Location: "
+			input(type='text' name='location')
+			| 
+			br
+			label(for='eventDate')="Date: "
+			input(type='date' name='eventDate')
+			| 
+			br
+			input(type='submit' value='Add Event')

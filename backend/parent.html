@@ -9,5 +9,34 @@
             <br>
             <input type = "submit" value = "Submit">
         </form>
+        <h2>Add Student</h2>
+        <form action = "./updateStudent" method = "GET">
+            Student ID: <input type = "text" name = "studentID"> 
+            <br>
+            Student First Name: <input type = "text" name = "studentFirstName">
+            <br>
+            Student Last Name: <input type="text" name="studentLastName">
+            <br>
+            DOB: <input type = "date" name = "studentDOB">
+            <br>
+            Contact Email: <input type = "text" name = "studentContactEmail">
+            <br>
+            <input type="radio" id="spedFalse" name="sped" value="SPEDFalse">
+            <label for="spedFalse">NOT SPED</label>
+            <input type="radio" id="spedTrue" name="sped" value="SPEDTrue">
+            <label for="spedTrue">SPED</label>
+            <br>
+            <input type="radio" id="elFalse" name="el" value="ELFalse">
+            <label for="elFalse">NOT EL</label>
+            <input type="radio" id="spedTrue" name="el" value="ELTrue">
+            <label for="elTrue">EL</label>
+            <br>
+            <input type="radio" id="internetAccessFalse" name="internetAccess" value="InternetAccessFalse">
+            <label for="internetAccessFalse">Does not have internet access at home</label>
+            <input type="radio" id="internetAccessTrue" name="internetAccess" value="InternetAccessTrue">
+            <label for="internetAccessTrue">Does have internet access at home</label>
+            <br>
+            <input type = "submit" value = "studentSubmit">
+        </form>
     </body>
 </html>

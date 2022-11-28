@@ -937,7 +937,7 @@ class Student{
     get offTaskPercentage(){
         return this.#offTaskPercentage;
     }
-    get refuseToWorkPercentage(){
+    get refusingToWorkPercentage(){
         return this.#refusingToWorkPercentage;
     }
     get outOfSeatPercentage(){
@@ -1015,14 +1015,14 @@ class Student{
             totalQuizzes: this.#totalQuizzes,
             totalExams: this.#totalExams,
             totalProjects: this.#totalProjects,
-            totalOtherAssignements: this.#totalOtherAssignments,
+            totalOtherAssignments: this.#totalOtherAssignments,
             totalAssignments: this.#totalAssignments,
             letterGrade: this.#letterGrade,
             gradePercentage: this.#gradePercentage,
             studentAssignments: assignmentOutput,
             // TOTAL ATTENDANCE
             totalDays: this.#totalDays,
-            totalPresentAttedance: this.#totalPresentAttendance,
+            totalPresentAttendance: this.#totalPresentAttendance,
             totalAbsentAttendance: this.#totalAbsentAttendance,
             attendancePresentPercentage: this.#attendancePresentPercentage,
             studentAttendance: attendanceOutput,
@@ -1212,6 +1212,186 @@ class Class {
     set gradeLevel(gradeLevel){
         this.#gradeLevel = gradeLevel;
     }
+    set totalNumberOfStudents(totalNumberOfStudents){
+        this.#totalNumberOfStudents = totalNumberOfStudents;
+    }
+    set totalBehaviorIncidents(totalBehaviorIncidents) {
+        this.#totalBehaviorIncidents = totalBehaviorIncidents;
+    }
+    set totalSPED(totalSPED){
+        this.#totalSPED = totalSPED;
+    }
+    set totalEL(totalEL){
+        this.#totalEL = totalEL;
+    }
+    set totalInternetAccess(totalInternetAccess){
+        this.#totalInternetAccess = totalInternetAccess;
+    }
+    set SPEDPercentage(SPEDPercentage){
+        this.#SPEDPercentage = SPEDPercentage;
+    }
+    set ELPercentage(ELPercentage){
+        this.#ELPercentage = ELPercentage;
+    }
+    set InternetAccessPercentage(InternetAccessPercentage){
+        this.#InternetAccessPercentage = InternetAccessPercentage;
+    }
+    set totalAttendancePresent(totalAttendancePresent){
+        this.#totalAttendancePresent = totalAttendancePresent;
+    }
+    set totalAttendanceAbsent(totalAttendanceAbsent){
+        this.#totalAttendanceAbsent = totalAttendanceAbsent;
+    }
+    set attendancePresentPercentage(attendancePresentPercentage){
+        this.#attendancePresentPercentage = attendancePresentPercentage;
+    }
+    set attendanceAbsentPercentage(attendanceAbsentPercentage){
+        this.#attendanceAbsentPercentage = attendanceAbsentPercentage;
+    }
+    set totalOffTask(totalOffTask){
+        this.#totalOffTask = totalOffTask;
+    }
+    set totalRefusingToWork(totalRefusingToWork){
+        this.#totalRefusingToWork = totalRefusingToWork;
+    }
+    set totalOutOfSeat(totalOutOfSeat){
+        this.#totalOutOfSeat = totalOutOfSeat;
+    }
+    set totalTalking(totalTalking){
+        this.#totalTalking = totalTalking;
+    }
+    set totalThrowingObject(totalThrowingObject){
+        this.#totalThrowingObject = totalThrowingObject;
+    }
+    set totalTouchingOthers(totalTouchingOthers){
+        this.#totalTouchingOthers = totalTouchingOthers;
+    }
+    set totalSelfHarm(totalSelfHarm){
+        this.#totalSelfHarm = totalSelfHarm;
+    }
+    set totalInappropriateLang(totalInappropriateLang) {
+        this.#totalInappropriateLang = totalInappropriateLang;
+    }
+    set totalBullyingTeasing(totalBullyingTeasing){
+        this.#totalBullyingTeasing = totalBullyingTeasing;
+    }
+    set totalPropertyDamage(totalPropertyDamage){
+        this.#totalPropertyDamage = totalPropertyDamage
+    }
+    set totalDefianceDisrespect(totalDefianceDisrespect){
+        this.#totalDefianceDisrespect = totalDefianceDisrespect;
+    }
+    set totalTheft(totalTheft){
+        this.#totalTheft = totalTheft;
+    }
+    set totalLyingCheating(totalLyingCheating){
+        this.#totalLyingCheating = totalLyingCheating;
+    }
+    set totalOtherBehavior(totalOtherBehavior){
+        this.#totalOtherBehavior = totalOtherBehavior;
+    }
+    set offTaskPercentage(offTaskPercentage){
+        this.#offTaskPercentage = offTaskPercentage;
+    }
+    set refusingToWorkPercentage(refusingToWorkPercentage){
+        this.#refusingToWorkPercentage = refusingToWorkPercentage;
+    }
+    set outOfSeatPercentage(outOfSeatPercentage){
+        this.#outOfSeatPercentage = outOfSeatPercentage;
+    }
+    set talkingPercentage(talkingPercentage){
+        this.#talkingPercentage = talkingPercentage;
+    }
+    set throwingObjectPercentage(throwingObjectPercentage){
+        this.#throwingObjectPercentage = throwingObjectPercentage;
+    }
+    set touchingOthersPercentage(touchingOthersPercentage){
+        this.#touchingOthersPercentage = touchingOthersPercentage;
+    }
+    set selfHarmPercentage(selfHarmPercentage){
+        this.#selfHarmPercentage = selfHarmPercentage;
+    }
+    set inappropriateLangPercentage(inappropriateLangPercentage){
+        this.#inappropriateLangPercentage = inappropriateLangPercentage;
+    }
+    set bullyingTeasingPercentage(bullyingTeasingPercentage){
+        this.#bullyingTeasingPercentage = bullyingTeasingPercentage;
+    }
+    set propertyDamagePercentage(propertyDamagePercentage){
+        this.#propertyDamagePercentage = propertyDamagePercentage;
+    }
+    set defianceDisrespectPercentage(defianceDisrespectPercentage){
+        this.#defianceDisrespectPercentage = defianceDisrespectPercentage;
+    }
+    set theftPercentage(theftPercentage){
+        this.#theftPercentage = theftPercentage;
+    }
+    set lyingCheatingPercentage(lyingCheatingPercentage){
+        this.#lyingCheatingPercentage = lyingCheatingPercentage;
+    }
+    set otherBehaviorPercentage(otherBehaviorPercentage){
+        this.#otherBehaviorPercentage = otherBehaviorPercentage;
+    }
+    set totalHomework(totalHomework){
+        this.#totalHomework = totalHomework;
+    }
+    set totalQuizzes(totalQuizzes){
+        this.#totalQuizzes = totalQuizzes;
+    }
+    set totalExams(totalExams){
+        this.#totalExams = totalExams;
+    }
+    set totalProjects(totalProjects){
+        this.#totalProjects = totalProjects;
+    }
+    set totalOtherAssignments(totalOtherAssignments){
+        this.#totalOtherAssignments = totalOtherAssignments;
+    }
+    set totalAssignments(totalAssignments){
+        this.#totalAssignments = totalAssignments;
+    }
+    set totalLetterGradeA(totalLetterGradeA){
+        this.#totalLetterGradeA = totalLetterGradeA;
+    }
+    set totalLetterGradeB(totalLetterGradeB){
+        this.#totalLetterGradeB = totalLetterGradeB;
+    }
+    set totalLetterGradeC(totalLetterGradeC){
+        this.#totalLetterGradeC = totalLetterGradeC;
+    }
+    set totalLetterGradeD(totalLetterGradeD){
+        this.#totalLetterGradeD = totalLetterGradeD;
+    }
+    set totalLetterGradeF(totalLetterGradeF){
+        this.#totalLetterGradeF = totalLetterGradeF;
+    }
+    set letterGradeAPercentage(letterGradeAPercentage){
+        this.#letterGradeAPercentage = letterGradeAPercentage;
+    }
+    set letterGradeBPercentage(letterGradeBPercentage){
+        this.#letterGradeBPercentage = letterGradeBPercentage;
+    }
+    set letterGradeCPercentage(letterGradeCPercentage){
+        this.#letterGradeCPercentage = letterGradeCPercentage;
+    }
+    set letterGradeDPercentage(letterGradeDPercentage){
+        this.#letterGradeDPercentage = letterGradeDPercentage;
+    }
+    set letterGradeFPercentage(letterGradeFPercentage){
+        this.#letterGradeFPercentage = letterGradeFPercentage;
+    }
+    set students(students){
+        this.#students = students;
+    }
+    set events(events){
+        this.#events = events;
+    }
+    set announcements(announcements){
+        this.#announcements = announcements;
+    }
+    static from(json){
+        return Object.assign(new Class(), json);
+      }
     addStudent(studentObj){
         //let s = new Student(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess);
         this.#students.push(studentObj);
@@ -1235,16 +1415,16 @@ class Class {
         this.#SPEDPercentage = Math.round(100*(this.#totalSPED / this.#totalNumberOfStudents) * 100) / 100;
         // Update ELPercentage
         this.#ELPercentage = (this.#totalEL / this.#totalNumberOfStudents) * 100;
-        // update InternestAccessPercentage
+        // update InternetAccessPercentage
         this.#InternetAccessPercentage = Math.round(100*(this.#totalInternetAccess / this.#totalNumberOfStudents) * 100) / 100;
-        // update totalAttedancePresent
+        // update totalAttendancePresent
         let totalAttendancePresentSum = 0;
         for (let i = 0; i < this.#students.length; i++){
             totalAttendancePresentSum += this.#students[i].totalPresentAttendance;
         }
         this.#totalAttendancePresent = totalAttendancePresentSum;
         this.#attendancePresentPercentage = Math.round(100*(this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100) / 100;
-        // update totalAttedanceAbsent
+        // update totalAttendanceAbsent
         let totalAttendanceAbsent = 0;
         for (let i = 0; i < this.#students.length; i++){
             totalAttendanceAbsent += this.#students[i].totalAbsentAttendance;
@@ -1428,16 +1608,16 @@ class Class {
             this.#SPEDPercentage = Math.round(100*(this.#totalSPED / this.#totalNumberOfStudents) * 100) / 100;
             // Update ELPercentage
             this.#ELPercentage = (this.#totalEL / this.#totalNumberOfStudents) * 100;
-            // update InternestAccessPercentage
+            // update InternetAccessPercentage
             this.#InternetAccessPercentage = Math.round(100*(this.#totalInternetAccess / this.#totalNumberOfStudents) * 100) / 100;
-            // update totalAttedancePresent
+            // update totalAttendancePresent
             let totalAttendancePresentSum = 0;
             for (let i = 0; i < this.#students.length; i++){
                 totalAttendancePresentSum += this.#students[i].totalPresentAttendance;
             }
             this.#totalAttendancePresent = totalAttendancePresentSum;
             this.#attendancePresentPercentage = Math.round(100*(this.#totalAttendancePresent / (this.#totalAttendancePresent + this.#totalAttendanceAbsent)) * 100) / 100;
-            // update totalAttedanceAbsent
+            // update totalAttendanceAbsent
             let totalAttendanceAbsent = 0;
             for (let i = 0; i < this.#students.length; i++){
                 totalAttendanceAbsent += this.#students[i].totalAbsentAttendance;
@@ -1629,7 +1809,7 @@ class Class {
     get gradeLevel(){
         return this.#gradeLevel;
     }
-    get totaNumberOfStudents(){
+    get totalNumberOfStudents(){
         return this.#totalNumberOfStudents;
     }
     get totalBehaviorIncidents() {
@@ -1710,7 +1890,7 @@ class Class {
     get offTaskPercentage(){
         return this.#offTaskPercentage;
     }
-    get refuseToWorkPercentage(){
+    get refusingToWorkPercentage(){
         return this.#refusingToWorkPercentage;
     }
     get outOfSeatPercentage(){
@@ -1806,6 +1986,78 @@ class Class {
     get announcements(){
         return this.#announcements;
     }
+    makeClass(doc) {
+        this.#courseName = doc.courseName;
+        this.#instructorName = doc.instructorName;
+        this.#gradeLevel = doc.gradeLevel;
+        this.#totalNumberOfStudents = doc.totalNumberOfStudents;
+        this.#totalSPED = doc.totalSPED;
+        this.#totalEL = doc.totalEL;
+        this.#totalInternetAccess = doc.totalInternetAccess;
+        this.#SPEDPercentage = doc.SPEDPercentage;
+        this.#ELPercentage = doc.ELPercentage;
+        this.#InternetAccessPercentage = doc.InternetAccessPercentage;
+
+        this.#totalAttendancePresent = doc.totalAttendancePresent;
+        this.#totalAttendanceAbsent = doc.totalAttendanceAbsent;
+        this.#attendancePresentPercentage = doc.attendancePresentPercentage;
+        this.#attendanceAbsentPercentage = doc.attendanceAbsentPercentage;
+
+        this.#totalBehaviorIncidents = doc.totalBehaviorIncidents;
+        this.#totalOffTask = doc.totalOffTask;
+        this.#totalRefusingToWork = doc.totalRefusingToWork;
+        this.#totalOutOfSeat = doc.totalOutOfSeat;
+        this.#totalTalking = doc.totalTalking;
+        this.#totalThrowingObject = doc.totalThrowingObject;
+        this.#totalTouchingOthers = doc.totalTouchingOthers;
+        this.#totalSelfHarm = doc.totalSelfHarm;
+        this.#totalInappropriateLang = doc.totalInappropriateLang;
+        this.#totalBullyingTeasing = doc.totalBullyingTeasing;
+        this.#totalPropertyDamage = doc.totalPropertyDamage;
+        this.#totalDefianceDisrespect = doc.totalDefianceDisrespect;
+        this.#totalTheft = doc.totalTheft;
+        this.#totalLyingCheating = doc.totalLyingCheating;
+        this.#totalOtherBehavior = doc.totalOtherBehavior;
+        this.#offTaskPercentage = doc.offTaskPercentage;
+        this.#refusingToWorkPercentage = doc.refusingToWorkPercentage;
+        this.#outOfSeatPercentage = doc.outOfSeatPercentage;
+        this.#talkingPercentage = doc.talkingPercentage;
+        this.#throwingObjectPercentage = doc.throwingObjectPercentage;
+        this.#touchingOthersPercentage = doc.touchingOthersPercentage;
+        this.#selfHarmPercentage = doc.selfHarmPercentage;
+        this.#inappropriateLangPercentage = doc.inappropriateLangPercentage;
+        this.#bullyingTeasingPercentage = doc.bullyingTeasingPercentage;
+        this.#propertyDamagePercentage = doc.propertyDamagePercentage;
+        this.#defianceDisrespectPercentage = doc.defianceDisrespectPercentage;
+        this.#theftPercentage = doc.theftPercentage;
+        this.#lyingCheatingPercentage = doc.lyingCheatingPercentage;
+        this.#otherBehaviorPercentage = doc.otherBehaviorPercentage;
+
+        this.#totalHomework = doc.totalHomework;
+        this.#totalQuizzes = doc.totalQuizzes;
+        this.#totalExams = doc.totalExams;
+        this.#totalProjects = doc.totalProjects;
+        this.#totalOtherAssignments = doc.totalOtherAssignments;
+        this.#totalAssignments = doc.totalAssignments;
+        homeworkWeight = doc.homeworkWeight;
+        quizWeight = doc.quizWeight;
+        examWeight = doc.examWeight;
+        projectWeight = doc.projectWeight;
+        this.#totalLetterGradeA = doc.totalLetterGradeA;
+        this.#totalLetterGradeB = doc.totalLetterGradeB;
+        this.#totalLetterGradeC = doc.totalLetterGradeC;
+        this.#totalLetterGradeD = doc.totalLetterGradeD;
+        this.#totalLetterGradeF = doc.totalLetterGradeF;
+        this.#letterGradeAPercentage = doc.letterGradeAPercentage;
+        this.#letterGradeBPercentage = doc.letterGradeBPercentage;
+        this.#letterGradeCPercentage = doc.letterGradeCPercentage;
+        this.#letterGradeDPercentage = doc.letterGradeDPercentage;
+        this.#letterGradeFPercentage = doc.letterGradeFPercentage;
+
+        this.#students = doc.students;
+        this.#events = doc.events;
+        this.#announcements = doc.announcements;
+    }
     toJSON(){
         var studentOutput = new Array();
         for (let i = 0; i < this.#students.length; i++){
@@ -1839,7 +2091,7 @@ class Class {
             totalQuizzes: this.#totalQuizzes,
             totalExams: this.#totalExams,
             totalProjects: this.#totalProjects,
-            totalOtherAssignements: this.#totalOtherAssignments,
+            totalOtherAssignments: this.#totalOtherAssignments,
             totalAssignments: this.#totalAssignments,
             totalLetterGradeA: this.#totalLetterGradeA,
             letterGradeAPercentage: this.#letterGradeAPercentage,
@@ -1952,6 +2204,46 @@ class User {
 // MongoDB Functions
 const {MongoClient, MongoDBNamespace} = require('mongodb');
 
+async function getNumberOfSPED(){
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    var numSPED;
+    try {
+        await client.connect();
+        numSPED = await countSPED(client);
+   }
+    finally {
+        await client.close(); 
+        return numSPED;
+    } 
+}
+async function getNumberOfEL(){
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    var numEL;
+    try {
+        await client.connect();
+        numEL = await countEL(client);
+   }
+    finally {
+        await client.close(); 
+        return numEL;
+    } 
+}
+async function getNumberOfInternetAccess(){
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    var numIA;
+    try {
+        await client.connect();
+        numIA = await countInternetAccess(client);
+   }
+    finally {
+        await client.close(); 
+        return numIA;
+    } 
+}
+
 async function addEventToDB(event) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
@@ -1976,7 +2268,7 @@ async function addAnnouncementToDB(announcement) {
         await client.close();
     }
 }
-async function addStudentToDB(course, student) {
+async function addStudentToDB(student) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
     try {
@@ -2374,6 +2666,23 @@ async function getUserArrayFromDB() {
 
 // Functions to write to MongoDB
 // HELPER FUNCTIONS, CALL THE ONES ABOVE
+// COUNT DOCUMENTS
+async function countSPED(client){
+    const query = {SPED: true};
+    const numSPED = await client.db("classparency").collection("students").countDocuments(query);
+    return numSPED;
+}
+async function countEL(client){
+    const query = {EL: true};
+    const numEL = await client.db("classparency").collection("students").countDocuments(query);
+    return numEL;
+}
+async function countInternetAccess(client){
+    const query = {internetAccess: true};
+    const numIA = await client.db("classparency").collection("students").countDocuments(query);
+    return numIA;
+}
+
 // ADD NEW DOCUMENTS
 async function addNewEventToDB(client, event){
     let JSONEvent = event;
@@ -2816,6 +3125,11 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'pug');
 app.use(express.static('views'));
 
+var bodyParser = require('body-parser');
+
+// Create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 
 const url =  "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
 
@@ -2845,16 +3159,65 @@ app.post("/newEvent", (req, res) => {
     addEventToDB(newEvent).catch(console.error);
     res.status(200).json({ ok: true })
 })
+app.post("/addEvent", urlencodedParser, async function(req, res){
+    var eventName = req.body.eventName;
+    var eventDescription = req.body.description;
+    var eventLocation = req.body.location;
+    var eventDate = new Date(req.body.eventDate);
+    const newEvent = new Event(eventName, eventDate.getUTCMonth(), eventDate.getUTCDate(), eventDate.getUTCFullYear(), eventDescription, eventLocation);
+    addEventToDB(newEvent.toJSON());
+    res.redirect('back');
+})
+
 app.post("/newAnnouncement", (req, res) => {
     const newAnnouncement = req.body;
     addAnnouncementToDB(newAnnouncement).catch(console.error);
     res.status(200).json({ ok: true })
+})
+app.post("/addAnnouncement", urlencodedParser, async function(req, res){
+    var title = req.body.title;
+    var description = req.body.description;
+    var announcementDate = new Date(req.body.announcementDate);
+    const newAnnouncement = new Announcement(title, description, announcementDate.getUTCMonth(), announcementDate.getUTCDate(), announcementDate.getUTCFullYear());
+    addAnnouncementToDB(newAnnouncement.toJSON());
+    res.redirect('back');
 })
 app.post("/newStudent", (req, res) => {
     const newStudent = req.body;
     addStudentToDB(newStudent).catch(console.error);
     res.status(200).json({ ok: true })
 })
+
+app.post("/addStudent",  urlencodedParser, async function(req, res) {
+    var studentID = req.body.studentID;
+    var studentFirstName = req.body.studentFirstName;
+    var studentLastName = req.body.studentLastName;
+    var studentGender = req.body.studentGender;
+    var studentDOB = new Date(req.body.studentDOB);
+    var studentContactEmail = req.body.studentContactEmail;
+    var studentSPEDRadio = req.body.sped;
+    var studentSPED;
+    if (studentSPEDRadio == "SPEDFalse"){
+        studentSPED = false;
+    }
+    else studentSPED = true;
+    var studentELRadio = req.body.el;
+    var studentEL;
+    if (studentELRadio == "ELFalse"){
+        studentEL = false;
+    }
+    else studentEL = true;
+    var studentIARadio = req.body.internetAccess;
+    var studentIA;
+    if (studentIARadio == "InternetAccessFalse"){
+        studentIA = false;
+    }
+    else studentIA = true;
+    const newStudent = new Student(studentID, "alt", studentFirstName, studentLastName, studentGender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), studentContactEmail, studentSPED, studentEL, studentIA);
+    addStudentToDB(newStudent.toJSON());
+    res.redirect('back');
+})
+
 app.post("/newClass", (req, res) => {
     const newCourse = req.body;
     addClassToDB(newCourse).catch(console.error);
@@ -3015,7 +3378,7 @@ app.get("/studentParentPage", async function(req, res) {
                                         gradePercentage: singleStudent.gradePercentage,
                                         studentAssignments: singleStudent.studentAssignments,
                                         totalDays: singleStudent.totalDays,
-                                        totalPresentAttendance: singleStudent.totalPresentAttedance,
+                                        totalPresentAttendance: singleStudent.totalPresentAttendance,
                                         totalAbsentAttendance: singleStudent.totalAbsentAttendance,
                                         attendancePresentPercentage: singleStudent.attendancePresentPercentage,
                                         studentAttendance: singleStudent.studentAttendance,
@@ -3057,31 +3420,58 @@ app.get("/classes", async function(req, res) {
 })
 
 app.get("/dashboard", async function(req, res) {
-    const classesArr = await getClassArrayFromDB();
-    const singleClass = classesArr[0];
-    for (let i = 0; i < singleClass.events.length; i++){
-        singleClass.events[i].date = singleClass.events[i].date.toLocaleDateString();
+    //const classesArr = await getClassArrayFromDB();
+    const numSPED = await getNumberOfSPED();
+    const numEL = await getNumberOfEL();
+    const numIA = await getNumberOfInternetAccess();
+    const studentsArr = await getStudentArrayFromDB();
+    let totalAttendancePresentSum = 0;
+    let attendancePresentPercentage = 0;
+    for (let i = 0; i < studentsArr.length; i++){
+        totalAttendancePresentSum += studentsArr[i].totalPresentAttendance;
     }
-    for (let i = 0; i < singleClass.announcements.length; i++){
-        singleClass.announcements[i].date = singleClass.announcements[i].date.toLocaleDateString();
+    let totalAttendanceAbsent = 0;
+    for (let i = 0; i < studentsArr.length; i++){
+        totalAttendanceAbsent += studentsArr[i].totalAbsentAttendance;
     }
-    res.render('dashboard', {   sped: singleClass.totalSPED,
-                                el: singleClass.totalEL,
-                                internetAccess: singleClass.totalInternetAccess,
-                                attendancePercentage: singleClass.attendancePresentPercentage,
-                                letterGradeAPercentage: singleClass.letterGradeAPercentage,
-                                events: singleClass.events,
-                                announcements: singleClass.announcements
+    attendancePresentPercentage = Math.round(100*(totalAttendancePresentSum / (totalAttendancePresentSum + totalAttendanceAbsent)) * 100) / 100;
+    let totalLetterGradeASum = 0;
+        for (let i = 0; i < studentsArr.length; i++){
+            if (studentsArr[i].letterGrade == "A+" || studentsArr[i].letterGrade == "A" || studentsArr[i].letterGrade == "A-"){
+                totalLetterGradeASum++;
+            }
+        }
+    var letterGradeAPercentage = Math.round(100*(totalLetterGradeASum / studentsArr.length) * 100) / 100;
+    const eventsArr = await getEventArrayFromDB();
+    const announcementsArr = await getAnnouncementArrayFromDB();
+    for (let i = 0; i < eventsArr.length; i++){
+        eventsArr[i].date = eventsArr[i].date.toLocaleDateString();
+    }
+    for (let i = 0; i < announcementsArr.length; i++){
+        announcementsArr[i].date = announcementsArr[i].date.toLocaleDateString();
+    }
+    res.render('dashboard', {   sped: numSPED,
+                                el: numEL,
+                                internetAccess: numIA,
+                                attendancePercentage: attendancePresentPercentage,
+                                letterGradeAPercentage: letterGradeAPercentage,
+                                events: eventsArr,
+                                announcements: announcementsArr
                         });
 })
 
 app.get("/studentPage",  async function(req, res) {
-    const classesArr = await getClassArrayFromDB();
+    /*const classesArr = await getClassArrayFromDB();
     const singleClass = classesArr[0];
     for (let i = 0; i < singleClass.students.length; i++){
         singleClass.students[i].birthDate = singleClass.students[i].birthDate.toLocaleDateString();
     }
-    res.render('student', { students: singleClass.students});
+    res.render('student', { students: singleClass.students});*/
+    const students = await getStudentArrayFromDB();
+    for (let i = 0; i < students.length; i++){
+        students[i].birthDate = students[i].birthDate.toLocaleDateString();
+    }
+    res.render('student', {students: students});
 })
 
 app.get("/user", async function(req, res) {
@@ -3099,3 +3489,5 @@ app.get('/parent.html', function (req, res) {
 })
 
 app.listen(3000, () => console.log("Server ready"))
+
+
