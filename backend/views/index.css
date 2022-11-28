@@ -165,11 +165,13 @@ th {
   border-collapse: collapse;
   border-radius: 20px;
   font-family: Arial;
+  overflow: auto;
 }
 table {
   width: 100%;
   height: 500px;
   text-align: center;
+  table-layout: fixed;
 
   /*KALVIN*/
   /*table-layout: fixed;
@@ -189,6 +191,7 @@ table {
 .main,
 .side-nav {
   overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .side-nav::-webkit-scrollbar {

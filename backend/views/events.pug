@@ -46,6 +46,13 @@ html
 				a(href)
 					i.fa-solid.fa-gear
 	.main
+		form(action='./edit' method='POST' name="editing")
+			input#allowEditing(type='radio' name='Editing' value='allowEditing')
+			label(for='allowEditing')="Allow Editing"
+			input#noEditing(type='radio' name='Editing' value='noEditing')
+			label(for='noEditing')="No Editing"
+			br
+			input(type='submit' value='Apply')
 		table   
 					tr 
 						th= "Event Name"
@@ -76,3 +83,12 @@ html
 			| 
 			br
 			input(type='submit' value='Add Event')
+		h2="Delete Event"
+		h3="Enter the exact name of the event you would like to delete"
+		form(action='./deleteEvent' method='POST')
+			| 
+			label(for='deleteEventName')= "Event Name: "
+			input(type='text' name='deleteEventName')
+			|
+			br
+			input(type='submit' value='Delete Event')

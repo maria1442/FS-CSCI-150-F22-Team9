@@ -46,11 +46,19 @@ html
 				a(href)
 					i.fa-solid.fa-gear
 	.main
-		table   
+		form(action='./edit' method='POST' name="editing")
+			input#allowEditing(type='radio' name='Editing' value='allowEditing')
+			label(for='allowEditing')="Allow Editing"
+			input#noEditing(type='radio' name='Editing' value='noEditing')
+			label(for='noEditing')="No Editing"
+			br
+			input(type='submit' value='Apply')
+		table 
 					tr 
 						th="Student Photo"
 						th= "Student ID" 
-						th= "Student Name" 
+						th= "Student First Name" 
+						th="Student Last Name"
 						th= "Date of Birth"
 						th= "Contact Email"
 						th= "SPED"
@@ -58,16 +66,36 @@ html
 						th= "Internet Access"
 						th= "Letter Grade"
 					each student in students
-						tr
-							td=student.photo
-							td=student.studentId 
-							td=student.firstName + " " + student.lastName
-							td=student.birthDate
-							td=student.contactEmail 
-							td=student.SPED 
-							td=student.EL
-							td=student.internetAccess 
-							td=student.letterGrade
+						form(action='./addStudent' method='POST' name="editingForm")
+							tr
+								td
+									input(type='text' value=student.photo readonly=editing)
+								td
+									input(type='number' value=student.studentId readonly=editing) 
+								td 
+									input(type='text' value=student.firstName readonly=editing)
+								td
+									input(type='text' value=student.lastName readonly=editing)
+								td
+									input(type='date' value=student.birthDate readonly=editing)
+								td
+									input(type='text' value=student.contactEmail readonly=editing) 
+								td
+									input#spedFalse(type='radio' name='sped' value='SPEDFalse' checked=student.SPED disabled=editing)
+									label(for='spedFalse')="not SPED"
+									input#spedTrue(type='radio' name='sped' value='SPEDTrue' checked=student.SPED disabled=editing)
+									label(for='spedTrue')="SPED"
+								td
+									input#elFalse(type='radio' name='el' value='ELFalse' checked=student.EL disabled=editing)
+									label(for='elFalse')="NOT EL"
+									input#spedTrue(type='radio' name='el' value='ELTrue' checked=student.EL disabled=editing)
+									label(for='elTrue')="EL"
+								td
+									input#internetAccessFalse(type='radio' name='internetAccess' value='InternetAccessFalse' checked=student.internetAccess disabled=editing)
+									label(for='internetAccessFalse')="Does not have internet access at home"
+									input#internetAccessTrue(type='radio' name='internetAccess' value='InternetAccessTrue' checked=student.internetAccess disabled=editing)
+									label(for='internetAccessTrue')="Does have internet access at home"
+								td=student.letterGrade
 		h2="Add Student"
 		form(action='./addStudent' method='POST')
 			| 
@@ -110,3 +138,12 @@ html
 			|
 			br
 			input(type='submit' value='Add Student')
+		h2="Delete Student"
+		h3="Enter the ID of the student you would like to delete"
+		form(action='./deleteStudent' method='POST')
+			| 
+			label(for='deleteStudentID')= "Student ID: "
+			input(type='text' name='deleteStudentID')
+			|
+			br
+

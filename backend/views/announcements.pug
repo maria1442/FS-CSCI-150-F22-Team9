@@ -46,6 +46,13 @@ html
 				a(href)
 					i.fa-solid.fa-gear
 	.main
+		form(action='./edit' method='POST' name="editing")
+			input#allowEditing(type='radio' name='Editing' value='allowEditing')
+			label(for='allowEditing')="Allow Editing"
+			input#noEditing(type='radio' name='Editing' value='noEditing')
+			label(for='noEditing')="No Editing"
+			br
+			input(type='submit' value='Apply')
 		table   
 					tr 
 						th= "Announcement"
@@ -71,3 +78,12 @@ html
 			| 
 			br
 			input(type='submit' value='Add Announcement')
+		h2="Delete Announcement"
+		h3="Enter the exact subject of the announcement you would like to delete"
+		form(action='./deleteAnnouncement' method='POST')
+			| 
+			label(for='deleteAnnouncementTitle')= "Announcement Subject: "
+			input(type='text' name='deleteAnnouncementTitle')
+			|
+			br
+			input(type='submit' value='Delete Announcement')

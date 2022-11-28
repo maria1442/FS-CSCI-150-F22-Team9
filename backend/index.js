@@ -3126,6 +3126,7 @@ app.set('view engine', 'pug');
 app.use(express.static('views'));
 
 var bodyParser = require('body-parser');
+const e = require('express');
 
 // Create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -3189,7 +3190,7 @@ app.post("/newStudent", (req, res) => {
 })
 
 app.post("/addStudent",  urlencodedParser, async function(req, res) {
-    var studentID = req.body.studentID;
+    var studentID = parseInt(req.body.studentID);
     var studentFirstName = req.body.studentFirstName;
     var studentLastName = req.body.studentLastName;
     var studentGender = req.body.studentGender;
@@ -3229,20 +3230,38 @@ app.post("/newUser", (req, res) => {
     res.status(200).json({ ok: true })
 })
 // Delete Documents
-app.post("/deleteEvent", (req, res) => {
+app.post("/removeEvent", (req, res) => {
     const event = req.body;
     deleteEventFromDB(event).catch(console.error);
     res.status(200).json({ ok: true })
 })
-app.post("/deleteAnnouncement", (req, res) => {
+app.post("/deleteEvent", urlencodedParser, (req, res) => {
+    const deleteEvent = req.body.deleteEventName;
+    const event = new Event(deleteEvent);
+    deleteEventFromDB(event.toJSON()).catch(console.error);
+    res.redirect('back');
+})
+app.post("/removeAnnouncement", (req, res) => {
     const announcement = req.body;
     deleteAnnouncementFromDB(announcement).catch(console.error);
     res.status(200).json({ ok: true })
 })
-app.post("/deleteStudent", (req, res) => {
+app.post("/deleteAnnouncement", urlencodedParser, (req, res) => {
+    const deleteAnnouncement = req.body.deleteAnnouncementTitle;
+    const announcement = new Announcement(deleteAnnouncement)
+    deleteAnnouncementFromDB(announcement.toJSON()).catch(console.error);
+    res.redirect('back');
+})
+app.post("/removeStudent", (req, res) => {
     const student = req.body;
     deleteStudentFromDB(student).catch(console.error);
-    res.status(200).json({ ok: true })
+    res.status(200).json({ ok: true })    
+})
+app.post("/deleteStudent", urlencodedParser, (req, res) => {
+    const deleteStudent = parseInt(req.body.deleteStudentID);
+    const student = new Student(deleteStudent);
+    deleteStudentFromDB(student.toJSON()).catch(console.error);
+    res.redirect('back');
 })
 app.post("/deleteClass", (req, res) => {
     const course = req.body;
@@ -3254,6 +3273,18 @@ app.post("/deleteUser", (req, res) => {
     deleteUserFromDB(user).catch(console.error);
     res.status(200).json({ ok: true })
 })
+// Editing
+var Editing = false;
+app.post("/edit", urlencodedParser, (req, res) => {
+    var editingRadio = req.body.Editing;
+    var allowEditing;
+    if (editingRadio == "noEditing"){
+        Editing = true;
+    }
+    else Editing = false;
+    res.redirect('back');
+})
+
 // Update documents
 /*
 Prep: 
@@ -3459,19 +3490,16 @@ app.get("/dashboard", async function(req, res) {
                                 announcements: announcementsArr
                         });
 })
-
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+}
 app.get("/studentPage",  async function(req, res) {
-    /*const classesArr = await getClassArrayFromDB();
-    const singleClass = classesArr[0];
-    for (let i = 0; i < singleClass.students.length; i++){
-        singleClass.students[i].birthDate = singleClass.students[i].birthDate.toLocaleDateString();
-    }
-    res.render('student', { students: singleClass.students});*/
     const students = await getStudentArrayFromDB();
     for (let i = 0; i < students.length; i++){
-        students[i].birthDate = students[i].birthDate.toLocaleDateString();
+        students[i].birthDate = [students[i].birthDate.getUTCFullYear(), padTo2Digits(students[i].birthDate.getUTCMonth() + 1),
+                padTo2Digits(students[i].birthDate.getUTCDate()),].join('-')
     }
-    res.render('student', {students: students});
+    res.render('student', {students: students, editing: Editing});
 })
 
 app.get("/user", async function(req, res) {
