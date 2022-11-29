@@ -53,16 +53,21 @@ html
 			label(for='noEditing')="No Editing"
 			br
 			input(type='submit' value='Apply')
-		table   
-					tr 
-						th= "Announcement"
-						th= "Date" 
-						th= "Description" 
-					each announcement in announcements
-						tr
-							td=announcement.title
-							td=announcement.date
-							td=announcement.description
+		form(action='./updateAnnouncement' method='POST' name="editingAnnouncementForm")
+			table   
+				tr 
+					th= "Announcement"
+					th= "Description" 
+					th= "Date"
+				each announcement in announcements
+					tr
+						td
+							input(type='text' value=announcement.title readonly=true name='updateAnnouncementTitle')
+						td
+							input(type='text' value=announcement.description readonly=editing name='updateAnnouncementDescription')
+						td
+							input(type='date' value=announcement.date readonly=editing name='updateAnnouncementDate')
+			input(type='submit' value='Update Announcement')
 		h2="Add Announcement"
 		form(action='./addAnnouncement' method='POST')
 			| 

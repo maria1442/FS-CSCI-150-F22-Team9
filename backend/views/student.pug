@@ -53,49 +53,51 @@ html
 			label(for='noEditing')="No Editing"
 			br
 			input(type='submit' value='Apply')
-		table 
-					tr 
-						th="Student Photo"
-						th= "Student ID" 
-						th= "Student First Name" 
-						th="Student Last Name"
-						th= "Date of Birth"
-						th= "Contact Email"
-						th= "SPED"
-						th= "EL"
-						th= "Internet Access"
-						th= "Letter Grade"
-					each student in students
-						form(action='./addStudent' method='POST' name="editingForm")
-							tr
-								td
-									input(type='text' value=student.photo readonly=editing)
-								td
-									input(type='number' value=student.studentId readonly=editing) 
-								td 
-									input(type='text' value=student.firstName readonly=editing)
-								td
-									input(type='text' value=student.lastName readonly=editing)
-								td
-									input(type='date' value=student.birthDate readonly=editing)
-								td
-									input(type='text' value=student.contactEmail readonly=editing) 
-								td
-									input#spedFalse(type='radio' name='sped' value='SPEDFalse' checked=student.SPED disabled=editing)
-									label(for='spedFalse')="not SPED"
-									input#spedTrue(type='radio' name='sped' value='SPEDTrue' checked=student.SPED disabled=editing)
-									label(for='spedTrue')="SPED"
-								td
-									input#elFalse(type='radio' name='el' value='ELFalse' checked=student.EL disabled=editing)
-									label(for='elFalse')="NOT EL"
-									input#spedTrue(type='radio' name='el' value='ELTrue' checked=student.EL disabled=editing)
-									label(for='elTrue')="EL"
-								td
-									input#internetAccessFalse(type='radio' name='internetAccess' value='InternetAccessFalse' checked=student.internetAccess disabled=editing)
-									label(for='internetAccessFalse')="Does not have internet access at home"
-									input#internetAccessTrue(type='radio' name='internetAccess' value='InternetAccessTrue' checked=student.internetAccess disabled=editing)
-									label(for='internetAccessTrue')="Does have internet access at home"
-								td=student.letterGrade
+		form(action='./updateStudents' method='POST' name="editingForm")
+			table(name="studentTable")
+				tr 
+					th="Student Photo"
+					th= "Student ID" 
+					th= "Student First Name" 
+					th="Student Last Name"
+					th= "Date of Birth"
+					th= "Contact Email"
+					th= "SPED"
+					th= "EL"
+					th= "Internet Access"
+					th= "Letter Grade"
+				each student in students
+					tr
+						td
+							input(type='text' value=student.photo readonly=editing name='updateStudentPhoto')
+						td
+							input(type='number' value=student.studentId readonly=true  name='updateStudentID') 
+						td 
+							input(type='text' value=student.firstName readonly=editing name='updateStudentFirstName')
+						td
+							input(type='text' value=student.lastName readonly=editing name='updateStudentLastName')
+						td
+							input(type='date' value=student.birthDate readonly=editing name='updateStudentDOB')
+						td
+							input(type='text' value=student.contactEmail readonly=editing name='updateStudentContactEmail') 
+						td
+							input#spedFalse(type='radio' name='updateSped' value='SPEDFalse' checked=student.SPED disabled=editing)
+							label(for='spedFalse')="not SPED"
+							input#spedTrue(type='radio' name='updateSped' value='SPEDTrue' checked=student.SPED disabled=editing)
+							label(for='spedTrue')="SPED"
+						td
+							input#elFalse(type='radio' name='updateEl' value='ELFalse' checked=student.EL disabled=editing)
+							label(for='elFalse')="NOT EL"
+							input#spedTrue(type='radio' name='updateEl' value='ELTrue' checked=student.EL disabled=editing)
+							label(for='elTrue')="EL"
+						td
+							input#internetAccessFalse(type='radio' name='updateInternetAccess' value='InternetAccessFalse' checked=student.internetAccess disabled=editing)
+							label(for='internetAccessFalse')="Does not have internet access at home"
+							input#internetAccessTrue(type='radio' name='updateInternetAccess' value='InternetAccessTrue' checked=student.internetAccess disabled=editing)
+							label(for='internetAccessTrue')="Does have internet access at home"
+						td=student.letterGrade
+			input(type='submit' value='Update Students')
+
 		h2="Add Student"
 		form(action='./addStudent' method='POST')
 			| 

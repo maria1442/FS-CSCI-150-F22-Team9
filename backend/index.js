@@ -3310,17 +3310,42 @@ Prep:
 }
 }
 */
-app.post("/updateEvent", (req, res) => {
+app.post("/updateEvent1", (req, res) => {
     const event = req.body.event;
     const newEvent = req.body.newEvent;
     updateEventFromDB(event, newEvent).catch(console.error);
     res.status(200).json({ ok: true })
 })
-app.post("/updateAnnouncement", (req, res) => {
+app.post("/updateEvent", urlencodedParser, (req, res) => {
+    const eventNameArr = req.body.updateEventName;
+    const eventDateArr = req.body.updateEventDate;
+    const eventDescriptionArr = req.body.updateEventDescription;
+    const eventLocationArr = req.body.updateEventLocation;
+    for (let i = 0; i < eventNameArr.length; i++){
+        let eventDate = new Date(eventDateArr[i]);
+        let oldEvent = new Event(eventNameArr[i]);
+        let newEvent = new Event(eventNameArr[i], eventDate.getUTCMonth(), eventDate.getUTCDate(), eventDate.getUTCFullYear(), eventDescriptionArr[i], eventLocationArr[i]);
+        updateEventFromDB(oldEvent.toJSON(), newEvent.toJSON()).catch(console.error);
+    }
+    res.redirect('back');
+})
+app.post("/updateAnnouncement1", (req, res) => {
     const announcement = req.body.announcement;
     const newAnnouncement = req.body.newAnnouncement;
     updateAnnouncementFromDB(announcement, newAnnouncement).catch(console.error);
     res.status(200).json({ ok: true })
+})
+app.post("/updateAnnouncement", urlencodedParser, (req, res) => {
+    const announcementTitleArr = req.body.updateAnnouncementTitle;
+    const announcementDateArr = req.body.updateAnnouncementDate;
+    const announcementDescriptionArr = req.body.updateAnnouncementDescription;
+    for (let i = 0; i < announcementTitleArr.length; i++){
+        let announcementDate = new Date(announcementDateArr[i]);
+        let oldAnnouncement = new Announcement(announcementTitleArr[i]);
+        let newAnnouncement = new Announcement(announcementTitleArr[i], announcementDescriptionArr[i], announcementDate.getUTCMonth(), announcementDate.getUTCDate(), announcementDate.getUTCFullYear());
+        updateAnnouncementFromDB(oldAnnouncement.toJSON(), newAnnouncement.toJSON()).catch(console.error);
+    }
+    res.redirect('back');
 })
 app.post("/updateStudent", (req, res) => {
     const student = req.body.student;
@@ -3328,6 +3353,20 @@ app.post("/updateStudent", (req, res) => {
     updateStudentFromDB(student, newStudent).catch(console.error);
     res.status(200).json({ ok: true })
 })
+
+app.post("/updateStudents", urlencodedParser, (req, res) => {
+    var table = req.body.studentTable;
+    console.log(table[0])
+    //const oldStudentID = req.body.updateStudentID;
+    /*for (let row of table){ 
+        //const newStudentPhoto = req.body.updateStudentPhoto;
+        //const newStudentFirstName = req.body.updateStudentFirstName;
+        console.log("hi");
+    }*/
+    res.redirect('back');
+})
+
+
 app.post("/updateClass", (req, res) => {
     const course = req.body.course;
     const newCourse = req.body.newCourse;
@@ -3352,9 +3391,10 @@ app.get("/event", async function(req, res) {
 app.get("/eventsPage", async function(req, res) {
     const eventsArr = await getEventArrayFromDB();
     for (let i = 0; i < eventsArr.length; i++){
-        eventsArr[i].date = eventsArr[i].date.toLocaleDateString();
+        eventsArr[i].date = [eventsArr[i].date.getUTCFullYear(), padTo2Digits(eventsArr[i].date.getUTCMonth() + 1),
+                padTo2Digits(eventsArr[i].date.getUTCDate()),].join('-')
     }
-    res.render('events', {events: eventsArr});
+    res.render('events', {events: eventsArr, editing: Editing});
 })
 app.get("/announcement", async function(req, res) {
     const singleAnnouncement = await getAnnouncementFromDB(req.body);
@@ -3367,7 +3407,8 @@ app.get("/announcements", async function(req, res) {
 app.get("/announcementsPage", async function(req, res) {
     const announcementsArr = await getAnnouncementArrayFromDB();
     for (let i = 0; i < announcementsArr.length; i++){
-        announcementsArr[i].date = announcementsArr[i].date.toLocaleDateString();
+        announcementsArr[i].date = [announcementsArr[i].date.getUTCFullYear(), padTo2Digits(announcementsArr[i].date.getUTCMonth() + 1),
+                padTo2Digits(announcementsArr[i].date.getUTCDate()),].join('-')
     }
     res.render('announcements', {announcements: announcementsArr});
 })
@@ -3377,6 +3418,7 @@ app.get("/student", async function(req, res) {
     const singleStudent = await getStudentFromDB(student.toJSON());
     res.status(200).json({student: singleStudent});
 })
+
 
 app.get("/studentParentPage", async function(req, res) {
     var studentId = req.query.studentID;
@@ -3506,6 +3548,23 @@ app.get("/user", async function(req, res) {
     const singleUser = await getUserFromDB(req.body);
     res.status(200).json({user: singleUser});
 })
+
+app.post("/login", urlencodedParser, async function(req, res) {
+    var username = req.body.email;
+    var password = req.body.password;
+    var findUser = new User(username, password);
+    const user = await getUserFromDB(findUser.toJSON());
+    if (user == undefined){
+        res.redirect('back');
+    }
+    else if (user.password != password){
+        res.redirect('back');
+    }
+    else {
+        res.redirect('/dashboard');
+    }
+})
+
 app.get("/users", async function(req, res) {
     const usersArr = await getUserArrayFromDB();
     res.status(200).json({users: usersArr});
@@ -3515,6 +3574,10 @@ app.use(express.static('public'));
 app.get('/parent.html', function (req, res) {
    res.sendFile( __dirname + "/" + "parent.html" );
 })
+
+app.get('/login.html', function (req, res) {
+    res.sendFile( __dirname + "/" + "login.html" );
+ })
 
 app.listen(3000, () => console.log("Server ready"))
 

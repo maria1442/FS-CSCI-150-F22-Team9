@@ -53,18 +53,24 @@ html
 			label(for='noEditing')="No Editing"
 			br
 			input(type='submit' value='Apply')
-		table   
-					tr 
-						th= "Event Name"
-						th= "Date" 
-						th= "Description" 
-						th= "Location"
-					each event in events
-						tr
-							td=event.eventName
-							td=event.date
-							td=event.description
-							td=event.location
+		form(action='./updateEvent' method='POST' name="editingEventForm")
+			table   
+				tr 
+					th= "Event Name"
+					th= "Date" 
+					th= "Description" 
+					th= "Location"
+				each event in events
+					tr
+						td
+							input(type='text' value=event.eventName readonly=true name='updateEventName')
+						td
+							input(type='date' value=event.date readonly=editing name='updateEventDate')
+						td
+							input(type='text' value=event.description readonly=editing name='updateEventDescription')
+						td
+							input(type='text' value=event.location readonly=editing name='updateEventLocation')
+			input(type='submit' value='Update Event')
 		h2="Add Event"
 		form(action='./addEvent' method='POST')
 			| 

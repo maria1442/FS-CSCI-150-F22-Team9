@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
+
     <div class="split left">
         <div class="centered">
           <img src="cp_logo.png" alt="Avatar woman" id= "logo">
@@ -21,10 +22,10 @@
         <div class="centered">
 
           <h2 id = "right-heading">PLEASE ENTER EMAIL AND PASSWORD</h2>
-          <form action="">
+          <form action="http://localhost:3000/login" method='POST'>
 
             <label for="javascript">EMAIL</label><br>
-            <input type="email" name = "email" placeholder="abc@gmail.com">
+            <input type="text" name = "email" placeholder="abc@gmail.com">
 
             <br>
             <br>
@@ -37,8 +38,15 @@
             <br>
             <br>
             <button type = "submit" name = "submit" class = "myButton">Login</button>
+
+          </form>
+          </form>
+            <h2 id = "right-heading">Parents Click This Button</h2>
+            <form action="http://localhost:3000/parent.html">
+              <input type="submit" value="Get Student">
+          </form>
         </div>
       </div>
 
-  </body>
+</body>
 </html>
