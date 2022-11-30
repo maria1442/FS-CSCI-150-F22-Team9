@@ -4956,12 +4956,12 @@ class1.addStudent(student28);
 class1.addStudent(student29);
 
 // Add class to user
-/*user1.addClass(class1);
+user1.addClass(class1);
 // Adding to DB
 // User
 addUserToDB(user1);
 // Class
-addClassToDB(user1, class1);*/
+addClassToDB(user1, class1);
 // Events
 /*addEventToDB(class1, event0).catch(console.error);
 addEventToDB(class1, event1).catch(console.error);
@@ -4969,12 +4969,12 @@ addEventToDB(class1, event2).catch(console.error);
 addEventToDB(class1, event3).catch(console.error);
 addEventToDB(class1, event4).catch(console.error);*/
 // Announcements
-addAnnouncementToDB(class1, announcement0);
+/*addAnnouncementToDB(class1, announcement0);
 addAnnouncementToDB(class1, announcement1);
 addAnnouncementToDB(class1, announcement2);
-addAnnouncementToDB(class1, announcement3);
+addAnnouncementToDB(class1, announcement3);*/
 // Students
-/*addStudentToDB(class1, student0);
+addStudentToDB(class1, student0);
 addStudentToDB(class1, student1);
 addStudentToDB(class1, student2);
 addStudentToDB(class1, student3);
@@ -5003,4 +5003,4 @@ addStudentToDB(class1, student25);
 addStudentToDB(class1, student26);
 addStudentToDB(class1, student27);
 addStudentToDB(class1, student28);
-addStudentToDB(class1, student29);*/
+addStudentToDB(class1, student29);

@@ -28,9 +28,9 @@ html
 				a(href='./eventsPage')
 					i.fa-solid.fa-calendar-days
 					="Events"
-				a(href='./seatingchart.html')
-					i.fa-solid.fa-chair
-					="Seating Chart"
+				a(href='#behavior')
+					i.fa-solid.fa-face-smile
+					="Behavior"
 				a(href='./announcementsPage')
 					i.fa-solid.fa-bullhorn
 					="Announcements"
@@ -60,6 +60,7 @@ html
 					th= "Student ID" 
 					th= "Student First Name" 
 					th="Student Last Name"
+					th="Student Gender"
 					th= "Date of Birth"
 					th= "Contact Email"
 					th= "SPED"
@@ -76,25 +77,18 @@ html
 							input(type='text' value=student.firstName readonly=editing name='updateStudentFirstName')
 						td
 							input(type='text' value=student.lastName readonly=editing name='updateStudentLastName')
+						td 
+							input(type='text' value=student.gender readonly=editing name='updateStudentGender')
 						td
 							input(type='date' value=student.birthDate readonly=editing name='updateStudentDOB')
 						td
 							input(type='text' value=student.contactEmail readonly=editing name='updateStudentContactEmail') 
 						td
-							input#spedFalse(type='radio' name='updateSped' value='SPEDFalse' checked=student.SPED disabled=editing)
-							label(for='spedFalse')="not SPED"
-							input#spedTrue(type='radio' name='updateSped' value='SPEDTrue' checked=student.SPED disabled=editing)
-							label(for='spedTrue')="SPED"
+							input(type='text' value=student.SPED readonly=editing name='updateSped')
 						td
-							input#elFalse(type='radio' name='updateEl' value='ELFalse' checked=student.EL disabled=editing)
-							label(for='elFalse')="NOT EL"
-							input#spedTrue(type='radio' name='updateEl' value='ELTrue' checked=student.EL disabled=editing)
-							label(for='elTrue')="EL"
+							input(type='text' value=student.EL readonly=editing name='updateEl')
 						td
-							input#internetAccessFalse(type='radio' name='updateInternetAccess' value='InternetAccessFalse' checked=student.internetAccess disabled=editing)
-							label(for='internetAccessFalse')="Does not have internet access at home"
-							input#internetAccessTrue(type='radio' name='updateInternetAccess' value='InternetAccessTrue' checked=student.internetAccess disabled=editing)
-							label(for='internetAccessTrue')="Does have internet access at home"
+							input(type='text' value=student.internetAccess readonly=editing name='updateInternetAccess')
 						td=student.letterGrade
 			input(type='submit' value='Update Students')
 
@@ -102,7 +96,7 @@ html
 		form(action='./addStudent' method='POST')
 			| 
 			label(for='studentID')= "Student ID: "
-			input(type='text' name='studentID')
+			input(type='number' name='studentID')
 			| 
 			label(for='studentFirstName')= "Student First Name: " 
 			input(type='text' name='studentFirstName')
@@ -145,7 +139,8 @@ html
 		form(action='./deleteStudent' method='POST')
 			| 
 			label(for='deleteStudentID')= "Student ID: "
-			input(type='text' name='deleteStudentID')
+			input(type='number' name='deleteStudentID')
 			|
 			br
+			input(type='submit' value='Delete Student')
 

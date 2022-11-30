@@ -2472,6 +2472,17 @@ async function updateStudentFromDB(student, newStudent) {
         await client.close();
     }
 }
+async function updateWholeStudentFromDB(student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateWholeStudentFromDBClient(client, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
 async function updateClassFromDB(course, newCourse) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
@@ -2964,6 +2975,14 @@ async function updateStudentFromDBClient(client, student, newStudent){
     const finding = await client.db("classparency").collection("students").findOne(query);
     let stringId = finding._id;  
     let update = newStudent;
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"photo": update.photo, "firstName": update.firstName, "lastName":update.lastName, "gender":update.gender, "birthDate":update.birthDate, "contactEmail":update.contactEmail, "SPED":update.SPED, "EL":update.EL, "internetAccess":update.internetAccess}});
+}
+async function updateWholeStudentFromDBClient(client, student, newStudent){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;  
+    let update = newStudent;
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: update});
 }
 async function updateStudentFromClassDB(client, course, student, newStudent){
@@ -3277,7 +3296,6 @@ app.post("/deleteUser", (req, res) => {
 var Editing = false;
 app.post("/edit", urlencodedParser, (req, res) => {
     var editingRadio = req.body.Editing;
-    var allowEditing;
     if (editingRadio == "noEditing"){
         Editing = true;
     }
@@ -3355,14 +3373,31 @@ app.post("/updateStudent", (req, res) => {
 })
 
 app.post("/updateStudents", urlencodedParser, (req, res) => {
-    var table = req.body.studentTable;
-    console.log(table[0])
-    //const oldStudentID = req.body.updateStudentID;
-    /*for (let row of table){ 
-        //const newStudentPhoto = req.body.updateStudentPhoto;
-        //const newStudentFirstName = req.body.updateStudentFirstName;
-        console.log("hi");
-    }*/
+    const studentPhotoArr = req.body.updateStudentPhoto;
+    const studentIDArr = req.body.updateStudentID;
+    const studentFirstNameArr = req.body.updateStudentFirstName;
+    const studentLastNameArr = req.body.updateStudentLastName;
+    const studentGenderArr = req.body.updateStudentGender;
+    const studentDOBArr = req.body.updateStudentDOB;
+    const studentContactEmailArr = req.body.updateStudentContactEmail;
+    var studentSPEDArr = req.body.updateSped;
+    for (let i = 0; i < studentSPEDArr.length; i++){
+        studentSPEDArr[i] = JSON.parse(studentSPEDArr[i]);
+    }
+    const studentELArr = req.body.updateEl;
+    for (let i = 0; i < studentELArr.length; i++){
+        studentELArr[i] = JSON.parse(studentELArr[i]);
+    }
+    const studentIAArr = req.body.updateInternetAccess;
+    for (let i = 0; i < studentIAArr.length; i++){
+        studentIAArr[i] = JSON.parse(studentIAArr[i]);
+    }
+    for (let i = 0; i < studentIDArr.length; i++){
+        let studentDOB = new Date(studentDOBArr[i]);
+        let oldStudent = new Student(parseInt(studentIDArr[i]));
+        let newStudent = new Student(parseInt(studentIDArr[i]), studentPhotoArr[i], studentFirstNameArr[i], studentLastNameArr[i], studentGenderArr[i], studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), studentContactEmailArr[i], studentSPEDArr[i], studentELArr[i], studentIAArr[i]);
+        updateStudentFromDB(oldStudent.toJSON(), newStudent.toJSON()).catch(console.error);
+    }
     res.redirect('back');
 })
 
@@ -3382,7 +3417,8 @@ app.post("/updateUser", (req, res) => {
 // Get Documents
 app.get("/event", async function(req, res) {
     const singleEvent = await getEventFromDB(req.body);
-    res.status(200).json({event: singleEvent});
+    var newEvent = new Event(singleEvent.eventName);
+    res.status(200).json({event: newEvent});
 })
 /*app.get("/events", async function(req, res) {
     const eventsArr = await getEventArrayFromDB();
@@ -3420,8 +3456,8 @@ app.get("/student", async function(req, res) {
 })
 
 
-app.get("/studentParentPage", async function(req, res) {
-    var studentId = req.query.studentID;
+app.post("/studentParentPage", urlencodedParser, async function(req, res) {
+    var studentId = req.body.studentID;
     var student = new Student(Number(studentId));
     const singleStudent = await getStudentFromDB(student.toJSON());
     if (singleStudent == undefined){
@@ -3540,6 +3576,24 @@ app.get("/studentPage",  async function(req, res) {
     for (let i = 0; i < students.length; i++){
         students[i].birthDate = [students[i].birthDate.getUTCFullYear(), padTo2Digits(students[i].birthDate.getUTCMonth() + 1),
                 padTo2Digits(students[i].birthDate.getUTCDate()),].join('-')
+    }
+    for (let i = 0; i < students.length; i++){
+        if(students[i].SPED == false){
+            students[i].SPED = "false";
+        }
+        else students[i].SPED = "true";
+    }
+    for (let i = 0; i < students.length; i++){
+        if(students[i].EL == false){
+            students[i].EL = "false";
+        }
+        else students[i].EL = "true";
+    }
+    for (let i = 0; i < students.length; i++){
+        if(students[i].internetAccess == false){
+            students[i].internetAccess = "false";
+        }
+        else students[i].internetAccess = "true";
     }
     res.render('student', {students: students, editing: Editing});
 })
