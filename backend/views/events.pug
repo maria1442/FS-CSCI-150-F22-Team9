@@ -63,11 +63,11 @@ html
 				each event in events
 					tr
 						td
-							input(type='text' value=event.eventName readonly=true name='updateEventName')
+							textarea#input(readonly=true name='updateEventName')= event.eventName
 						td
 							input(type='date' value=event.date readonly=editing name='updateEventDate')
 						td
-							input(type='text' value=event.description readonly=editing name='updateEventDescription')
+							textarea#input(readonly=editing name='updateEventDescription')=event.description
 						td
 							input(type='text' value=event.location readonly=editing name='updateEventLocation')
 			input(type='submit' value='Update Event')

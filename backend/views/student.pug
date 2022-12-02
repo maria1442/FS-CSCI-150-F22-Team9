@@ -82,7 +82,7 @@ html
 						td
 							input(type='date' value=student.birthDate readonly=editing name='updateStudentDOB')
 						td
-							input(type='text' value=student.contactEmail readonly=editing name='updateStudentContactEmail') 
+							textarea#input(readonly=editing name='updateStudentContactEmail')=student.contactEmail
 						td
 							input(type='text' value=student.SPED readonly=editing name='updateSped')
 						td

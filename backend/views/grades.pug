@@ -46,19 +46,60 @@ html
 				a(href)
 					i.fa-solid.fa-gear
 	.main
-		table   
-					tr 
-						th="Student Name"
-						th= "Student ID" 
-						th= "Grade Percentage" 
-						th= "Grade Letter"
-						each assignment in assignmentArr
-							th(style="white-space:pre-line;")= assignment.assignmentName + "\nout of " + assignment.possibleScore + "\nDate: " + assignment.date
-					each student in students
-						tr
-							td=student.firstName + " " + student.lastName
-							td=student.studentId
-							td=student.gradePercentage + "%"
-							td=student.letterGrade
-							each studentAssignment in student.studentAssignments
-								td=studentAssignment.givenScore
+		form(action='./edit' method='POST' name="editing")
+			input#allowEditing(type='radio' name='Editing' value='allowEditing')
+			label(for='allowEditing')="Allow Editing"
+			input#noEditing(type='radio' name='Editing' value='noEditing')
+			label(for='noEditing')="No Editing"
+			br
+			input(type='submit' value='Apply')
+		form(action='./updateAssignment' method='POST' name="editingAssignmentForm")
+			table   
+				tr 
+					th="Student Name"
+					th= "Student ID" 
+					th= "Grade Percentage" 
+					th= "Grade Letter"
+					each assignment in assignmentArr
+						th(style="white-space:pre-line;")= assignment.assignmentName + "\nout of " + assignment.possibleScore + "\nDate: " + assignment.date
+				each student in students
+					tr
+						td=student.firstName + " " + student.lastName
+						td=student.studentId
+						td=student.gradePercentage + "%"
+						td=student.letterGrade
+						each studentAssignment in student.studentAssignments
+							td
+								input(type='number' value=studentAssignment.givenScore readonly=editing name='updateStudentScore')
+			input(type='submit' value='Update Assignments')
+		h2="Add Assignment"
+		form(action='./addAssignment' method='POST')
+			| 
+			label(for='assignmentName')= "Assignment Name: "
+			input(type='text' name='assignmentName')
+			| 
+			label(for='assignmentCategory')= "Category: " 
+			input(type='text' name='assignmentCategory')
+			| 
+			label(for='possibleScore')="Out of: "
+			input(type='number' name='possibleScore')
+			| 
+			br
+			label(for='assignmentDate')="Date: "
+			input(type='date' name='assignmentDate')
+			| 
+			br
+			each student in students
+				input(type='text' value=student.firstName + " " + student.lastName readonly=true name="studentID")
+				input(type='text' value=student.studentId readonly=true name="studentID")
+				label(for='givenScore')= "\tGiven Score: "
+				input(type='number' name='givenScore')
+				br
+			input(type='submit' value='Add Assignment')
+		h2="Delete Assignment"
+		form(action="./deleteAssignment" method='POST')
+			| 
+			label(for='deleteAssignmentName')= "Assignment Name: "
+			input(type='text' name='deleteAssignmentName')
+			input(type='submit' value='Delete Assignment')
+

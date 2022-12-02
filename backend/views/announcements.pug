@@ -64,7 +64,7 @@ html
 						td
 							input(type='text' value=announcement.title readonly=true name='updateAnnouncementTitle')
 						td
-							input(type='text' value=announcement.description readonly=editing name='updateAnnouncementDescription')
+							textarea#input(readonly=editing name='updateAnnouncementDescription')=announcement.description
 						td
 							input(type='date' value=announcement.date readonly=editing name='updateAnnouncementDate')
 			input(type='submit' value='Update Announcement')

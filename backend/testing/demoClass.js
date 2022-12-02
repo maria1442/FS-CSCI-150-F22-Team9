@@ -1111,6 +1111,10 @@ class Class {
     #lyingCheatingPercentage;
     #otherBehaviorPercentage;
     // COURSE ASSIGNMENT INFORMATION
+    #classHomeworkWeight;
+    #classQuizWeight;
+    #classProjectWeight;
+    #classExamWeight;
     #totalHomework;
     #totalQuizzes;
     #totalExams;
@@ -1185,9 +1189,13 @@ class Class {
         this.#totalOtherAssignments = 0;
         this.#totalAssignments = 0;
         homeworkWeight = classHomeworkWeight / 100;
+        this.#classHomeworkWeight = classHomeworkWeight / 100;
         quizWeight = classQuizWeight / 100;
+        this.#classQuizWeight = classQuizWeight / 100;
         examWeight = classExamWeight / 100;
+        this.#classExamWeight = classExamWeight / 100;
         projectWeight = classProjectWeight / 100;
+        this.#classProjectWeight = classProjectWeight / 100;
         this.#totalLetterGradeA = 0;
         this.#totalLetterGradeB = 0;
         this.#totalLetterGradeC = 0;
@@ -1212,6 +1220,186 @@ class Class {
     set gradeLevel(gradeLevel){
         this.#gradeLevel = gradeLevel;
     }
+    set totalNumberOfStudents(totalNumberOfStudents){
+        this.#totalNumberOfStudents = totalNumberOfStudents;
+    }
+    set totalBehaviorIncidents(totalBehaviorIncidents) {
+        this.#totalBehaviorIncidents = totalBehaviorIncidents;
+    }
+    set totalSPED(totalSPED){
+        this.#totalSPED = totalSPED;
+    }
+    set totalEL(totalEL){
+        this.#totalEL = totalEL;
+    }
+    set totalInternetAccess(totalInternetAccess){
+        this.#totalInternetAccess = totalInternetAccess;
+    }
+    set SPEDPercentage(SPEDPercentage){
+        this.#SPEDPercentage = SPEDPercentage;
+    }
+    set ELPercentage(ELPercentage){
+        this.#ELPercentage = ELPercentage;
+    }
+    set InternetAccessPercentage(InternetAccessPercentage){
+        this.#InternetAccessPercentage = InternetAccessPercentage;
+    }
+    set totalAttendancePresent(totalAttendancePresent){
+        this.#totalAttendancePresent = totalAttendancePresent;
+    }
+    set totalAttendanceAbsent(totalAttendanceAbsent){
+        this.#totalAttendanceAbsent = totalAttendanceAbsent;
+    }
+    set attendancePresentPercentage(attendancePresentPercentage){
+        this.#attendancePresentPercentage = attendancePresentPercentage;
+    }
+    set attendanceAbsentPercentage(attendanceAbsentPercentage){
+        this.#attendanceAbsentPercentage = attendanceAbsentPercentage;
+    }
+    set totalOffTask(totalOffTask){
+        this.#totalOffTask = totalOffTask;
+    }
+    set totalRefusingToWork(totalRefusingToWork){
+        this.#totalRefusingToWork = totalRefusingToWork;
+    }
+    set totalOutOfSeat(totalOutOfSeat){
+        this.#totalOutOfSeat = totalOutOfSeat;
+    }
+    set totalTalking(totalTalking){
+        this.#totalTalking = totalTalking;
+    }
+    set totalThrowingObject(totalThrowingObject){
+        this.#totalThrowingObject = totalThrowingObject;
+    }
+    set totalTouchingOthers(totalTouchingOthers){
+        this.#totalTouchingOthers = totalTouchingOthers;
+    }
+    set totalSelfHarm(totalSelfHarm){
+        this.#totalSelfHarm = totalSelfHarm;
+    }
+    set totalInappropriateLang(totalInappropriateLang) {
+        this.#totalInappropriateLang = totalInappropriateLang;
+    }
+    set totalBullyingTeasing(totalBullyingTeasing){
+        this.#totalBullyingTeasing = totalBullyingTeasing;
+    }
+    set totalPropertyDamage(totalPropertyDamage){
+        this.#totalPropertyDamage = totalPropertyDamage
+    }
+    set totalDefianceDisrespect(totalDefianceDisrespect){
+        this.#totalDefianceDisrespect = totalDefianceDisrespect;
+    }
+    set totalTheft(totalTheft){
+        this.#totalTheft = totalTheft;
+    }
+    set totalLyingCheating(totalLyingCheating){
+        this.#totalLyingCheating = totalLyingCheating;
+    }
+    set totalOtherBehavior(totalOtherBehavior){
+        this.#totalOtherBehavior = totalOtherBehavior;
+    }
+    set offTaskPercentage(offTaskPercentage){
+        this.#offTaskPercentage = offTaskPercentage;
+    }
+    set refusingToWorkPercentage(refusingToWorkPercentage){
+        this.#refusingToWorkPercentage = refusingToWorkPercentage;
+    }
+    set outOfSeatPercentage(outOfSeatPercentage){
+        this.#outOfSeatPercentage = outOfSeatPercentage;
+    }
+    set talkingPercentage(talkingPercentage){
+        this.#talkingPercentage = talkingPercentage;
+    }
+    set throwingObjectPercentage(throwingObjectPercentage){
+        this.#throwingObjectPercentage = throwingObjectPercentage;
+    }
+    set touchingOthersPercentage(touchingOthersPercentage){
+        this.#touchingOthersPercentage = touchingOthersPercentage;
+    }
+    set selfHarmPercentage(selfHarmPercentage){
+        this.#selfHarmPercentage = selfHarmPercentage;
+    }
+    set inappropriateLangPercentage(inappropriateLangPercentage){
+        this.#inappropriateLangPercentage = inappropriateLangPercentage;
+    }
+    set bullyingTeasingPercentage(bullyingTeasingPercentage){
+        this.#bullyingTeasingPercentage = bullyingTeasingPercentage;
+    }
+    set propertyDamagePercentage(propertyDamagePercentage){
+        this.#propertyDamagePercentage = propertyDamagePercentage;
+    }
+    set defianceDisrespectPercentage(defianceDisrespectPercentage){
+        this.#defianceDisrespectPercentage = defianceDisrespectPercentage;
+    }
+    set theftPercentage(theftPercentage){
+        this.#theftPercentage = theftPercentage;
+    }
+    set lyingCheatingPercentage(lyingCheatingPercentage){
+        this.#lyingCheatingPercentage = lyingCheatingPercentage;
+    }
+    set otherBehaviorPercentage(otherBehaviorPercentage){
+        this.#otherBehaviorPercentage = otherBehaviorPercentage;
+    }
+    set totalHomework(totalHomework){
+        this.#totalHomework = totalHomework;
+    }
+    set totalQuizzes(totalQuizzes){
+        this.#totalQuizzes = totalQuizzes;
+    }
+    set totalExams(totalExams){
+        this.#totalExams = totalExams;
+    }
+    set totalProjects(totalProjects){
+        this.#totalProjects = totalProjects;
+    }
+    set totalOtherAssignments(totalOtherAssignments){
+        this.#totalOtherAssignments = totalOtherAssignments;
+    }
+    set totalAssignments(totalAssignments){
+        this.#totalAssignments = totalAssignments;
+    }
+    set totalLetterGradeA(totalLetterGradeA){
+        this.#totalLetterGradeA = totalLetterGradeA;
+    }
+    set totalLetterGradeB(totalLetterGradeB){
+        this.#totalLetterGradeB = totalLetterGradeB;
+    }
+    set totalLetterGradeC(totalLetterGradeC){
+        this.#totalLetterGradeC = totalLetterGradeC;
+    }
+    set totalLetterGradeD(totalLetterGradeD){
+        this.#totalLetterGradeD = totalLetterGradeD;
+    }
+    set totalLetterGradeF(totalLetterGradeF){
+        this.#totalLetterGradeF = totalLetterGradeF;
+    }
+    set letterGradeAPercentage(letterGradeAPercentage){
+        this.#letterGradeAPercentage = letterGradeAPercentage;
+    }
+    set letterGradeBPercentage(letterGradeBPercentage){
+        this.#letterGradeBPercentage = letterGradeBPercentage;
+    }
+    set letterGradeCPercentage(letterGradeCPercentage){
+        this.#letterGradeCPercentage = letterGradeCPercentage;
+    }
+    set letterGradeDPercentage(letterGradeDPercentage){
+        this.#letterGradeDPercentage = letterGradeDPercentage;
+    }
+    set letterGradeFPercentage(letterGradeFPercentage){
+        this.#letterGradeFPercentage = letterGradeFPercentage;
+    }
+    set students(students){
+        this.#students = students;
+    }
+    set events(events){
+        this.#events = events;
+    }
+    set announcements(announcements){
+        this.#announcements = announcements;
+    }
+    static from(json){
+        return Object.assign(new Class(), json);
+      }
     addStudent(studentObj){
         //let s = new Student(studentId, photo, firstName, lastName, gender, birthDate, contactEmail, SPED, EL, internetAccess);
         this.#students.push(studentObj);
@@ -1235,7 +1423,7 @@ class Class {
         this.#SPEDPercentage = Math.round(100*(this.#totalSPED / this.#totalNumberOfStudents) * 100) / 100;
         // Update ELPercentage
         this.#ELPercentage = (this.#totalEL / this.#totalNumberOfStudents) * 100;
-        // update InternestAccessPercentage
+        // update InternetAccessPercentage
         this.#InternetAccessPercentage = Math.round(100*(this.#totalInternetAccess / this.#totalNumberOfStudents) * 100) / 100;
         // update totalAttendancePresent
         let totalAttendancePresentSum = 0;
@@ -1428,7 +1616,7 @@ class Class {
             this.#SPEDPercentage = Math.round(100*(this.#totalSPED / this.#totalNumberOfStudents) * 100) / 100;
             // Update ELPercentage
             this.#ELPercentage = (this.#totalEL / this.#totalNumberOfStudents) * 100;
-            // update InternestAccessPercentage
+            // update InternetAccessPercentage
             this.#InternetAccessPercentage = Math.round(100*(this.#totalInternetAccess / this.#totalNumberOfStudents) * 100) / 100;
             // update totalAttendancePresent
             let totalAttendancePresentSum = 0;
@@ -1629,7 +1817,7 @@ class Class {
     get gradeLevel(){
         return this.#gradeLevel;
     }
-    get totaNumberOfStudents(){
+    get totalNumberOfStudents(){
         return this.#totalNumberOfStudents;
     }
     get totalBehaviorIncidents() {
@@ -1806,6 +1994,78 @@ class Class {
     get announcements(){
         return this.#announcements;
     }
+    makeClass(doc) {
+        this.#courseName = doc.courseName;
+        this.#instructorName = doc.instructorName;
+        this.#gradeLevel = doc.gradeLevel;
+        this.#totalNumberOfStudents = doc.totalNumberOfStudents;
+        this.#totalSPED = doc.totalSPED;
+        this.#totalEL = doc.totalEL;
+        this.#totalInternetAccess = doc.totalInternetAccess;
+        this.#SPEDPercentage = doc.SPEDPercentage;
+        this.#ELPercentage = doc.ELPercentage;
+        this.#InternetAccessPercentage = doc.InternetAccessPercentage;
+
+        this.#totalAttendancePresent = doc.totalAttendancePresent;
+        this.#totalAttendanceAbsent = doc.totalAttendanceAbsent;
+        this.#attendancePresentPercentage = doc.attendancePresentPercentage;
+        this.#attendanceAbsentPercentage = doc.attendanceAbsentPercentage;
+
+        this.#totalBehaviorIncidents = doc.totalBehaviorIncidents;
+        this.#totalOffTask = doc.totalOffTask;
+        this.#totalRefusingToWork = doc.totalRefusingToWork;
+        this.#totalOutOfSeat = doc.totalOutOfSeat;
+        this.#totalTalking = doc.totalTalking;
+        this.#totalThrowingObject = doc.totalThrowingObject;
+        this.#totalTouchingOthers = doc.totalTouchingOthers;
+        this.#totalSelfHarm = doc.totalSelfHarm;
+        this.#totalInappropriateLang = doc.totalInappropriateLang;
+        this.#totalBullyingTeasing = doc.totalBullyingTeasing;
+        this.#totalPropertyDamage = doc.totalPropertyDamage;
+        this.#totalDefianceDisrespect = doc.totalDefianceDisrespect;
+        this.#totalTheft = doc.totalTheft;
+        this.#totalLyingCheating = doc.totalLyingCheating;
+        this.#totalOtherBehavior = doc.totalOtherBehavior;
+        this.#offTaskPercentage = doc.offTaskPercentage;
+        this.#refusingToWorkPercentage = doc.refusingToWorkPercentage;
+        this.#outOfSeatPercentage = doc.outOfSeatPercentage;
+        this.#talkingPercentage = doc.talkingPercentage;
+        this.#throwingObjectPercentage = doc.throwingObjectPercentage;
+        this.#touchingOthersPercentage = doc.touchingOthersPercentage;
+        this.#selfHarmPercentage = doc.selfHarmPercentage;
+        this.#inappropriateLangPercentage = doc.inappropriateLangPercentage;
+        this.#bullyingTeasingPercentage = doc.bullyingTeasingPercentage;
+        this.#propertyDamagePercentage = doc.propertyDamagePercentage;
+        this.#defianceDisrespectPercentage = doc.defianceDisrespectPercentage;
+        this.#theftPercentage = doc.theftPercentage;
+        this.#lyingCheatingPercentage = doc.lyingCheatingPercentage;
+        this.#otherBehaviorPercentage = doc.otherBehaviorPercentage;
+
+        this.#totalHomework = doc.totalHomework;
+        this.#totalQuizzes = doc.totalQuizzes;
+        this.#totalExams = doc.totalExams;
+        this.#totalProjects = doc.totalProjects;
+        this.#totalOtherAssignments = doc.totalOtherAssignments;
+        this.#totalAssignments = doc.totalAssignments;
+        homeworkWeight = doc.homeworkWeight;
+        quizWeight = doc.quizWeight;
+        examWeight = doc.examWeight;
+        projectWeight = doc.projectWeight;
+        this.#totalLetterGradeA = doc.totalLetterGradeA;
+        this.#totalLetterGradeB = doc.totalLetterGradeB;
+        this.#totalLetterGradeC = doc.totalLetterGradeC;
+        this.#totalLetterGradeD = doc.totalLetterGradeD;
+        this.#totalLetterGradeF = doc.totalLetterGradeF;
+        this.#letterGradeAPercentage = doc.letterGradeAPercentage;
+        this.#letterGradeBPercentage = doc.letterGradeBPercentage;
+        this.#letterGradeCPercentage = doc.letterGradeCPercentage;
+        this.#letterGradeDPercentage = doc.letterGradeDPercentage;
+        this.#letterGradeFPercentage = doc.letterGradeFPercentage;
+
+        this.#students = doc.students;
+        this.#events = doc.events;
+        this.#announcements = doc.announcements;
+    }
     toJSON(){
         var studentOutput = new Array();
         for (let i = 0; i < this.#students.length; i++){
@@ -1835,6 +2095,10 @@ class Class {
             ELPercentage: this.#ELPercentage,
             InternetAccessPercentage: this.#InternetAccessPercentage,
             // TOTAL ASSIGNMENTS
+            homeworkWeight: this.#classHomeworkWeight,
+            quizWeight: this.#classQuizWeight,
+            examWeight: this.#classExamWeight,
+            projectWeight: this.#classProjectWeight,
             totalHomework: this.#totalHomework,
             totalQuizzes: this.#totalQuizzes,
             totalExams: this.#totalExams,
@@ -1877,9 +2141,9 @@ class Class {
             totalBullyingTeasing: this.#totalBullyingTeasing,
             bullyingTeasingPercentage: this.#bullyingTeasingPercentage,
             totalPropertyDamage: this.#totalPropertyDamage,
-            propertyDamagePercentage: this.#propertyDamagePercentage,
+            propertyDamage: this.#propertyDamagePercentage,
             totalDefianceDisrespect: this.#totalDefianceDisrespect,
-            defianceDisrespectPercentage: this.#defianceDisrespectPercentage,
+            defianceDisrespect: this.#defianceDisrespectPercentage,
             totalTheft: this.#totalTheft,
             theftPercentage: this.#theftPercentage,
             totalLyingCheating: this.#totalLyingCheating,
@@ -4974,7 +5238,7 @@ addAnnouncementToDB(class1, announcement1);
 addAnnouncementToDB(class1, announcement2);
 addAnnouncementToDB(class1, announcement3);*/
 // Students
-addStudentToDB(class1, student0);
+/*addStudentToDB(class1, student0);
 addStudentToDB(class1, student1);
 addStudentToDB(class1, student2);
 addStudentToDB(class1, student3);
@@ -5003,4 +5267,4 @@ addStudentToDB(class1, student25);
 addStudentToDB(class1, student26);
 addStudentToDB(class1, student27);
 addStudentToDB(class1, student28);
-addStudentToDB(class1, student29);
+addStudentToDB(class1, student29);*/

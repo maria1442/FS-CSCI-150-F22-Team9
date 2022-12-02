@@ -789,7 +789,7 @@ class Student{
     }
     removeAssignment(assignmentObj){
         let pos = this.#studentAssignments.findIndex(
-            element => element.assignmentName === assignmenObj.assignmentName
+            element => element.assignmentName === assignmentObj.assignmentName
         );
         if (pos > -1) { // only splice array when item is found
             if (this.#studentAssignments[pos].assignmentCategory == "Homework"){
@@ -1111,6 +1111,10 @@ class Class {
     #lyingCheatingPercentage;
     #otherBehaviorPercentage;
     // COURSE ASSIGNMENT INFORMATION
+    #classHomeworkWeight;
+    #classQuizWeight;
+    #classProjectWeight;
+    #classExamWeight;
     #totalHomework;
     #totalQuizzes;
     #totalExams;
@@ -1185,9 +1189,13 @@ class Class {
         this.#totalOtherAssignments = 0;
         this.#totalAssignments = 0;
         homeworkWeight = classHomeworkWeight / 100;
+        this.#classHomeworkWeight = classHomeworkWeight / 100;
         quizWeight = classQuizWeight / 100;
+        this.#classQuizWeight = classQuizWeight / 100;
         examWeight = classExamWeight / 100;
+        this.#classExamWeight = classExamWeight / 100;
         projectWeight = classProjectWeight / 100;
+        this.#classProjectWeight = classProjectWeight / 100;
         this.#totalLetterGradeA = 0;
         this.#totalLetterGradeB = 0;
         this.#totalLetterGradeC = 0;
@@ -2087,6 +2095,10 @@ class Class {
             ELPercentage: this.#ELPercentage,
             InternetAccessPercentage: this.#InternetAccessPercentage,
             // TOTAL ASSIGNMENTS
+            homeworkWeight: this.#classHomeworkWeight,
+            quizWeight: this.#classQuizWeight,
+            examWeight: this.#classExamWeight,
+            projectWeight: this.#classProjectWeight,
             totalHomework: this.#totalHomework,
             totalQuizzes: this.#totalQuizzes,
             totalExams: this.#totalExams,
@@ -2327,7 +2339,7 @@ async function addBehaviorToDB(course, student, behavior) {
         await client.close();
     }
 }
-async function addAssignmentToDB(course, student, assignment) {
+async function addAssignmentToDB(student, assignment) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
     try {
@@ -2423,13 +2435,13 @@ async function deleteBehaviorFromDB(course, student, behavior) {
         await client.close();
     }
 }
-async function deleteAssignmentFromDB(course, student, assignment) {
+async function deleteAssignmentFromDB(student, assignment) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
     try {
         await client.connect();
         await deleteStudentAssignmentFromDB(client, student, assignment);
-        await deleteStudentAssignmentFromClassDB(client, course, student, assignment);
+        //await deleteStudentAssignmentFromClassDB(client, course, student, assignment);
     }
     finally {
         await client.close();
@@ -2466,6 +2478,30 @@ async function updateStudentFromDB(student, newStudent) {
     try {
         await client.connect();
         await updateStudentFromDBClient(client, student, newStudent);
+        //await updateStudentFromClassDB(client, course, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateStudentGradeFromDB(student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentGradeFromDBClient(client, student, newStudent);
+        //await updateStudentFromClassDB(client, course, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateStudentGradeAfterDeleteFromDB(student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentGradeAfterDeleteFromDBClient(client, student, newStudent);
         //await updateStudentFromClassDB(client, course, student, newStudent);
     }
     finally {
@@ -2512,7 +2548,7 @@ async function updateAttendanceFromDB(course, student, attendance, newAttendance
     try {
         await client.connect();
         await updateStudentAttendanceFromDB(client, student, attendance, newAttendance);
-        await updateStudentAttendanceFromClassDB(client, course, student, attendance, newAttendance);
+        //await updateStudentAttendanceFromClassDB(client, course, student, attendance, newAttendance);
     }
     finally {
         await client.close();
@@ -2977,6 +3013,22 @@ async function updateStudentFromDBClient(client, student, newStudent){
     let update = newStudent;
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"photo": update.photo, "firstName": update.firstName, "lastName":update.lastName, "gender":update.gender, "birthDate":update.birthDate, "contactEmail":update.contactEmail, "SPED":update.SPED, "EL":update.EL, "internetAccess":update.internetAccess}});
 }
+async function updateStudentGradeFromDBClient(client, student, newStudent){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;  
+    let update = newStudent;
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalHomework": update.totalHomework, "totalQuizzes": update.totalQuizzes, "totalExams":update.totalExams, "totalProjects":update.totalProjects, "totalOtherAssignments":update.totalOtherAssignments, "totalAssignments":update.totalAssignments, "letterGrade":update.letterGrade, "gradePercentage":update.gradePercentage}});
+}
+async function updateStudentGradeAfterDeleteFromDBClient(client, student, newStudent){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;  
+    let update = newStudent;
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalHomework": update.totalHomework, "totalQuizzes": update.totalQuizzes, "totalExams":update.totalExams, "totalProjects":update.totalProjects, "totalOtherAssignments":update.totalOtherAssignments, "totalAssignments":update.totalAssignments, "letterGrade":update.letterGrade, "gradePercentage":update.gradePercentage, "studentAssignments":update.studentAssignments}});
+}
 async function updateWholeStudentFromDBClient(client, student, newStudent){
     let name = student.studentId;
     const query = {studentId: name};
@@ -3185,7 +3237,7 @@ app.post("/addEvent", urlencodedParser, async function(req, res){
     var eventLocation = req.body.location;
     var eventDate = new Date(req.body.eventDate);
     const newEvent = new Event(eventName, eventDate.getUTCMonth(), eventDate.getUTCDate(), eventDate.getUTCFullYear(), eventDescription, eventLocation);
-    addEventToDB(newEvent.toJSON());
+    await addEventToDB(newEvent.toJSON());
     res.redirect('back');
 })
 
@@ -3199,9 +3251,68 @@ app.post("/addAnnouncement", urlencodedParser, async function(req, res){
     var description = req.body.description;
     var announcementDate = new Date(req.body.announcementDate);
     const newAnnouncement = new Announcement(title, description, announcementDate.getUTCMonth(), announcementDate.getUTCDate(), announcementDate.getUTCFullYear());
-    addAnnouncementToDB(newAnnouncement.toJSON());
+    await addAnnouncementToDB(newAnnouncement.toJSON());
     res.redirect('back');
 })
+
+app.post("/addAssignment", urlencodedParser, async function(req, res){
+    const assignmentName = req.body.assignmentName;
+    const assignmentCategory = req.body.assignmentCategory;
+    const assignmentPossibleScore = parseInt(req.body.possibleScore);
+    const assignmentDate = new Date(req.body.assignmentDate); 
+    const classesArr = await getClassArrayFromDB();
+    const course = classesArr[0];
+    if (assignmentCategory == "Homework"){
+        homeworkWeight = course.homeworkWeight;
+    }
+    else if (assignmentCategory == "Quiz"){
+        quizWeight = course.quizWeight;
+    }
+    else if (assignmentCategory == "Exam"){
+        examWeight = course.examWeight;
+    }
+    else if (assignmentCategory == "Project"){
+        projectWeight = course.projectWeight;
+    }
+    const studentIDArr = req.body.studentID;
+    const givenScoreArr = req.body.givenScore;
+    for(let j = 0; j < studentIDArr.length; j++){
+        let newAssignment = new Assignment(assignmentName, assignmentCategory, assignmentPossibleScore, parseInt(givenScoreArr[j]), assignmentDate.getUTCMonth(), assignmentDate.getUTCDate(), assignmentDate.getUTCFullYear());
+        var studentId = studentIDArr[j];
+        var student = new Student(Number(studentId));
+        await addAssignmentToDB(student.toJSON(), newAssignment.toJSON());
+        const singleStudent = await getStudentFromDB(student.toJSON());
+        var studentDOB = new Date(singleStudent.birthDate);
+        var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+        for(let i = 0; i < singleStudent.studentAssignments.length; i++){
+            let name = singleStudent.studentAssignments[i].assignmentName;
+            let category = singleStudent.studentAssignments[i].assignmentCategory;
+            if (category == "Homework"){
+                homeworkWeight = course.homeworkWeight;
+            }
+            else if (category == "Quiz"){
+                quizWeight = course.quizWeight;
+            }
+            else if (category == "Exam"){
+                examWeight = course.examWeight;
+            }
+            else if (category == "Project"){
+                projectWeight = course.projectWeight;
+            }
+            let possibleScore = parseInt(singleStudent.studentAssignments[i].possibleScore);
+            let givenScore = parseInt(singleStudent.studentAssignments[i].givenScore);
+            let date = new Date(singleStudent.studentAssignments[i].date);
+            let month = date.getUTCMonth();
+            let day = date.getUTCDate();
+            let year = date.getUTCFullYear();
+            let assignment = new Assignment(name, category, possibleScore, givenScore, month, day, year);
+            newStudent.addAssignment(assignment);
+        }
+        await updateStudentGradeFromDB(student.toJSON(), newStudent.toJSON());
+    }
+    res.redirect('back');
+})
+
 app.post("/newStudent", (req, res) => {
     const newStudent = req.body;
     addStudentToDB(newStudent).catch(console.error);
@@ -3254,10 +3365,10 @@ app.post("/removeEvent", (req, res) => {
     deleteEventFromDB(event).catch(console.error);
     res.status(200).json({ ok: true })
 })
-app.post("/deleteEvent", urlencodedParser, (req, res) => {
+app.post("/deleteEvent", urlencodedParser, async function(req, res) {
     const deleteEvent = req.body.deleteEventName;
     const event = new Event(deleteEvent);
-    deleteEventFromDB(event.toJSON()).catch(console.error);
+    await deleteEventFromDB(event.toJSON()).catch(console.error);
     res.redirect('back');
 })
 app.post("/removeAnnouncement", (req, res) => {
@@ -3265,10 +3376,10 @@ app.post("/removeAnnouncement", (req, res) => {
     deleteAnnouncementFromDB(announcement).catch(console.error);
     res.status(200).json({ ok: true })
 })
-app.post("/deleteAnnouncement", urlencodedParser, (req, res) => {
+app.post("/deleteAnnouncement", urlencodedParser, async function(req, res) {
     const deleteAnnouncement = req.body.deleteAnnouncementTitle;
     const announcement = new Announcement(deleteAnnouncement)
-    deleteAnnouncementFromDB(announcement.toJSON()).catch(console.error);
+    await deleteAnnouncementFromDB(announcement.toJSON()).catch(console.error);
     res.redirect('back');
 })
 app.post("/removeStudent", (req, res) => {
@@ -3276,10 +3387,56 @@ app.post("/removeStudent", (req, res) => {
     deleteStudentFromDB(student).catch(console.error);
     res.status(200).json({ ok: true })    
 })
-app.post("/deleteStudent", urlencodedParser, (req, res) => {
+app.post("/deleteStudent", urlencodedParser, async function(req, res) {
     const deleteStudent = parseInt(req.body.deleteStudentID);
     const student = new Student(deleteStudent);
-    deleteStudentFromDB(student.toJSON()).catch(console.error);
+    await deleteStudentFromDB(student.toJSON()).catch(console.error);
+    res.redirect('back');
+})
+app.post("/deleteAssignment", urlencodedParser, async function(req, res) {
+    const assignmentName = req.body.deleteAssignmentName;
+    var oldAssignment = new Assignment(assignmentName);
+    const classesArr = await getClassArrayFromDB();
+    const course = classesArr[0];
+    var studentArr = await getStudentArrayFromDB();
+    var studentIDArr = new Array();
+    for (let i = 0; i < studentArr.length; i++){
+        studentIDArr.push(studentArr[i].studentId);
+    }
+    for(let j = 0; j < studentIDArr.length; j++){
+        var studentId = studentIDArr[j];
+        var student = new Student(Number(studentId));
+        const singleStudent = await getStudentFromDB(student.toJSON());
+        var studentDOB = new Date(singleStudent.birthDate);
+        var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+        for(let i = 0; i < singleStudent.studentAssignments.length; i++){
+            let name = singleStudent.studentAssignments[i].assignmentName;
+            let category = singleStudent.studentAssignments[i].assignmentCategory;
+            if (category == "Homework"){
+                homeworkWeight = course.homeworkWeight;
+            }
+            else if (category == "Quiz"){
+                quizWeight = course.quizWeight;
+            }
+            else if (category == "Exam"){
+                examWeight = course.examWeight;
+            }
+            else if (category == "Project"){
+                projectWeight = course.projectWeight;
+            }
+            let possibleScore = parseInt(singleStudent.studentAssignments[i].possibleScore);
+            let givenScore = parseInt(singleStudent.studentAssignments[i].givenScore);
+            let date = new Date(singleStudent.studentAssignments[i].date);
+            let month = date.getUTCMonth();
+            let day = date.getUTCDate();
+            let year = date.getUTCFullYear();
+            let assignment = new Assignment(name, category, possibleScore, givenScore, month, day, year);
+            console.log(assignment.assignmentWeight);
+            newStudent.addAssignment(assignment);
+       }
+        newStudent.removeAssignment(oldAssignment);
+        updateStudentGradeAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
+    }
     res.redirect('back');
 })
 app.post("/deleteClass", (req, res) => {
@@ -3334,7 +3491,7 @@ app.post("/updateEvent1", (req, res) => {
     updateEventFromDB(event, newEvent).catch(console.error);
     res.status(200).json({ ok: true })
 })
-app.post("/updateEvent", urlencodedParser, (req, res) => {
+app.post("/updateEvent", urlencodedParser, async function(req, res) {
     const eventNameArr = req.body.updateEventName;
     const eventDateArr = req.body.updateEventDate;
     const eventDescriptionArr = req.body.updateEventDescription;
@@ -3343,7 +3500,7 @@ app.post("/updateEvent", urlencodedParser, (req, res) => {
         let eventDate = new Date(eventDateArr[i]);
         let oldEvent = new Event(eventNameArr[i]);
         let newEvent = new Event(eventNameArr[i], eventDate.getUTCMonth(), eventDate.getUTCDate(), eventDate.getUTCFullYear(), eventDescriptionArr[i], eventLocationArr[i]);
-        updateEventFromDB(oldEvent.toJSON(), newEvent.toJSON()).catch(console.error);
+        await updateEventFromDB(oldEvent.toJSON(), newEvent.toJSON()).catch(console.error);
     }
     res.redirect('back');
 })
@@ -3353,7 +3510,7 @@ app.post("/updateAnnouncement1", (req, res) => {
     updateAnnouncementFromDB(announcement, newAnnouncement).catch(console.error);
     res.status(200).json({ ok: true })
 })
-app.post("/updateAnnouncement", urlencodedParser, (req, res) => {
+app.post("/updateAnnouncement", urlencodedParser, async function(req, res) {
     const announcementTitleArr = req.body.updateAnnouncementTitle;
     const announcementDateArr = req.body.updateAnnouncementDate;
     const announcementDescriptionArr = req.body.updateAnnouncementDescription;
@@ -3361,7 +3518,7 @@ app.post("/updateAnnouncement", urlencodedParser, (req, res) => {
         let announcementDate = new Date(announcementDateArr[i]);
         let oldAnnouncement = new Announcement(announcementTitleArr[i]);
         let newAnnouncement = new Announcement(announcementTitleArr[i], announcementDescriptionArr[i], announcementDate.getUTCMonth(), announcementDate.getUTCDate(), announcementDate.getUTCFullYear());
-        updateAnnouncementFromDB(oldAnnouncement.toJSON(), newAnnouncement.toJSON()).catch(console.error);
+        await updateAnnouncementFromDB(oldAnnouncement.toJSON(), newAnnouncement.toJSON()).catch(console.error);
     }
     res.redirect('back');
 })
@@ -3372,7 +3529,7 @@ app.post("/updateStudent", (req, res) => {
     res.status(200).json({ ok: true })
 })
 
-app.post("/updateStudents", urlencodedParser, (req, res) => {
+app.post("/updateStudents", urlencodedParser, async function(req, res){
     const studentPhotoArr = req.body.updateStudentPhoto;
     const studentIDArr = req.body.updateStudentID;
     const studentFirstNameArr = req.body.updateStudentFirstName;
@@ -3396,11 +3553,57 @@ app.post("/updateStudents", urlencodedParser, (req, res) => {
         let studentDOB = new Date(studentDOBArr[i]);
         let oldStudent = new Student(parseInt(studentIDArr[i]));
         let newStudent = new Student(parseInt(studentIDArr[i]), studentPhotoArr[i], studentFirstNameArr[i], studentLastNameArr[i], studentGenderArr[i], studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), studentContactEmailArr[i], studentSPEDArr[i], studentELArr[i], studentIAArr[i]);
-        updateStudentFromDB(oldStudent.toJSON(), newStudent.toJSON()).catch(console.error);
+        await updateStudentFromDB(oldStudent.toJSON(), newStudent.toJSON()).catch(console.error);
     }
     res.redirect('back');
 })
+app.post("/updateAssignment", urlencodedParser, async function(req, res){
+    const studentScoreArr = req.body.updateStudentScore;
+    const studentArr = await getStudentArrayFromDB();
+    const numberOfAssignments = (studentArr[0].studentAssignments.length);
+    const assignmentArr = studentArr[0].studentAssignments;
+    const classesArr = await getClassArrayFromDB();
+    const course = classesArr[0];
 
+    var studentIDArr = new Array();
+    for (let i = 0; i < studentArr.length; i++){
+        studentIDArr.push(studentArr[i].studentId);
+    }
+    var k = 0;
+    for (let j = 0; j < studentIDArr.length; j++){
+        var studentId = studentIDArr[j];
+        var student = new Student(Number(studentId));
+        const singleStudent = await getStudentFromDB(student.toJSON());
+        var studentDOB = new Date(singleStudent.birthDate);
+        var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+        for(let i = 0; i < singleStudent.studentAssignments.length; i++){
+            let name = singleStudent.studentAssignments[i].assignmentName;
+            let category = singleStudent.studentAssignments[i].assignmentCategory;
+            if (category == "Homework"){
+                homeworkWeight = course.homeworkWeight;
+            }
+            else if (category == "Quiz"){
+                quizWeight = course.quizWeight;
+            }
+            else if (category == "Exam"){
+                examWeight = course.examWeight;
+            }
+            else if (category == "Project"){
+                projectWeight = course.projectWeight;
+            }
+            let possibleScore = parseInt(singleStudent.studentAssignments[i].possibleScore);
+            let date = new Date(singleStudent.studentAssignments[i].date);
+            let month = date.getUTCMonth();
+            let day = date.getUTCDate();
+            let year = date.getUTCFullYear();
+            let assignment = new Assignment(name, category, possibleScore, parseInt(studentScoreArr[k]), month, day, year);
+            newStudent.addAssignment(assignment);
+            k++;
+       }
+        updateStudentGradeAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
+    }
+    res.redirect('back');
+})
 
 app.post("/updateClass", (req, res) => {
     const course = req.body.course;
@@ -3507,7 +3710,7 @@ app.get("/grades", async function(req, res) {
     for (let i = 0; i < assignmentArr.length; i++){
         assignmentArr[i].date = assignmentArr[i].date.toLocaleDateString();
     }
-    res.render('grades', {students: studentsArr, assignmentArr: assignmentArr});
+    res.render('grades', {students: studentsArr, assignmentArr: assignmentArr, editing: Editing});
 })
 
 app.get("/attendance", async function(req, res) {
