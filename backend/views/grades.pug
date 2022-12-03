@@ -90,7 +90,7 @@ html
 			| 
 			br
 			each student in students
-				input(type='text' value=student.firstName + " " + student.lastName readonly=true name="studentID")
+				input(type='text' value=student.firstName + " " + student.lastName readonly=true name="studentName")
 				input(type='text' value=student.studentId readonly=true name="studentID")
 				label(for='givenScore')= "\tGiven Score: "
 				input(type='number' name='givenScore')

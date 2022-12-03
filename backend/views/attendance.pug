@@ -46,15 +46,47 @@ html
 				a(href)
 					i.fa-solid.fa-gear
 	.main
-		table   
-					tr 
-						th="Student Name"
-						th= "Student ID"
-						each day in attendanceArr
-							th(style="white-space:pre-line;")= day.date
-					each student in students
-						tr
-							td=student.firstName + " " + student.lastName
-							td=student.studentId
-							each studentAttendance in student.studentAttendance
-								td=studentAttendance.status
+		form(action='./edit' method='POST' name="editing")
+			input#allowEditing(type='radio' name='Editing' value='allowEditing')
+			label(for='allowEditing')="Allow Editing"
+			input#noEditing(type='radio' name='Editing' value='noEditing')
+			label(for='noEditing')="No Editing"
+			br
+			input(type='submit' value='Apply')
+		form(action='./updateAttendance' method='POST' name="editingAttendanceForm")
+			table   
+				tr 
+					th="Student Name"
+					th= "Student ID"
+					each day in attendanceArr
+						th(style="white-space:pre-line;")= day.date
+				each student in students
+					tr
+						td=student.firstName + " " + student.lastName
+						td=student.studentId
+						each studentAttendance in student.studentAttendance
+							td 
+								input(type='text' value=studentAttendance.status readonly=editing name='updateStatus')
+			input(type='submit' value='Update Attendance')
+		h2="Add Attendance"
+		form(action='./addAttendance' method='POST')
+			| 
+			label(for='attendanceDate')= "Date: "
+			input(type='date' name='attendanceDate')
+			br
+			each student in students
+				input(type='text' value=student.firstName + " " + student.lastName readonly=true name="studentName")
+				input(type='text' value=student.studentId readonly=true name="studentID")
+				input#attendanceAbsent(type='radio' name='attendanceStatus'+ student.studentId value='Absent')
+				label(for='attendanceAbsent')="Absent"
+				input#attendancePresent(type='radio' name='attendanceStatus'+ student.studentId value='Present')
+				label(for='attendancePresent')="Present"
+				br
+			input(type='submit' value='Add Attendance')
+		h2="Delete Attendance"
+		form(action='./deleteAttendance' method='POST')
+			| 
+			label(for='attendanceDate')= "Date: "
+			input(type='date' name='deleteAttendanceDate')
+			br
+			input(type='submit' value='Delete Attendance')

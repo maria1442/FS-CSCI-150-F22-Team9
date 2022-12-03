@@ -2315,7 +2315,7 @@ async function addUserToDB(user) {
         await client.close();
     }
 }
-async function addAttendanceToDB(course, student, attendance) {
+async function addAttendanceToDB(student, attendance) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
     try {
@@ -2508,6 +2508,29 @@ async function updateStudentGradeAfterDeleteFromDB(student, newStudent) {
         await client.close();
     }
 }
+async function updateStudentAttendanceFromDB(student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentAttendanceFromDBClient(client, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateStudentAttendanceAfterDeleteFromDB(student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentAttendanceAfterDeleteFromDBClient(client, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
+
 async function updateWholeStudentFromDB(student, newStudent) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
@@ -2547,7 +2570,7 @@ async function updateAttendanceFromDB(course, student, attendance, newAttendance
     const client = new MongoClient(uri);
     try {
         await client.connect();
-        await updateStudentAttendanceFromDB(client, student, attendance, newAttendance);
+        await updateWholeStudentAttendanceFromDB(client, student, attendance, newAttendance);
         //await updateStudentAttendanceFromClassDB(client, course, student, attendance, newAttendance);
     }
     finally {
@@ -3029,6 +3052,22 @@ async function updateStudentGradeAfterDeleteFromDBClient(client, student, newStu
     let update = newStudent;
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalHomework": update.totalHomework, "totalQuizzes": update.totalQuizzes, "totalExams":update.totalExams, "totalProjects":update.totalProjects, "totalOtherAssignments":update.totalOtherAssignments, "totalAssignments":update.totalAssignments, "letterGrade":update.letterGrade, "gradePercentage":update.gradePercentage, "studentAssignments":update.studentAssignments}});
 }
+async function updateStudentAttendanceFromDBClient(client, student, newStudent){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;  
+    let update = newStudent;
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalDays": update.totalDays, "totalPresentAttendance": update.totalPresentAttendance, "totalAbsentAttendance":update.totalAbsentAttendance, "attendancePresentPercentage":update.attendancePresentPercentage}});
+}
+async function updateStudentAttendanceAfterDeleteFromDBClient(client, student, newStudent){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;  
+    let update = newStudent;
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalDays": update.totalDays, "totalPresentAttendance": update.totalPresentAttendance, "totalAbsentAttendance":update.totalAbsentAttendance, "attendancePresentPercentage":update.attendancePresentPercentage, "studentAttendance":update.studentAttendance}});
+}
 async function updateWholeStudentFromDBClient(client, student, newStudent){
     let name = student.studentId;
     const query = {studentId: name};
@@ -3069,7 +3108,7 @@ async function updateUserFromDBClient(client, user, newUser){
     let update = newUser;  
     const result = await client.db("classparency").collection("users").updateOne({"_id": stringId}, {$set: update});
 }
-async function updateStudentAttendanceFromDB(client, student, attendance, newAttendance){
+async function updateWholeStudentAttendanceFromDB(client, student, attendance, newAttendance){
     let name = student.studentId;
     const query = {studentId: name};
     const finding = await client.db("classparency").collection("students").findOne(query);
@@ -3313,6 +3352,40 @@ app.post("/addAssignment", urlencodedParser, async function(req, res){
     res.redirect('back');
 })
 
+app.post("/addAttendance", urlencodedParser, async function(req, res){
+    const studentIDArr = req.body.studentID;
+    const attendanceDate = new Date(req.body.attendanceDate);
+    const classesArr = await getClassArrayFromDB();
+    const course = classesArr[0];
+    var attendanceStatusArr = new Array();
+    for (let i = 0; i < studentIDArr.length; i++){
+        var string = "attendanceStatus" + studentIDArr[i];
+        var attendanceStatus = req.body[string];
+        attendanceStatusArr.push(attendanceStatus);
+    }
+    for(let j = 0; j < studentIDArr.length; j++){
+        let newAttendance = new Attendance(attendanceDate.getUTCMonth(), attendanceDate.getUTCDate(), attendanceDate.getUTCFullYear(), attendanceStatusArr[j]);
+        var studentId = studentIDArr[j];
+        var student = new Student(Number(studentId));
+        await addAttendanceToDB(student.toJSON(), newAttendance.toJSON());
+        const singleStudent = await getStudentFromDB(student.toJSON());
+        var studentDOB = new Date(singleStudent.birthDate);
+        var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+        for(let i = 0; i < singleStudent.studentAttendance.length; i++){
+            let date = new Date(singleStudent.studentAttendance[i].date);
+            let month = date.getUTCMonth();
+            let day = date.getUTCDate();
+            let year = date.getUTCFullYear();
+            let status = singleStudent.studentAttendance[i].status;
+            let attendance = new Attendance(month, day, year, status);
+            newStudent.addAttendance(attendance);
+        }
+        await updateStudentAttendanceFromDB(student.toJSON(), newStudent.toJSON());
+    }
+    res.redirect('back');
+})
+
+
 app.post("/newStudent", (req, res) => {
     const newStudent = req.body;
     addStudentToDB(newStudent).catch(console.error);
@@ -3439,6 +3512,40 @@ app.post("/deleteAssignment", urlencodedParser, async function(req, res) {
     }
     res.redirect('back');
 })
+app.post("/deleteAttendance", urlencodedParser, async function(req, res) {
+    const attendanceDate = new Date(req.body.deleteAttendanceDate);
+    const attendanceMonth = attendanceDate.getUTCMonth();
+    const attendanceDay = attendanceDate.getUTCDate();
+    const attendanceYear = attendanceDate.getUTCFullYear();
+    var studentArr = await getStudentArrayFromDB();
+    var oldAttendance = new Attendance(attendanceMonth, attendanceDay, attendanceYear);
+    var studentIDArr = new Array();
+    for (let i = 0; i < studentArr.length; i++){
+        studentIDArr.push(studentArr[i].studentId);
+    }
+    for(let j = 0; j < studentIDArr.length; j++){
+        var studentId = studentIDArr[j];
+        var student = new Student(Number(studentId));
+        const singleStudent = await getStudentFromDB(student.toJSON());
+        var studentDOB = new Date(singleStudent.birthDate);
+        var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+        
+        for(let i = 0; i < singleStudent.studentAttendance.length; i++){
+            let date = new Date(singleStudent.studentAttendance[i].date);
+            let month = date.getUTCMonth();
+            let day = date.getUTCDate();
+            let year = date.getUTCFullYear();
+            let status = singleStudent.studentAttendance[i].status;
+            let attendance = new Attendance(month, day, year, status);
+            newStudent.addAttendance(attendance);
+        }
+        newStudent.removeAttendance(oldAttendance);
+        await updateStudentAttendanceAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
+    }
+    res.redirect('back');
+})
+
+
 app.post("/deleteClass", (req, res) => {
     const course = req.body;
     deleteClassFromDB(course).catch(console.error);
@@ -3600,7 +3707,36 @@ app.post("/updateAssignment", urlencodedParser, async function(req, res){
             newStudent.addAssignment(assignment);
             k++;
        }
-        updateStudentGradeAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
+        await updateStudentGradeAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
+    }
+    res.redirect('back');
+})
+
+app.post("/updateAttendance", urlencodedParser, async function(req, res){
+    const statusArr = req.body.updateStatus;
+    const studentArr = await getStudentArrayFromDB();
+
+    var studentIDArr = new Array();
+    for (let i = 0; i < studentArr.length; i++){
+        studentIDArr.push(studentArr[i].studentId);
+    }
+    var k = 0;
+    for (let j = 0; j < studentIDArr.length; j++){
+        var studentId = studentIDArr[j];
+        var student = new Student(Number(studentId));
+        const singleStudent = await getStudentFromDB(student.toJSON());
+        var studentDOB = new Date(singleStudent.birthDate);
+        var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+        for(let i = 0; i < singleStudent.studentAttendance.length; i++){
+            let date = new Date(singleStudent.studentAttendance[i].date);
+            let month = date.getUTCMonth();
+            let day = date.getUTCDate();
+            let year = date.getUTCFullYear();
+            let attendance = new Attendance(month, day, year, statusArr[k]);
+            newStudent.addAttendance(attendance);
+            k++;
+       }
+        await updateStudentAttendanceAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
     }
     res.redirect('back');
 })
@@ -3719,7 +3855,7 @@ app.get("/attendance", async function(req, res) {
     for (let i = 0; i < attendanceArr.length; i++){
         attendanceArr[i].date = attendanceArr[i].date.toLocaleDateString();
     }
-    res.render('attendance', {students: studentsArr, attendanceArr: attendanceArr});
+    res.render('attendance', {students: studentsArr, attendanceArr: attendanceArr, editing: Editing});
 })
 
 app.get("/class", async function(req, res) {

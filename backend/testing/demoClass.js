@@ -5238,7 +5238,7 @@ addAnnouncementToDB(class1, announcement1);
 addAnnouncementToDB(class1, announcement2);
 addAnnouncementToDB(class1, announcement3);*/
 // Students
-/*addStudentToDB(class1, student0);
+addStudentToDB(class1, student0);
 addStudentToDB(class1, student1);
 addStudentToDB(class1, student2);
 addStudentToDB(class1, student3);
@@ -5267,4 +5267,4 @@ addStudentToDB(class1, student25);
 addStudentToDB(class1, student26);
 addStudentToDB(class1, student27);
 addStudentToDB(class1, student28);
-addStudentToDB(class1, student29);*/
+addStudentToDB(class1, student29);
