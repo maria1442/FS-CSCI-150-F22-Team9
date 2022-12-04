@@ -28,7 +28,7 @@ html
 				a(href='./eventsPage')
 					i.fa-solid.fa-calendar-days
 					="Events"
-				a(href='#behavior')
+				a(href='./behavior')
 					i.fa-solid.fa-face-smile
 					="Behavior"
 				a(href='./announcementsPage')
@@ -74,11 +74,11 @@ html
 		h2="Add Event"
 		form(action='./addEvent' method='POST')
 			| 
-			label(for='eventName')= "Event Name: "
+			label(for='eventName')= "Unique Event Name: "
 			input(type='text' name='eventName')
 			| 
 			label(for='description')= "Description: " 
-			input(type='text' name='description')
+			textarea#input(name='description')
 			| 
 			label(for='location')="Location: "
 			input(type='text' name='location')
@@ -90,11 +90,14 @@ html
 			br
 			input(type='submit' value='Add Event')
 		h2="Delete Event"
-		h3="Enter the exact name of the event you would like to delete"
+		h3="Choose the name of the event you would like to delete"
 		form(action='./deleteEvent' method='POST')
 			| 
-			label(for='deleteEventName')= "Event Name: "
-			input(type='text' name='deleteEventName')
+			label(for="deleteEventName")="Event Name: "
+			input(name="deleteEventName" list='deleteEventNameList')
+			datalist(id='deleteEventNameList')
+				for event in events
+					option(value=event.eventName)
 			|
 			br
 			input(type='submit' value='Delete Event')

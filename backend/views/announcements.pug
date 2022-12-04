@@ -28,7 +28,7 @@ html
 				a(href='./eventsPage')
 					i.fa-solid.fa-calendar-days
 					="Events"
-				a(href='#behavior')
+				a(href='./behavior')
 					i.fa-solid.fa-face-smile
 					="Behavior"
 				a(href='./announcementsPage')
@@ -71,11 +71,12 @@ html
 		h2="Add Announcement"
 		form(action='./addAnnouncement' method='POST')
 			| 
-			label(for='title')= "Announcement Subject: "
+			label(for='title')= "Unique Announcement Title: "
 			input(type='text' name='title')
 			| 
+			br
 			label(for='description')= "Description: " 
-			input(type='text' name='description')
+			textarea#input(name='description')
 			|  
 			br
 			label(for='announcementDate')="Date: "
@@ -84,11 +85,14 @@ html
 			br
 			input(type='submit' value='Add Announcement')
 		h2="Delete Announcement"
-		h3="Enter the exact subject of the announcement you would like to delete"
+		h3="Choose the name of the announcement you would like to delete"
 		form(action='./deleteAnnouncement' method='POST')
 			| 
-			label(for='deleteAnnouncementTitle')= "Announcement Subject: "
-			input(type='text' name='deleteAnnouncementTitle')
+			label(for="deleteAnnouncementTitle")="Announcement Title: "
+			input(name="deleteAnnouncementTitle" list='deleteAnnouncementTitleList')
+			datalist(id='deleteAnnouncementTitleList')
+				for announcement in announcements
+					option(value=announcement.title)
 			|
 			br
 			input(type='submit' value='Delete Announcement')

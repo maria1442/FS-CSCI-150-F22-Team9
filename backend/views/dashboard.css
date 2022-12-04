@@ -114,7 +114,7 @@
     display: grid;
     grid-template-columns: repeat(1, 160px);
     grid-gap: 80px;
-    margin-top: 100px;
+    margin-top: 50px;
     margin-left: 50px;
     width: 150px;
     height: 150px;
@@ -162,7 +162,7 @@
   .mask.full-1,
   .circle .fill-1 {
     animation: fill-1 ease-in-out 3s;
-    transform: rotate(153deg);
+    transform: rotate(150.552deg);
   }
   
   @keyframes fill-1 {
@@ -170,7 +170,7 @@
       transform: rotate(0deg);
     }
     100% {
-      transform: rotate(153deg);
+      transform: rotate(150.552deg);
     }
   }
   
@@ -184,7 +184,7 @@
   .mask.full-2,
   .circle .fill-2 {
     animation: fill-2 ease-in-out 3s;
-    transform: rotate(117deg);
+    transform: rotate(149.778deg);
   }
   
   @keyframes fill-2{
@@ -192,7 +192,7 @@
       transform: rotate(0deg);
     }
     100% {
-      transform: rotate(117deg);
+      transform: rotate(149.778deg);
     }
   }
   
@@ -205,7 +205,7 @@
   .mask.full-3,
   .circle .fill-3 {
     animation: fill-3 ease-in-out 3s;
-    transform: rotate(135deg);
+    transform: rotate(27.3deg);
   }
   
   @keyframes fill-3{
@@ -213,7 +213,7 @@
       transform: rotate(0deg);
     }
     100% {
-      transform: rotate(135deg);
+      transform: rotate(27.3deg);
     }
   }
   

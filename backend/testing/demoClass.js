@@ -53,19 +53,24 @@ class Attendance {
 
 // BEHAVIOR
 class Behavior {
+    #id;
     #incident = "";
     #month;
     #day;
     #year;
     #date;
     #comment = "";
-    constructor(incident, month, day, year, comment){
+    constructor(id, incident, month, day, year, comment){
+        this.#id = id;
         this.#incident = incident;
         this.#month = month;
         this.#day = day;
         this.#year = year;
         this.#date = new Date(year, month, day);
         this.#comment = comment;
+    }
+    set id(id){
+        this.#id = id;
     }
     set incident(incident){
         this.#incident = incident;
@@ -81,6 +86,9 @@ class Behavior {
     }
     set comment(comment) {
         this.#comment = comment;
+    }
+    get id(){
+        return this.#id;
     }
     get incident() {
         return this.#incident;
@@ -102,6 +110,7 @@ class Behavior {
     }
     toJSON(){
         return {
+            id: this.#id,
             incident: this.#incident,
             date: this.#date,
             comment: this.#comment
@@ -704,7 +713,7 @@ class Student{
     }
     removeBehavior(behaviorObj){
         let pos = this.#studentBehavior.findIndex(
-            element => element.incident === behaviorObj.incident && element.date === behaviorObj.date && element.comment === behaviorObj.comment
+            element => element.id === behaviorObj.id
         );
         if (pos > -1) { // only splice array when item is found
             this.#studentBehavior.splice(pos, 1); // 2nd parameter means remove one item only
@@ -1046,9 +1055,9 @@ class Student{
             totalBullyingTeasing: this.#totalBullyingTeasing,
             bullyingTeasingPercentage: this.#bullyingTeasingPercentage,
             totalPropertyDamage: this.#totalPropertyDamage,
-            propertyDamage: this.#propertyDamagePercentage,
+            propertyDamagePercentage: this.#propertyDamagePercentage,
             totalDefianceDisrespect: this.#totalDefianceDisrespect,
-            defianceDisrespect: this.#defianceDisrespectPercentage,
+            defianceDisrespectPercentage: this.#defianceDisrespectPercentage,
             totalTheft: this.#totalTheft,
             theftPercentage: this.#theftPercentage,
             totalLyingCheating: this.#totalLyingCheating,
@@ -4491,67 +4500,67 @@ student29.addAttendance(student29Day19);
 student29.addAttendance(student29Day20);
 student29.addAttendance(student29Day21);
 // Behavior
-var student0Behavior1 = new Behavior("Refusing to Work", 9, 1, 2022, "Did not want to do writing assignment");
-var student1Behavior1 = new Behavior("Talking", 9, 1, 2022, "Talking during reading time");
-var student2Behavior1 = new Behavior("Touching Others", 9, 2, 2022, "Play fighting with Josephina");
-var student3Behavior1 = new Behavior("Off Task", 9, 5, 2022, "Not paying attention");
-var student4Behavior1 = new Behavior("Refusing to Work", 9, 6, 2022, "Did not want to do math");
-var student5Behavior1 = new Behavior("Out of Seat", 9, 7, 2022, "Would not stay seated during reading time");
-var student6Behavior1 = new Behavior("Talking", 9, 8, 2022, "Talking with Lexine");
-var student7Behavior1 = new Behavior("Talking", 9, 8, 2022, "Talking with Margarete");
-var student8Behavior1 = new Behavior("Throwing Object", 9, 9, 2022, "Threw pencil");
-var student9Behavior1 = new Behavior("Touching Others", 9, 12, 2022, "Pushed Cleveland");
-var student10Behavior1 = new Behavior("Self Harm", 9, 13, 2022, "Pulling out their own hair");
-var student11Behavior1 = new Behavior("Inappropriate Language", 9, 14, 2022, "Cussed at another student");
-var student12Behavior1 = new Behavior("Bullying or Teasing", 9, 15, 2022, "Teasing another student");
-var student13Behavior1 = new Behavior("Property Damage", 9, 16, 2022, "Vandalized desk");
-var student14Behavior1 = new Behavior("Defiance or Disrespect", 9, 19, 2022, "Talked back to teacher");
-var student15Behavior1 = new Behavior("Theft", 9, 20, 2022, "Stole an eraser");
-var student16Behavior1 = new Behavior("Lying or Cheating", 9, 21, 2022, "Lied about homework");
-var student17Behavior1 = new Behavior("Touching Others", 9, 22, 2022, "Not keeping hands to themselves");
-var student18Behavior1 = new Behavior("Off Task", 9, 23, 2022, "Not paying attention");
-var student19Behavior1 = new Behavior("Refusing to Work", 9, 26, 2022, "Did not want to read out loud");
-var student20Behavior1 = new Behavior("Out of Seat", 9, 27, 2022, "Did not stay seated during science lesson");
-var student21Behavior1 = new Behavior("Throwing Object", 9, 28, 2022, "Threw ball of paper across room");
-var student22Behavior1 = new Behavior("Touching Others", 9, 29, 2022, "Play fighting");
-var student23Behavior1 = new Behavior("Self Harm", 9, 30, 2022, "Writing on themselves");
-var student24Behavior1 = new Behavior("Inappropriate Language", 9, 14, 2022, "Cussed at Colly");
-var student25Behavior1 = new Behavior("Bullying or Teasing", 9, 15, 2022, "Called Tandi names");
-var student26Behavior1 = new Behavior("Property Damage", 9, 16, 2022, "Wrote on a chair with a marker");
-var student27Behavior1 = new Behavior("Defiance or Disrespect", 9, 19, 2022, "Talked back to teacher");
-var student28Behavior1 = new Behavior("Theft", 9, 20, 2022, "Stole snack from Deandra");
-var student29Behavior1 = new Behavior("Lying or Cheating", 9, 21, 2022, "Cheated on quiz");
+var student0Behavior1 = new Behavior(1, "Refusing to Work", 9, 1, 2022, "Did not want to do writing assignment");
+var student1Behavior1 = new Behavior(1, "Talking", 9, 1, 2022, "Talking during reading time");
+var student2Behavior1 = new Behavior(1, "Touching Others", 9, 2, 2022, "Play fighting with Josephina");
+var student3Behavior1 = new Behavior(1, "Off Task", 9, 5, 2022, "Not paying attention");
+var student4Behavior1 = new Behavior(1, "Refusing to Work", 9, 6, 2022, "Did not want to do math");
+var student5Behavior1 = new Behavior(1, "Out of Seat", 9, 7, 2022, "Would not stay seated during reading time");
+var student6Behavior1 = new Behavior(1, "Talking", 9, 8, 2022, "Talking with Lexine");
+var student7Behavior1 = new Behavior(1, "Talking", 9, 8, 2022, "Talking with Margarete");
+var student8Behavior1 = new Behavior(1, "Throwing Object", 9, 9, 2022, "Threw pencil");
+var student9Behavior1 = new Behavior(1, "Touching Others", 9, 12, 2022, "Pushed Cleveland");
+var student10Behavior1 = new Behavior(1, "Self Harm", 9, 13, 2022, "Pulling out their own hair");
+var student11Behavior1 = new Behavior(1, "Inappropriate Language", 9, 14, 2022, "Cussed at another student");
+var student12Behavior1 = new Behavior(1, "Bullying or Teasing", 9, 15, 2022, "Teasing another student");
+var student13Behavior1 = new Behavior(1, "Property Damage", 9, 16, 2022, "Vandalized desk");
+var student14Behavior1 = new Behavior(1, "Defiance or Disrespect", 9, 19, 2022, "Talked back to teacher");
+var student15Behavior1 = new Behavior(1, "Theft", 9, 20, 2022, "Stole an eraser");
+var student16Behavior1 = new Behavior(1, "Lying or Cheating", 9, 21, 2022, "Lied about homework");
+var student17Behavior1 = new Behavior(1, "Touching Others", 9, 22, 2022, "Not keeping hands to themselves");
+var student18Behavior1 = new Behavior(1, "Off Task", 9, 23, 2022, "Not paying attention");
+var student19Behavior1 = new Behavior(1, "Refusing to Work", 9, 26, 2022, "Did not want to read out loud");
+var student20Behavior1 = new Behavior(1, "Out of Seat", 9, 27, 2022, "Did not stay seated during science lesson");
+var student21Behavior1 = new Behavior(1, "Throwing Object", 9, 28, 2022, "Threw ball of paper across room");
+var student22Behavior1 = new Behavior(1, "Touching Others", 9, 29, 2022, "Play fighting");
+var student23Behavior1 = new Behavior(1, "Self Harm", 9, 30, 2022, "Writing on themselves");
+var student24Behavior1 = new Behavior(1, "Inappropriate Language", 9, 14, 2022, "Cussed at Colly");
+var student25Behavior1 = new Behavior(1, "Bullying or Teasing", 9, 15, 2022, "Called Tandi names");
+var student26Behavior1 = new Behavior(1, "Property Damage", 9, 16, 2022, "Wrote on a chair with a marker");
+var student27Behavior1 = new Behavior(1, "Defiance or Disrespect", 9, 19, 2022, "Talked back to teacher");
+var student28Behavior1 = new Behavior(1, "Theft", 9, 20, 2022, "Stole snack from Deandra");
+var student29Behavior1 = new Behavior(1, "Lying or Cheating", 9, 21, 2022, "Cheated on quiz");
 
-var student0Behavior2 = new Behavior("Lying or Cheating", 9, 30, 2022, "Lied about doing their homework");
-var student1Behavior2 = new Behavior("Theft", 9, 29, 2022, "Stole Fabio's pencil");
-var student2Behavior2 = new Behavior("Defiance or Disrespect", 9, 28, 2022, "Refused to go to the office");
-var student3Behavior2 = new Behavior("Property Damage", 9, 27, 2022, "Ripped page from textbook");
-var student4Behavior2 = new Behavior("Bullying or Teasing", 9, 26, 2022, "Made fun of Mitch");
-var student5Behavior2 = new Behavior("Inappropriate Language", 9, 23, 2022, "Cussed at Lincoln");
-var student6Behavior2 = new Behavior("Self Harm", 9, 22, 2022, "Hitting themselves");
-var student7Behavior2 = new Behavior("Touching Others", 9, 21, 2022, "Hit Goldina");
-var student8Behavior2 = new Behavior("Throwing Object", 9, 20, 2022, "Threw eraser at Channa");
-var student9Behavior2 = new Behavior("Out of Seat", 9, 19, 2022, "Did not stay seated during attendance");
-var student10Behavior2 = new Behavior("Refusing to Work", 9, 16, 2022, "Did not want to work on classwork");
-var student11Behavior2 = new Behavior("Off Task", 9, 15, 2022, "Did not pay attention during video");
-var student12Behavior2 = new Behavior("Other Behavior", 9, 14, 2022, "Need to talk to parent");
-var student13Behavior2 = new Behavior("Lying or Cheating", 9, 13, 2022, "Cheating on exam");
-var student14Behavior2 = new Behavior("Theft", 9, 12, 2022, "Stole Octavia's book");
-var student15Behavior2 = new Behavior("Defiance or Disrespect", 9, 9, 2022, "Talked back to librarian");
-var student16Behavior2 = new Behavior("Property Damage", 9, 8, 2022, "Wrote on the wall with permanent marker");
-var student17Behavior2 = new Behavior("Bullying or Teasing", 9, 7, 2022, "Bullying Bryana");
-var student18Behavior2 = new Behavior("Inappropriate Language", 9, 6, 2022, "Cussed during free time");
-var student19Behavior2 = new Behavior("Touching Others", 9, 5, 2022, "Play fighting with Whit");
-var student20Behavior2 = new Behavior("Throwing Object", 9, 2, 2022, "Threw whiteboard marker");
-var student21Behavior2 = new Behavior("Out of Seat", 9, 1, 2022, "Out of seat during homework time");
-var student22Behavior2 = new Behavior("Refusing to Work", 9, 30, 2022, "Refused to check out book");
-var student23Behavior2 = new Behavior("Off Task", 9, 29, 2022, "Was doing math homework during reading time");
-var student24Behavior2 = new Behavior("Other Behavior", 9, 28, 2022, "Need to talk to parent");
-var student25Behavior2 = new Behavior("Lying or Cheating", 9, 27, 2022, "Forged parent signature");
-var student26Behavior2 = new Behavior("Theft", 9, 12, 2022, "Stole Eve's water bottle");
-var student27Behavior2 = new Behavior("Defiance or Disrespect", 9, 9, 2022, "Talked back to vice principal");
-var student28Behavior2 = new Behavior("Property Damage", 9, 8, 2022, "Wrote on the wall with permanent marker");
-var student29Behavior2 = new Behavior("Bullying or Teasing", 9, 7, 2022, "Bullying Bryana");
+var student0Behavior2 = new Behavior(2, "Lying or Cheating", 9, 30, 2022, "Lied about doing their homework");
+var student1Behavior2 = new Behavior(2, "Theft", 9, 29, 2022, "Stole Fabio's pencil");
+var student2Behavior2 = new Behavior(2, "Defiance or Disrespect", 9, 28, 2022, "Refused to go to the office");
+var student3Behavior2 = new Behavior(2, "Property Damage", 9, 27, 2022, "Ripped page from textbook");
+var student4Behavior2 = new Behavior(2, "Bullying or Teasing", 9, 26, 2022, "Made fun of Mitch");
+var student5Behavior2 = new Behavior(2, "Inappropriate Language", 9, 23, 2022, "Cussed at Lincoln");
+var student6Behavior2 = new Behavior(2, "Self Harm", 9, 22, 2022, "Hitting themselves");
+var student7Behavior2 = new Behavior(2, "Touching Others", 9, 21, 2022, "Hit Goldina");
+var student8Behavior2 = new Behavior(2, "Throwing Object", 9, 20, 2022, "Threw eraser at Channa");
+var student9Behavior2 = new Behavior(2, "Out of Seat", 9, 19, 2022, "Did not stay seated during attendance");
+var student10Behavior2 = new Behavior(2, "Refusing to Work", 9, 16, 2022, "Did not want to work on classwork");
+var student11Behavior2 = new Behavior(2, "Off Task", 9, 15, 2022, "Did not pay attention during video");
+var student12Behavior2 = new Behavior(2, "Other Behavior", 9, 14, 2022, "Need to talk to parent");
+var student13Behavior2 = new Behavior(2, "Lying or Cheating", 9, 13, 2022, "Cheating on exam");
+var student14Behavior2 = new Behavior(2, "Theft", 9, 12, 2022, "Stole Octavia's book");
+var student15Behavior2 = new Behavior(2, "Defiance or Disrespect", 9, 9, 2022, "Talked back to librarian");
+var student16Behavior2 = new Behavior(2, "Property Damage", 9, 8, 2022, "Wrote on the wall with permanent marker");
+var student17Behavior2 = new Behavior(2, "Bullying or Teasing", 9, 7, 2022, "Bullying Bryana");
+var student18Behavior2 = new Behavior(2, "Inappropriate Language", 9, 6, 2022, "Cussed during free time");
+var student19Behavior2 = new Behavior(2, "Touching Others", 9, 5, 2022, "Play fighting with Whit");
+var student20Behavior2 = new Behavior(2, "Throwing Object", 9, 2, 2022, "Threw whiteboard marker");
+var student21Behavior2 = new Behavior(2, "Out of Seat", 9, 1, 2022, "Out of seat during homework time");
+var student22Behavior2 = new Behavior(2, "Refusing to Work", 9, 30, 2022, "Refused to check out book");
+var student23Behavior2 = new Behavior(2, "Off Task", 9, 29, 2022, "Was doing math homework during reading time");
+var student24Behavior2 = new Behavior(2, "Other Behavior", 9, 28, 2022, "Need to talk to parent");
+var student25Behavior2 = new Behavior(2, "Lying or Cheating", 9, 27, 2022, "Forged parent signature");
+var student26Behavior2 = new Behavior(2, "Theft", 9, 12, 2022, "Stole Eve's water bottle");
+var student27Behavior2 = new Behavior(2, "Defiance or Disrespect", 9, 9, 2022, "Talked back to vice principal");
+var student28Behavior2 = new Behavior(2, "Property Damage", 9, 8, 2022, "Wrote on the wall with permanent marker");
+var student29Behavior2 = new Behavior(2, "Bullying or Teasing", 9, 7, 2022, "Bullying Bryana");
 student0.addBehavior(student0Behavior1);
 student0.addBehavior(student0Behavior2);
 
@@ -5268,3 +5277,5 @@ addStudentToDB(class1, student26);
 addStudentToDB(class1, student27);
 addStudentToDB(class1, student28);
 addStudentToDB(class1, student29);
+
+//addBehaviorToDB(class1, student0, student0Behavior1);

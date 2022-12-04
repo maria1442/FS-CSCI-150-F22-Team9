@@ -28,7 +28,7 @@ html
 				a(href='./eventsPage')
 					i.fa-solid.fa-calendar-days
 					="Events"
-				a(href='#behavior')
+				a(href='./behavior')
 					i.fa-solid.fa-face-smile
 					="Behavior"
 				a(href='./announcementsPage')
@@ -84,11 +84,20 @@ html
 						td
 							textarea#input(readonly=editing name='updateStudentContactEmail')=student.contactEmail
 						td
-							input(type='text' value=student.SPED readonly=editing name='updateSped')
+							input(name="updateSped" list='updateSpedList' readonly=editing value=student.SPED)
+							datalist(id='updateSpedList')
+								option(value="true")
+								option(value="false")
 						td
-							input(type='text' value=student.EL readonly=editing name='updateEl')
+							input(name="updateEl" list='updateElList' readonly=editing value=student.EL)
+							datalist(id='updateElList')
+								option(value="true")
+								option(value="false")
 						td
-							input(type='text' value=student.internetAccess readonly=editing name='updateInternetAccess')
+							input(name="updateInternetAccess" list='updateInternetAccessList' readonly=editing value=student.internetAccess)
+							datalist(id='updateInternetAccessList')
+								option(value="true")
+								option(value="false")
 						td=student.letterGrade
 			input(type='submit' value='Update Students')
 
@@ -135,11 +144,14 @@ html
 			br
 			input(type='submit' value='Add Student')
 		h2="Delete Student"
-		h3="Enter the ID of the student you would like to delete"
+		h3="Choose the ID of the student you would like to delete"
 		form(action='./deleteStudent' method='POST')
 			| 
-			label(for='deleteStudentID')= "Student ID: "
-			input(type='number' name='deleteStudentID')
+			label(for="deleteStudentID")="Student ID: "
+			input(name="deleteStudentID" list='deleteStudentIDList')
+			datalist(id='deleteStudentIDList')
+				for student in students
+					option(value=student.studentId)
 			|
 			br
 			input(type='submit' value='Delete Student')

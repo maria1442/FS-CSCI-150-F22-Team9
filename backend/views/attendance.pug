@@ -28,7 +28,7 @@ html
 				a(href='./eventsPage')
 					i.fa-solid.fa-calendar-days
 					="Events"
-				a(href='#behavior')
+				a(href='./behavior')
 					i.fa-solid.fa-face-smile
 					="Behavior"
 				a(href='./announcementsPage')
@@ -86,7 +86,11 @@ html
 		h2="Delete Attendance"
 		form(action='./deleteAttendance' method='POST')
 			| 
-			label(for='attendanceDate')= "Date: "
-			input(type='date' name='deleteAttendanceDate')
+			label(for="deleteAttendanceDate")="Date: "
+			input(name="deleteAttendanceDate" list='attendanceDateList')
+			datalist(id='attendanceDateList')
+				for day in attendanceArr
+					option(value=day.date)
+			|
 			br
 			input(type='submit' value='Delete Attendance')

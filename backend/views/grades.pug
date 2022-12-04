@@ -28,7 +28,7 @@ html
 				a(href='./eventsPage')
 					i.fa-solid.fa-calendar-days
 					="Events"
-				a(href='#behavior')
+				a(href='./behavior')
 					i.fa-solid.fa-face-smile
 					="Behavior"
 				a(href='./announcementsPage')
@@ -99,7 +99,11 @@ html
 		h2="Delete Assignment"
 		form(action="./deleteAssignment" method='POST')
 			| 
-			label(for='deleteAssignmentName')= "Assignment Name: "
-			input(type='text' name='deleteAssignmentName')
+			label(for="deleteAssignmentName")="Assignment Name: "
+			input(name="deleteAssignmentName" list='deleteAssignmentNameList')
+			datalist(id='deleteAssignmentNameList')
+				for assignment in assignmentArr
+					option(value=assignment.assignmentName)
+			|
 			input(type='submit' value='Delete Assignment')
 

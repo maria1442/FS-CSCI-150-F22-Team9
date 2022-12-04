@@ -1,0 +1,143 @@
+html
+	head
+		meta(charset='UTF-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width,initial-scale=1')
+		style 	
+			include ./index.css
+		script(src='https://kit.fontawesome.com/d029989dde.js' crossorigin='anonymous')
+		title="Student"
+	body 
+		aside.side-nav
+			.header-div
+				img#img-logo.same(src='/cp_logo.png' alt='no-image')
+				h2.same#heading="Classparency"
+			.side-nav-a
+				a(href='./dashboard')
+					i.fa-solid.fa-house
+					="Dashboard"
+				a(href='./studentPage')
+					i.fa-solid.fa-user-graduate
+					="Students"
+				a(href='./grades')
+					i.fa-solid.fa-square-poll-vertical
+					="Grades"
+				a(href='./attendance')
+					i.fa-solid.fa-wave-square
+					="Attendence"
+				a(href='./eventsPage')
+					i.fa-solid.fa-calendar-days
+					="Events"
+				a(href='./behavior')
+					i.fa-solid.fa-face-smile
+					="Behavior"
+				a(href='./announcementsPage')
+					i.fa-solid.fa-bullhorn
+					="Announcements"
+				a(href='#options')
+					i.fa-solid.fa-gear
+					="Options"
+	.top-section
+				h2.top-div#top-header="Behavior"
+				img#dd-a(href='https://www.google.com')
+				i#drop-icon.fa-solid.fa-caret-down
+				a(href)
+					i.fa-solid.fa-bell
+				a(href)
+					i.fa-solid.fa-gear
+	.main
+		form(action='./edit' method='POST' name="editing")
+			input#allowEditing(type='radio' name='Editing' value='allowEditing')
+			label(for='allowEditing')="Allow Editing"
+			input#noEditing(type='radio' name='Editing' value='noEditing')
+			label(for='noEditing')="No Editing"
+			br
+			input(type='submit' value='Apply')
+		form(action='./updateBehavior' method='POST' name="editingBehaviorForm")
+			table   
+				tr 
+					th="Student Name"
+					th= "Student ID"
+					th="Total Behavior Incidents"
+					-for(var i = 1; i <= max; i++) {
+						th(style="white-space:pre-line;")=i
+					-}
+				each student in students
+					tr
+						td=student.firstName + " " + student.lastName
+						td=student.studentId
+						td
+							input(type="number" value=student.totalBehaviorIncidents name="numberOfIncidents" readonly=true)
+						each studentBehavior in student.studentBehavior
+							td 
+								input(type="date" value=studentBehavior.date name="incidentDate" readonly=editing)
+								input(value=studentBehavior.incident name="incident" list='incidentList' readonly=editing)
+								datalist(id='incidentList')
+									option(value="Off Task")
+									option(value="Refusing to Work")
+									option(value="Out of Seat")
+									option(value="Talking")
+									option(value="Throwing Object")
+									option(value="Touching Others")
+									option(value="Self Harm")
+									option(value="Inappropriate Language")
+									option(value="Bullying or Teasing")
+									option(value="Property Damage")
+									option(value="Defiance or Disrespect")
+									option(value="Theft")
+									option(value="Lying or Cheating")
+									option(value="Other")
+								textarea#input(readonly=editing name='updateComment')=studentBehavior.comment
+			input(type='submit' value='Update Behavior')
+		h2="Add Behavior"
+		form(action='./addBehavior' method='POST' name="addBehaviorForm")
+			label(for="studentID")="Student ID: "
+			input(name="studentID" list='studentIDList' readonly=editing)
+			datalist(id='studentIDList')
+				for student in students
+					option(value=student.studentId)
+			|
+			br
+			label(for='behaviorDate')="Date: "
+			input(type='date' name='behaviorDate')
+			| 
+			label(for='addIncident')= "Incident: "
+			input(name="addIncident" list='addIncidentList')
+			datalist(id='addIncidentList')
+				option(value="Off Task")
+				option(value="Refusing to Work")
+				option(value="Out of Seat")
+				option(value="Talking")
+				option(value="Throwing Object")
+				option(value="Touching Others")
+				option(value="Self Harm")
+				option(value="Inappropriate Language")
+				option(value="Bullying or Teasing")
+				option(value="Property Damage")
+				option(value="Defiance or Disrespect")
+				option(value="Theft")
+				option(value="Lying or Cheating")
+				option(value="Other")
+			|
+			br
+			label(for='addComment')= "Comment: "
+			textarea#input(readonly=editing name='addComment')
+			|
+			br
+			input(type='submit' value='Add Behavior')
+		h2="Delete Behavior"
+		form(action='./deleteBehavior' method='POST' name="deleteBehaviorForm")
+			label(for="deleteStudentID")="Student ID: "
+			input(name="deleteStudentID" list='deleteStudentIDList')
+			datalist(id='deleteStudentIDList')
+				for student in students
+					option(value=student.studentId)
+			|
+			label(for='deleteIndex')="Enter Index of Behavior to Delete: "
+			input(name="deleteIndex" list='deleteIndexList')
+			datalist(id='deleteIndexList')
+				-for(var i = 1; i <= max; i++) {
+					option(value=i)
+				-}
+			|
+			input(type='submit' value='Delete Behavior')

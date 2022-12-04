@@ -53,19 +53,24 @@ class Attendance {
 
 // BEHAVIOR
 class Behavior {
+    #id;
     #incident = "";
     #month;
     #day;
     #year;
     #date;
     #comment = "";
-    constructor(incident, month, day, year, comment){
+    constructor(id, incident, month, day, year, comment){
+        this.#id = id;
         this.#incident = incident;
         this.#month = month;
         this.#day = day;
         this.#year = year;
         this.#date = new Date(year, month, day);
         this.#comment = comment;
+    }
+    set id(id){
+        this.#id = id;
     }
     set incident(incident){
         this.#incident = incident;
@@ -81,6 +86,9 @@ class Behavior {
     }
     set comment(comment) {
         this.#comment = comment;
+    }
+    get id(){
+        return this.#id;
     }
     get incident() {
         return this.#incident;
@@ -102,6 +110,7 @@ class Behavior {
     }
     toJSON(){
         return {
+            id: this.#id,
             incident: this.#incident,
             date: this.#date,
             comment: this.#comment
@@ -704,7 +713,7 @@ class Student{
     }
     removeBehavior(behaviorObj){
         let pos = this.#studentBehavior.findIndex(
-            element => element.incident === behaviorObj.incident && element.date === behaviorObj.date && element.comment === behaviorObj.comment
+            element => element.id === behaviorObj.id
         );
         if (pos > -1) { // only splice array when item is found
             this.#studentBehavior.splice(pos, 1); // 2nd parameter means remove one item only
@@ -1046,9 +1055,9 @@ class Student{
             totalBullyingTeasing: this.#totalBullyingTeasing,
             bullyingTeasingPercentage: this.#bullyingTeasingPercentage,
             totalPropertyDamage: this.#totalPropertyDamage,
-            propertyDamage: this.#propertyDamagePercentage,
+            propertyDamagePercentage: this.#propertyDamagePercentage,
             totalDefianceDisrespect: this.#totalDefianceDisrespect,
-            defianceDisrespect: this.#defianceDisrespectPercentage,
+            defianceDisrespectPercentage: this.#defianceDisrespectPercentage,
             totalTheft: this.#totalTheft,
             theftPercentage: this.#theftPercentage,
             totalLyingCheating: this.#totalLyingCheating,
@@ -2327,7 +2336,7 @@ async function addAttendanceToDB(student, attendance) {
         await client.close();
     }
 }
-async function addBehaviorToDB(course, student, behavior) {
+async function addBehaviorToDB(student, behavior) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
     try {
@@ -2423,13 +2432,13 @@ async function deleteAttendanceFromDB(course, student, attendance) {
         await client.close();
     }
 }
-async function deleteBehaviorFromDB(course, student, behavior) {
+async function deleteBehaviorFromDB(student, behavior) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
     try {
         await client.connect();
         await deleteStudentBehaviorFromDB(client, student, behavior);
-        await deleteStudentBehaviorFromClassDB(client, course, student, behavior);
+        //await deleteStudentBehaviorFromClassDB(client, course, student, behavior);
     }
     finally {
         await client.close();
@@ -2530,7 +2539,28 @@ async function updateStudentAttendanceAfterDeleteFromDB(student, newStudent) {
         await client.close();
     }
 }
-
+async function updateStudentBehaviorFromDB(student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentBehaviorFromDBClient(client, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
+async function updateStudentBehaviorAfterDeleteFromDB(student, newStudent) {
+    const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await updateStudentBehaviorAfterDeleteFromDBClient(client, student, newStudent);
+    }
+    finally {
+        await client.close();
+    }
+}
 async function updateWholeStudentFromDB(student, newStudent) {
     const uri = "mongodb+srv://test1:alligator0523@cluster0.h7j34v9.mongodb.net/test";
     const client = new MongoClient(uri);
@@ -2968,7 +2998,7 @@ async function deleteStudentBehaviorFromDB(client, student, behavior){
     const query = {studentId: name};
     const finding = await client.db("classparency").collection("students").findOne(query);
     let stringId = finding._id;        
-    let JSONBehavior = behavior.toJSON();
+    let JSONBehavior = behavior;
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$pull: {studentBehavior: JSONBehavior}});
 }
 async function deleteStudentBehaviorFromClassDB(client, course, student, behavior){
@@ -3068,6 +3098,42 @@ async function updateStudentAttendanceAfterDeleteFromDBClient(client, student, n
     let update = newStudent;
     const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalDays": update.totalDays, "totalPresentAttendance": update.totalPresentAttendance, "totalAbsentAttendance":update.totalAbsentAttendance, "attendancePresentPercentage":update.attendancePresentPercentage, "studentAttendance":update.studentAttendance}});
 }
+async function updateStudentBehaviorFromDBClient(client, student, newStudent){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;  
+    let update = newStudent;
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalBehaviorIncidents": update.totalBehaviorIncidents, "totalOffTask": update.totalOffTask, 
+                                                                                    "totalRefusingToWork":update.totalRefusingToWork, "totalOutOfSeat":update.totalOutOfSeat, "totalTalking":update.totalTalking, 
+                                                                                    "totalThrowingObject":update.totalThrowingObject, "totalTouchingOthers":update.totalTouchingOthers, "totalSelfHarm":update.totalSelfHarm,
+                                                                                    "totalInappropriateLang":update.totalInappropriateLang, "totalBullyingTeasing":update.totalBullyingTeasing, "totalPropertyDamage":update.totalPropertyDamage,
+                                                                                    "totalDefianceDisrespect":update.totalDefianceDisrespect, "totalTheft":update.totalTheft, "totalLyingCheating":update.totalLyingCheating,
+                                                                                    "totalOtherBehavior":update.totalOtherBehavior, "offTaskPercentage":update.offTaskPercentage, "refusingToWorkPercentage":update.refusingToWorkPercentage,
+                                                                                    "outOfSeatPercentage": update.outOfSeatPercentage, "talkingPercentage":update.talkingPercentage, "throwingObjectPercentage":update.throwingObjectPercentage,
+                                                                                    "touchingOthersPercentage":update.touchingOthersPercentage, "selfHarmPercentage":update.selfHarmPercentage, "inappropriateLangPercentage":update.inappropriateLangPercentage,
+                                                                                    "bullyingTeasingPercentage":update.bullyingTeasingPercentage, "propertyDamagePercentage":update.propertyDamagePercentage, "defianceDisrespectPercentage":update.defianceDisrespectPercentage,
+                                                                                    "theftPercentage":update.theftPercentage, "lyingCheatingPercentage":update.lyingCheatingPercentage, "otherBehaviorPercentage":update.otherBehaviorPercentage
+                                                                                }});
+}
+async function updateStudentBehaviorAfterDeleteFromDBClient(client, student, newStudent){
+    let name = student.studentId;
+    const query = {studentId: name};
+    const finding = await client.db("classparency").collection("students").findOne(query);
+    let stringId = finding._id;  
+    let update = newStudent;
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId}, {$set: {"totalBehaviorIncidents": update.totalBehaviorIncidents, "totalOffTask": update.totalOffTask, 
+                                                                                    "totalRefusingToWork":update.totalRefusingToWork, "totalOutOfSeat":update.totalOutOfSeat, "totalTalking":update.totalTalking, 
+                                                                                    "totalThrowingObject":update.totalThrowingObject, "totalTouchingOthers":update.totalTouchingOthers, "totalSelfHarm":update.totalSelfHarm,
+                                                                                    "totalInappropriateLang":update.totalInappropriateLang, "totalBullyingTeasing":update.totalBullyingTeasing, "totalPropertyDamage":update.totalPropertyDamage,
+                                                                                    "totalDefianceDisrespect":update.totalDefianceDisrespect, "totalTheft":update.totalTheft, "totalLyingCheating":update.totalLyingCheating,
+                                                                                    "totalOtherBehavior":update.totalOtherBehavior, "offTaskPercentage":update.offTaskPercentage, "refusingToWorkPercentage":update.refusingToWorkPercentage,
+                                                                                    "outOfSeatPercentage": update.outOfSeatPercentage, "talkingPercentage":update.talkingPercentage, "throwingObjectPercentage":update.throwingObjectPercentage,
+                                                                                    "touchingOthersPercentage":update.touchingOthersPercentage, "selfHarmPercentage":update.selfHarmPercentage, "inappropriateLangPercentage":update.inappropriateLangPercentage,
+                                                                                    "bullyingTeasingPercentage":update.bullyingTeasingPercentage, "propertyDamagePercentage":update.propertyDamagePercentage, "defianceDisrespectPercentage":update.defianceDisrespectPercentage,
+                                                                                    "theftPercentage":update.theftPercentage, "lyingCheatingPercentage":update.lyingCheatingPercentage, "otherBehaviorPercentage":update.otherBehaviorPercentage, "studentBehavior":update.studentBehavior
+                                                                                }});
+}
 async function updateWholeStudentFromDBClient(client, student, newStudent){
     let name = student.studentId;
     const query = {studentId: name};
@@ -3124,13 +3190,13 @@ async function updateStudentAttendanceFromClassDB(client, course, student, atten
     let JSONAttendance = newAttendance;
     const result = await client.db("classparency").collection("classes").updateOne({"_id": stringId, "students.studentId": student.studentId, "students.studentAttendance.date": attendance.date}, {$set: {"students.$.studentAttendance": JSONAttendance}});
 }
-async function updateStudentBehaviorFromDB(client, student, behavior, newBehavior){
+async function updateWholeStudentBehaviorFromDB(client, student, behavior, newBehavior){
     let name = student.studentId;
     const query = {studentId: name};
     const finding = await client.db("classparency").collection("students").findOne(query);
     let stringId = finding._id;        
     let JSONBehavior = newBehavior;
-    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId, "studentBehavior.date": behavior.date, "studentBehavior.incident": behavior.incident}, {$set: {"studentBehavior.$": JSONBehavior}});
+    const result = await client.db("classparency").collection("students").updateOne({"_id": stringId, "studentBehavior.id": behavior.date, "studentBehavior.date": behavior.date, "studentBehavior.incident": behavior.incident}, {$set: {"studentBehavior.$": JSONBehavior}});
 }
 async function updateStudentBehaviorFromClassDB(client, course, student, behavior, newBehavior){
     let name = course.courseName;
@@ -3385,6 +3451,34 @@ app.post("/addAttendance", urlencodedParser, async function(req, res){
     res.redirect('back');
 })
 
+app.post("/addBehavior", urlencodedParser, async function(req, res){
+    const studentId = req.body.studentID;
+    var student = new Student(Number(studentId));
+    const behaviorDate= new Date(req.body.behaviorDate);
+    const addIncident = req.body.addIncident;
+    const addComment = req.body.addComment;
+    const getStudent = await getStudentFromDB(student.toJSON());
+    const addId = Number(getStudent.totalBehaviorIncidents) + 1;
+    var newBehavior = new Behavior(addId, addIncident, behaviorDate.getUTCMonth(), behaviorDate.getUTCDate(), behaviorDate.getFullYear(), addComment);
+    await addBehaviorToDB(student.toJSON(), newBehavior.toJSON());
+    const singleStudent = await getStudentFromDB(student.toJSON());
+    var studentDOB = new Date(singleStudent.birthDate);
+    var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+    for(let i = 0; i < singleStudent.studentBehavior.length; i++){
+        let date = new Date(singleStudent.studentBehavior[i].date);
+        let month = date.getUTCMonth();
+        let day = date.getUTCDate();
+        let year = date.getUTCFullYear();
+        let id = singleStudent.studentBehavior[i].id;
+        let incident = singleStudent.studentBehavior[i].incident;
+        let comment = singleStudent.studentBehavior[i].comment;
+        let behavior = new Behavior(id, incident, month, day, year, comment);
+        newStudent.addBehavior(behavior);
+    }
+    await updateStudentBehaviorFromDB(student.toJSON(), newStudent.toJSON());
+    res.redirect('back');
+})
+
 
 app.post("/newStudent", (req, res) => {
     const newStudent = req.body;
@@ -3544,7 +3638,40 @@ app.post("/deleteAttendance", urlencodedParser, async function(req, res) {
     }
     res.redirect('back');
 })
-
+app.post("/deleteBehavior", urlencodedParser, async function(req, res){
+    const studentId = req.body.deleteStudentID;
+    var student = new Student(Number(studentId));
+    const deleteId = Number(req.body.deleteIndex);
+    const oldStudent = await getStudentFromDB(student.toJSON());
+    const deleteBehaviorDate= new Date(oldStudent.studentBehavior[deleteId-1].date);
+    const deleteBehaviorIncident = oldStudent.studentBehavior[deleteId-1].incident;
+    const deleteBehaviorComment = oldStudent.studentBehavior[deleteId-1].comment;
+    var oldBehavior = new Behavior(deleteId, deleteBehaviorIncident, deleteBehaviorDate.getUTCMonth(), deleteBehaviorDate.getUTCDate(), deleteBehaviorDate.getFullYear(), deleteBehaviorComment);
+    console.log(oldBehavior.toJSON());
+    await deleteBehaviorFromDB(student.toJSON(), oldBehavior.toJSON());
+    const singleStudent = await getStudentFromDB(student.toJSON());
+    var studentDOB = new Date(singleStudent.birthDate);
+    var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+    for(let i = 0; i < singleStudent.studentBehavior.length; i++){
+        let date = new Date(singleStudent.studentBehavior[i].date);
+        let month = date.getUTCMonth();
+        let day = date.getUTCDate();
+        let year = date.getUTCFullYear();
+        var id = singleStudent.studentBehavior[i].id;
+        if (id > deleteId){
+            console.log(id);
+            id = id - 1;
+            console.log(id);
+        }
+        let incident = singleStudent.studentBehavior[i].incident;
+        let comment = singleStudent.studentBehavior[i].comment;
+        console.log(id);
+        let behavior = new Behavior(id, incident, month, day, year, comment);
+        newStudent.addBehavior(behavior);
+    }
+    await updateStudentBehaviorAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
+    res.redirect('back');
+})
 
 app.post("/deleteClass", (req, res) => {
     const course = req.body;
@@ -3740,6 +3867,41 @@ app.post("/updateAttendance", urlencodedParser, async function(req, res){
     }
     res.redirect('back');
 })
+app.post("/updateBehavior", urlencodedParser, async function(req, res){
+    var numberOfIncidentsArr = req.body.numberOfIncidents;
+    for (let i = 0; i < numberOfIncidentsArr.length; i++){
+        numberOfIncidentsArr[i] = Number(numberOfIncidentsArr[i]);
+    }
+    const dateArr = req.body.incidentDate;
+    const incidentArr = req.body.incident;
+    const commentArr = req.body.updateComment;
+
+    const studentArr = await getStudentArrayFromDB();
+    var studentIDArr = new Array();
+    for (let i = 0; i < studentArr.length; i++){
+        studentIDArr.push(studentArr[i].studentId);
+    }
+
+    var k = 0;
+    for (let j = 0; j < studentIDArr.length; j++){
+        var studentId = studentIDArr[j];
+        var student = new Student(Number(studentId));
+        const singleStudent = await getStudentFromDB(student.toJSON());
+        var studentDOB = new Date(singleStudent.birthDate);
+        var newStudent = new Student(singleStudent.studentId, singleStudent.photo, singleStudent.firstName, singleStudent.lastName, singleStudent.gender, studentDOB.getUTCMonth(), studentDOB.getUTCDate(), studentDOB.getUTCFullYear(), singleStudent.contactEmail, singleStudent.SPED, singleStudent.EL, singleStudent.internetAccess);
+        for(let i = 0; i < singleStudent.studentBehavior.length; i++){
+            let date = new Date(dateArr[k]);
+            let month = date.getUTCMonth();
+            let day = date.getUTCDate();
+            let year = date.getUTCFullYear();
+            let behavior = new Behavior(i+1, incidentArr[k], month, day, year, commentArr[k]);
+            newStudent.addBehavior(behavior);
+            k++;
+       }
+        await updateStudentBehaviorAfterDeleteFromDB(student.toJSON(), newStudent.toJSON());
+    }
+    res.redirect('back');
+})
 
 app.post("/updateClass", (req, res) => {
     const course = req.body.course;
@@ -3785,7 +3947,7 @@ app.get("/announcementsPage", async function(req, res) {
         announcementsArr[i].date = [announcementsArr[i].date.getUTCFullYear(), padTo2Digits(announcementsArr[i].date.getUTCMonth() + 1),
                 padTo2Digits(announcementsArr[i].date.getUTCDate()),].join('-')
     }
-    res.render('announcements', {announcements: announcementsArr});
+    res.render('announcements', {announcements: announcementsArr, editing: Editing});
 })
 app.get("/student", async function(req, res) {
     var studentId = req.query.studentID;
@@ -3793,7 +3955,6 @@ app.get("/student", async function(req, res) {
     const singleStudent = await getStudentFromDB(student.toJSON());
     res.status(200).json({student: singleStudent});
 })
-
 
 app.post("/studentParentPage", urlencodedParser, async function(req, res) {
     var studentId = req.body.studentID;
@@ -3858,6 +4019,31 @@ app.get("/attendance", async function(req, res) {
     res.render('attendance', {students: studentsArr, attendanceArr: attendanceArr, editing: Editing});
 })
 
+app.get("/behavior", async function(req, res) {
+    const studentsArr = await getStudentArrayFromDB();
+    var max = studentsArr[0].totalBehaviorIncidents;
+    for(let i = 0; i < studentsArr.length; i++){
+        if (studentsArr[i].totalBehaviorIncidents > max){
+            max = studentsArr[i].totalBehaviorIncidents;
+        }
+    }
+    for (let i = 0; i < studentsArr.length; i++){
+        studentsArr[i].studentBehavior.sort(function(a,b){
+            var c = new Date(a.date);
+            var d = new Date(b.date);
+            return c-d;
+        });
+    }
+    for (let i = 0; i < studentsArr.length; i++){
+        var studentBehaviorArr = studentsArr[i].studentBehavior;
+        for (let j = 0; j < studentBehaviorArr.length; j++){
+            studentBehaviorArr[j].date = [studentBehaviorArr[j].date.getUTCFullYear(), padTo2Digits(studentBehaviorArr[j].date.getUTCMonth() + 1),
+                    padTo2Digits(studentBehaviorArr[j].date.getUTCDate()),].join('-');
+        }
+    }
+    res.render('behavior', {students: studentsArr, max: max, editing: Editing});
+})
+
 app.get("/class", async function(req, res) {
     const singleClass = await getClassFromDB(req.body);
     res.status(200).json({class: singleClass});
@@ -3883,13 +4069,11 @@ app.get("/dashboard", async function(req, res) {
         totalAttendanceAbsent += studentsArr[i].totalAbsentAttendance;
     }
     attendancePresentPercentage = Math.round(100*(totalAttendancePresentSum / (totalAttendancePresentSum + totalAttendanceAbsent)) * 100) / 100;
-    let totalLetterGradeASum = 0;
-        for (let i = 0; i < studentsArr.length; i++){
-            if (studentsArr[i].letterGrade == "A+" || studentsArr[i].letterGrade == "A" || studentsArr[i].letterGrade == "A-"){
-                totalLetterGradeASum++;
-            }
-        }
-    var letterGradeAPercentage = Math.round(100*(totalLetterGradeASum / studentsArr.length) * 100) / 100;
+    let totalGradePercentage = 0;
+    for (let i = 0; i < studentsArr.length; i++){
+        totalGradePercentage += studentsArr[i].gradePercentage;
+    }
+    var getAvgGradePercentage = Math.round((totalGradePercentage / studentsArr.length) * 100) / 100;
     const eventsArr = await getEventArrayFromDB();
     const announcementsArr = await getAnnouncementArrayFromDB();
     for (let i = 0; i < eventsArr.length; i++){
@@ -3898,11 +4082,19 @@ app.get("/dashboard", async function(req, res) {
     for (let i = 0; i < announcementsArr.length; i++){
         announcementsArr[i].date = announcementsArr[i].date.toLocaleDateString();
     }
+
+    var totalIncidents = 0;
+    for (let i = 0; i < studentsArr.length; i++){
+        totalIncidents += studentsArr[i].totalBehaviorIncidents;
+    }
+    var totalDays = studentsArr[0].totalDays;
+    var getBehaviorPercentage = Math.round((totalIncidents / totalDays) * 100) / 100;
     res.render('dashboard', {   sped: numSPED,
                                 el: numEL,
                                 internetAccess: numIA,
+                                behaviorPercentage: getBehaviorPercentage,
                                 attendancePercentage: attendancePresentPercentage,
-                                letterGradeAPercentage: letterGradeAPercentage,
+                                avgGradePercentage: getAvgGradePercentage,
                                 events: eventsArr,
                                 announcements: announcementsArr
                         });
