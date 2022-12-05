@@ -54,7 +54,7 @@ html
 			br
 			input(type='submit' value='Apply')
 		form(action='./updateBehavior' method='POST' name="editingBehaviorForm")
-			table   
+			table#behave
 				tr 
 					th="Student Name"
 					th= "Student ID"
@@ -89,7 +89,7 @@ html
 									option(value="Other")
 								textarea#input(readonly=editing name='updateComment')=studentBehavior.comment
 			input(type='submit' value='Update Behavior')
-		h2="Add Behavior"
+		h2.behave="Add Behavior"
 		form(action='./addBehavior' method='POST' name="addBehaviorForm")
 			label(for="studentID")="Student ID: "
 			input(name="studentID" list='studentIDList' readonly=editing)
@@ -125,7 +125,7 @@ html
 			|
 			br
 			input(type='submit' value='Add Behavior')
-		h2="Delete Behavior"
+		h2.behave="Delete Behavior"
 		form(action='./deleteBehavior' method='POST' name="deleteBehaviorForm")
 			label(for="deleteStudentID")="Student ID: "
 			input(name="deleteStudentID" list='deleteStudentIDList')

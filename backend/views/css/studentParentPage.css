@@ -1,0 +1,39 @@
+body {
+  background-color: ivory;
+}
+
+table,
+td,
+th {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+th {
+  background-color: steelblue;
+}
+
+td {
+  background-color: white;
+
+}
+
+.s2,
+.s4 {
+  width: 100%
+}
+
+
+
+#section1,
+#section2,
+#section3,
+#section4 {
+  position: relative;
+  border: 1px solid black;
+  background-color: white;
+  padding-bottom: 2px;
+
+  width: 50%;
+
+}

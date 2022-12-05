@@ -54,7 +54,7 @@ html
 			br
 			input(type='submit' value='Apply')
 		form(action='./updateEvent' method='POST' name="editingEventForm")
-			table   
+			table#content   
 				tr 
 					th= "Event Name"
 					th= "Date" 
@@ -71,7 +71,7 @@ html
 						td
 							input(type='text' value=event.location readonly=editing name='updateEventLocation')
 			input(type='submit' value='Update Event')
-		h2="Add Event"
+		h2.event="Add Event"
 		form(action='./addEvent' method='POST')
 			| 
 			label(for='eventName')= "Unique Event Name: "
@@ -89,8 +89,8 @@ html
 			| 
 			br
 			input(type='submit' value='Add Event')
-		h2="Delete Event"
-		h3="Choose the name of the event you would like to delete"
+		h2.event="Delete Event"
+		h3.event="Choose the name of the event you would like to delete"
 		form(action='./deleteEvent' method='POST')
 			| 
 			label(for="deleteEventName")="Event Name: "

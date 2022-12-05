@@ -1,13 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Parent Page</title>
-    </head>
-    <body>
-        <form action = "http://localhost:3000/studentParentPage" method = "POST">
-            Student ID: <input type = "text" name = "studentID"> 
-            <br>
-            <input type = "submit" value = "Submit">
-        </form>
-    </body>
+
+<head>
+    <title>Parent Page</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+
+<body>
+    <div class="split left">
+        <div class="centered">
+            <img src="cp_logo.png" alt="Avatar woman" id="logo">
+
+            <h2 id="heading">Classparency</h2>
+
+        </div>
+    </div>
+
+    <!-- <form action="http://localhost:3000/studentParentPage" method="POST">
+        Student ID: <input type="text" name="studentID">
+        <br>
+        <input type="submit" value="Submit">
+    </form> -->
+
+    <div class="split right">
+        <div class="centered">
+            <h2 id="right-heading">PLEASE ENTER STUDENT'S ID NUMBER</h2>
+            <form action="http://localhost:3000/studentParentPage" method="POST">
+                <input type="text" name="studentID" placeholder="student id">
+
+                <input type="submit" value="Submit">
+            </form>
+            <form action="http://localhost:3000/login.html">
+                <br>
+                <input type="submit" value="Return">
+            </form>
+        </div>
+    </div>
+</body>
+
 </html>

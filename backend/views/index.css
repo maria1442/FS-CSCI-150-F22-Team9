@@ -124,6 +124,7 @@ i {
   height: 20%;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 .top-div {
   display: inline-block;
   color: #002acc;
@@ -137,8 +138,8 @@ i {
   top: 0px;
 }
 
-#drop-icon:hover {
-}
+#drop-icon:hover {}
+
 #drop-icon {
   padding: 0;
   width: 14px;
@@ -163,11 +164,12 @@ th {
   /* border: 3px solid black; */
   border: 1px solid black;
   border-collapse: collapse;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   font-family: Arial;
   overflow-wrap: normal;
   width: 200px;
 }
+
 table {
   width: 100%;
   height: 500px;
@@ -179,6 +181,7 @@ table {
   /*table-layout: fixed;
   overflow: auto;*/
 }
+
 
 #event_content thead th {
   height: 10%;
@@ -197,5 +200,38 @@ table {
 }
 
 .side-nav::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  /* display: none; */
+  /* Safari and Chrome */
+}
+
+#content {
+  background-color: ivory;
+}
+
+.main th {
+  background-color: tomato;
+
+}
+
+form {
+  border: 1px solid black;
+  background-color: ivory;
+}
+
+.main h2 {
+  background-color: goldenrod;
+}
+
+
+/* h2.event,
+h2.behave{
+  background-color: goldenrod;
+} */
+
+table textarea,
+table input {
+  border: transparent;
+  background-color: ivory;
+  width: 100%;
+  height: 100%;
 }
