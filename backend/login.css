@@ -47,6 +47,7 @@ body {
 
   #right-heading{
 
+    margin-top: 80px;
     font-weight: 10; 
     color: #5A5A5A;
   }
@@ -55,7 +56,8 @@ body {
 
 .myButton {
 	background-color:#0029cc;
-	border-radius:14px;
+	border-radius: 40px;
+  border:none;
 	display:inline-block;
 	/* cursor:pointer; */
 	color:#ffffff;
@@ -83,4 +85,15 @@ input{
   width: 100%;
   padding: 12px 20px;
   background-color: #EEEE;
+}
+
+#parents-btn{
+  width: 30%;
+  border: none;
+  border-radius: 40px;
+  padding: 10px 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0029cc;
+  color: white;
+  font-size: 10px;
 }
