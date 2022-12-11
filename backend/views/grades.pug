@@ -75,9 +75,15 @@ html
 			label(for='assignmentName')= "Assignment Name: "
 			input(type='text' name='assignmentName')
 			| 
-			label(for='assignmentCategory')= "Category: " 
-			input(type='text' name='assignmentCategory')
-			| 
+			label(for="assignmentCategory")="Category"
+			input(name="assignmentCategory" list='assignmentCategoryList')
+			datalist(id='assignmentCategoryList')
+				option(value="Homework")
+				option(value="Quiz")
+				option(value="Exam")
+				option(value="Project")
+				option(value="Other")
+			|
 			label(for='possibleScore')="Out of: "
 			input(type='number' name='possibleScore')
 			| 
