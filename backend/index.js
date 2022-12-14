@@ -3331,11 +3331,11 @@ app.use(express.json())
 
 // Send Documents
 // Add new document
-app.post("/newEvent", (req, res) => {
+/*app.post("/newEvent", (req, res) => {
     const newEvent = req.body;
     addEventToDB(newEvent).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 app.post("/addEvent", urlencodedParser, async function(req, res){
     var eventName = req.body.eventName;
     var eventDescription = req.body.description;
@@ -3346,11 +3346,11 @@ app.post("/addEvent", urlencodedParser, async function(req, res){
     res.redirect('back');
 })
 
-app.post("/newAnnouncement", (req, res) => {
+/*app.post("/newAnnouncement", (req, res) => {
     const newAnnouncement = req.body;
     addAnnouncementToDB(newAnnouncement).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 app.post("/addAnnouncement", urlencodedParser, async function(req, res){
     var title = req.body.title;
     var description = req.body.description;
@@ -3480,11 +3480,11 @@ app.post("/addBehavior", urlencodedParser, async function(req, res){
 })
 
 
-app.post("/newStudent", (req, res) => {
+/*app.post("/newStudent", (req, res) => {
     const newStudent = req.body;
     addStudentToDB(newStudent).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 
 app.post("/addStudent",  urlencodedParser, async function(req, res) {
     var studentID = parseInt(req.body.studentID);
@@ -3527,33 +3527,33 @@ app.post("/newUser", (req, res) => {
     res.status(200).json({ ok: true })
 })
 // Delete Documents
-app.post("/removeEvent", (req, res) => {
+/*app.post("/removeEvent", (req, res) => {
     const event = req.body;
     deleteEventFromDB(event).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 app.post("/deleteEvent", urlencodedParser, async function(req, res) {
     const deleteEvent = req.body.deleteEventName;
     const event = new Event(deleteEvent);
     await deleteEventFromDB(event.toJSON()).catch(console.error);
     res.redirect('back');
 })
-app.post("/removeAnnouncement", (req, res) => {
+/*app.post("/removeAnnouncement", (req, res) => {
     const announcement = req.body;
     deleteAnnouncementFromDB(announcement).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 app.post("/deleteAnnouncement", urlencodedParser, async function(req, res) {
     const deleteAnnouncement = req.body.deleteAnnouncementTitle;
     const announcement = new Announcement(deleteAnnouncement)
     await deleteAnnouncementFromDB(announcement.toJSON()).catch(console.error);
     res.redirect('back');
 })
-app.post("/removeStudent", (req, res) => {
+/*app.post("/removeStudent", (req, res) => {
     const student = req.body;
     deleteStudentFromDB(student).catch(console.error);
     res.status(200).json({ ok: true })    
-})
+})*/
 app.post("/deleteStudent", urlencodedParser, async function(req, res) {
     const deleteStudent = parseInt(req.body.deleteStudentID);
     const student = new Student(deleteStudent);
@@ -3673,7 +3673,7 @@ app.post("/deleteBehavior", urlencodedParser, async function(req, res){
     res.redirect('back');
 })
 
-app.post("/deleteClass", (req, res) => {
+/*app.post("/deleteClass", (req, res) => {
     const course = req.body;
     deleteClassFromDB(course).catch(console.error);
     res.status(200).json({ ok: true })
@@ -3682,7 +3682,7 @@ app.post("/deleteUser", (req, res) => {
     const user = req.body;
     deleteUserFromDB(user).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 // Editing
 var Editing = false;
 app.post("/edit", urlencodedParser, (req, res) => {
@@ -3695,36 +3695,12 @@ app.post("/edit", urlencodedParser, (req, res) => {
 })
 
 // Update documents
-/*
-Prep: 
-{"event":
-  {"eventName": "Scholastic Book Fair",
-  "date": {
-    "$date": {
-      "$numberLong": "1665903600000"
-    }
-  },
-  "description": "Students can buy books from the book fair",
-  "location": "Library"
-},
- "newEvent":
- {"eventName": "Scholastic Boo Fair",
-  "date": {
-    "$date": {
-      "$numberLong": "1665903600000"
-    }
-  },
-  "description": "Students can buy books from the book fair",
-  "location": "Library"
-}
-}
-*/
-app.post("/updateEvent1", (req, res) => {
+/*app.post("/updateEvent1", (req, res) => {
     const event = req.body.event;
     const newEvent = req.body.newEvent;
     updateEventFromDB(event, newEvent).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 app.post("/updateEvent", urlencodedParser, async function(req, res) {
     const eventNameArr = req.body.updateEventName;
     const eventDateArr = req.body.updateEventDate;
@@ -3738,12 +3714,12 @@ app.post("/updateEvent", urlencodedParser, async function(req, res) {
     }
     res.redirect('back');
 })
-app.post("/updateAnnouncement1", (req, res) => {
+/*app.post("/updateAnnouncement1", (req, res) => {
     const announcement = req.body.announcement;
     const newAnnouncement = req.body.newAnnouncement;
     updateAnnouncementFromDB(announcement, newAnnouncement).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 app.post("/updateAnnouncement", urlencodedParser, async function(req, res) {
     const announcementTitleArr = req.body.updateAnnouncementTitle;
     const announcementDateArr = req.body.updateAnnouncementDate;
@@ -3756,12 +3732,12 @@ app.post("/updateAnnouncement", urlencodedParser, async function(req, res) {
     }
     res.redirect('back');
 })
-app.post("/updateStudent", (req, res) => {
+/*app.post("/updateStudent", (req, res) => {
     const student = req.body.student;
     const newStudent = req.body.newStudent;
     updateStudentFromDB(student, newStudent).catch(console.error);
     res.status(200).json({ ok: true })
-})
+})*/
 
 app.post("/updateStudents", urlencodedParser, async function(req, res){
     const studentPhotoArr = req.body.updateStudentPhoto;
@@ -3903,7 +3879,7 @@ app.post("/updateBehavior", urlencodedParser, async function(req, res){
     res.redirect('back');
 })
 
-app.post("/updateClass", (req, res) => {
+/*app.post("/updateClass", (req, res) => {
     const course = req.body.course;
     const newCourse = req.body.newCourse;
     updateClassFromDB(course, newCourse).catch(console.error);
@@ -3920,7 +3896,7 @@ app.get("/event", async function(req, res) {
     const singleEvent = await getEventFromDB(req.body);
     var newEvent = new Event(singleEvent.eventName);
     res.status(200).json({event: newEvent});
-})
+})*/
 /*app.get("/events", async function(req, res) {
     const eventsArr = await getEventArrayFromDB();
     res.status(200).json({events: eventsArr});
@@ -4044,14 +4020,14 @@ app.get("/behavior", async function(req, res) {
     res.render('behavior', {students: studentsArr, max: max, editing: Editing});
 })
 
-app.get("/class", async function(req, res) {
+/*app.get("/class", async function(req, res) {
     const singleClass = await getClassFromDB(req.body);
     res.status(200).json({class: singleClass});
 })
 app.get("/classes", async function(req, res) {
     const classesArr = await getClassArrayFromDB();
     res.status(200).json({classes: classesArr});
-})
+})*/
 
 app.get("/dashboard", async function(req, res) {
     //const classesArr = await getClassArrayFromDB();
@@ -4129,10 +4105,10 @@ app.get("/studentPage",  async function(req, res) {
     res.render('student', {students: students, editing: Editing});
 })
 
-app.get("/user", async function(req, res) {
+/*app.get("/user", async function(req, res) {
     const singleUser = await getUserFromDB(req.body);
     res.status(200).json({user: singleUser});
-})
+})*/
 
 app.post("/login", urlencodedParser, async function(req, res) {
     var username = req.body.email;
@@ -4150,10 +4126,10 @@ app.post("/login", urlencodedParser, async function(req, res) {
     }
 })
 
-app.get("/users", async function(req, res) {
+/*app.get("/users", async function(req, res) {
     const usersArr = await getUserArrayFromDB();
     res.status(200).json({users: usersArr});
-})
+})*/
 
 app.use(express.static('public'));
 app.get('/parent.html', function (req, res) {
