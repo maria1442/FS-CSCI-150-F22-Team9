@@ -3909,14 +3909,14 @@ app.get("/eventsPage", async function(req, res) {
     }
     res.render('events', {events: eventsArr, editing: Editing});
 })
-app.get("/announcement", async function(req, res) {
+/*app.get("/announcement", async function(req, res) {
     const singleAnnouncement = await getAnnouncementFromDB(req.body);
     res.status(200).json({announcement: singleAnnouncement});
 })
 app.get("/announcements", async function(req, res) {
     const announcementsArr = await getAnnouncementArrayFromDB();
     res.status(200).json({announcements: announcementsArr});
-})
+})*/
 app.get("/announcementsPage", async function(req, res) {
     const announcementsArr = await getAnnouncementArrayFromDB();
     for (let i = 0; i < announcementsArr.length; i++){
@@ -3925,12 +3925,12 @@ app.get("/announcementsPage", async function(req, res) {
     }
     res.render('announcements', {announcements: announcementsArr, editing: Editing});
 })
-app.get("/student", async function(req, res) {
+/*app.get("/student", async function(req, res) {
     var studentId = req.query.studentID;
     var student = new Student(Number(studentId));
     const singleStudent = await getStudentFromDB(student.toJSON());
     res.status(200).json({student: singleStudent});
-})
+})*/
 
 app.post("/studentParentPage", urlencodedParser, async function(req, res) {
     var studentId = req.body.studentID;
@@ -3972,10 +3972,10 @@ app.post("/studentParentPage", urlencodedParser, async function(req, res) {
                                         });
     }
 })
-app.get("/students", async function(req, res) {
+/*app.get("/students", async function(req, res) {
     const studentsArr = await getStudentArrayFromDB();
     res.status(200).json({students: studentsArr});
-})
+})*/
 
 app.get("/grades", async function(req, res) {
     const studentsArr = await getStudentArrayFromDB();
