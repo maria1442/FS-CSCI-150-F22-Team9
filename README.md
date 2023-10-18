@@ -6,7 +6,7 @@
 | Emma Escandon | Project Manager & Backend Developer|
 | Aakash Sharma | Frontend Developer |
 | Kalvin Xiong | Frontend Developer |
-| Maria Gonzalez | UI/UX Designer |
+| Maria Guimaraes Tomaz | UI/UX Designer |
 
 ## Important Links:
 > Youtube Video: https://youtu.be/CL9oDdQxLK0
